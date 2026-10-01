@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#ffffff"
+        id="themeColor"
+    >
+
+    <title>
+        {% block title %}CareerAI{% endblock %}
+    </title>
+
+
+    <!-- ==============================
+         MAIN CSS
+    =============================== -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+
+    {% block extra_css %}{% endblock %}
+
+
+    <!-- ==============================
+         THEME PRELOAD
+    =============================== -->
+
+    <script>
+
+        (function () {
+
+            const savedTheme =
+                localStorage.getItem("careerai-theme");
+
+            const theme =
+                savedTheme === "dark"
+                    ? "dark"
+                    : "light";
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                theme
+            );
+
+        })();
+
+    </script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     MOBILE OVERLAY
+========================================= -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
+
+
+
+<!-- =========================================
+     TOP NAVBAR
+========================================= -->
+
+<header class="topbar">
+
+
+    <!-- MOBILE MENU -->
+
+    <button
+        type="button"
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Open menu"
+    >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+
+
+    <!-- BRAND -->
+
+    <a
+        href="{{ url_for('dashboard.home') }}"
+        class="topbar-brand"
+    >
+
+        <span class="brand-career">
+            Career
+        </span>
+
+        <span class="brand-ai">
+            AI
+        </span>
+
+    </a>
+
+
+
+    <!-- TOP RIGHT -->
+
+    <div class="topbar-right">
+
+
+        <!-- THEME BUTTON -->
+
+        <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle dark mode"
+            title="Toggle theme"
+        >
+
+            <span
+                class="theme-icon"
+                id="themeIcon"
+            >
+                🌙
+            </span>
+
+            <span
+                class="theme-label"
+                id="themeLabel"
+            >
+                Dark
+            </span>
+
+        </button>
+
+
+
+        <!-- USER -->
+
+        <div class="top-user">
+
+            <div class="top-user-avatar">
+
+                {{ (user.name or "U")[0]|upper }}
+
+            </div>
+
+
+            <span class="top-user-name">
+
+                {{ user.name or "User" }}
+
+            </span>
+
+        </div>
+
+
+
+        <!-- LOGOUT -->
+
+        <a
+            href="{{ url_for('auth.logout') }}"
+            class="top-logout"
+        >
+
+            Logout
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     SIDEBAR
+========================================= -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="sidebar-nav">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="{{ url_for('dashboard.home') }}"
+            class="sidebar-link {% if request.endpoint == 'dashboard.home' %}active{% endif %}"
+        >
+
+            <span class="sidebar-icon">
+                🏠
+            </span>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+
+        <!-- ROADMAP -->
+
+        <a
+            href="{{ url_for('roadmap.home') }}"
+            class="sidebar-link {% if request.endpoint == 'roadmap.home' %}active{% endif %}"
+        >
+
+            <span class="sidebar-icon">
+                🧭
+            </span>
+
+            <span>
+                Career Roadmap
+            </span>
+
+        </a>
+
+
+
+        <!-- RESUME ANALYZER -->
+
+        <a
+            href="{{ url_for('resume.analyzer') }}"
+            class="sidebar-link {% if request.endpoint == 'resume.analyzer' %}active{% endif %}"
+        >
+
+            <span class="sidebar-icon">
+                📄
+            </span>
+
+            <span>
+                Resume Analyzer
+            </span>
+
+        </a>
+
+
+
+        <!-- RESUME BUILDER -->
+
+        <a
+            href="{{ url_for('resume_builder.builder') }}"
+            class="sidebar-link {% if request.endpoint == 'resume_builder.builder' %}active{% endif %}"
+        >
+
+            <span class="sidebar-icon">
+                ✍️
+            </span>
+
+            <span>
+                Resume Builder
+            </span>
+
+        </a>
+
+
+
+        <!-- PORTFOLIO -->
+
+        <a
+            href="/portfolio"
+            class="sidebar-link"
+        >
+
+            <span class="sidebar-icon">
+                💼
+            </span>
+
+            <span>
+                Portfolio Builder
+            </span>
+
+        </a>
+
+
+
+        <!-- JOBS -->
+
+        <a
+            href="/jobs"
+            class="sidebar-link"
+        >
+
+            <span class="sidebar-icon">
+                🔎
+            </span>
+
+            <span>
+                Job Finder
+            </span>
+
+        </a>
+
+
+
+        <!-- CERTIFICATIONS -->
+
+        <a
+            href="/certifications"
+            class="sidebar-link"
+        >
+
+            <span class="sidebar-icon">
+                🎓
+            </span>
+
+            <span>
+                Certifications
+            </span>
+
+        </a>
+
+
+
+        <!-- INTERVIEW -->
+
+        <a
+            href="/interview"
+            class="sidebar-link"
+        >
+
+            <span class="sidebar-icon">
+                🎤
+            </span>
+
+            <span>
+                Interview Preparation
+            </span>
+
+        </a>
+
+
+
+        <!-- PROFILE -->
+
+        <a
+            href="{{ url_for('profile.home') }}"
+            class="sidebar-link {% if request.endpoint == 'profile.home' %}active{% endif %}"
+        >
+
+            <span class="sidebar-icon">
+                👤
+            </span>
+
+            <span>
+                My Profile
+            </span>
+
+        </a>
+
+    </nav>
+
+
+
+    <!-- =====================================
+         SIDEBAR USER AREA
+    ====================================== -->
+
+    <div class="sidebar-bottom">
+
+
+        <!-- USER INFO -->
+
+        <div class="sidebar-user">
+
+
+            <div class="sidebar-user-avatar">
+
+                {{ (user.name or "U")[0]|upper }}
+
+            </div>
+
+
+            <div class="sidebar-user-info">
+
+                <strong>
+                    {{ user.name or "User" }}
+                </strong>
+
+                <span>
+                    My Account
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PROFILE -->
+
+        <a
+            href="{{ url_for('profile.home') }}"
+            class="sidebar-account-link"
+        >
+
+            <span>
+                👤
+            </span>
+
+            <span>
+                My Profile
+            </span>
+
+        </a>
+
+
+
+        <!-- LOGOUT -->
+
+        <a
+            href="{{ url_for('auth.logout') }}"
+            class="sidebar-logout"
+        >
+
+            <span>
+                🚪
+            </span>
+
+            <span>
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =========================================
+     MAIN PAGE AREA
+========================================= -->
+
+<main class="page-content">
+
+
+    <div class="page-container">
+
+        {% block content %}
+
+        <!-- Page content goes here -->
+
+        {% endblock %}
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================
+     FLOATING AI CHAT
+========================================= -->
+
+<a
+    href="/chat"
+    class="floating-ai"
+    id="floatingAI"
+    title="Chat with CareerAI"
+    aria-label="Open AI Career Chat"
+>
+
+
+    <span class="ai-pulse"></span>
+
+
+    <span class="ai-icon">
+        🤖
+    </span>
+
+
+    <span class="ai-text">
+        AI Chat
+    </span>
+
+</a>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script
+    src="{{ url_for('static', filename='js/theme.js') }}"
+></script>
+
+
+<script
+    src="{{ url_for('static', filename='js/main.js') }}"
+></script>
+
+
+<script
+    src="{{ url_for('static', filename='js/chat.js') }}"
+></script>
+
+
+{% block extra_js %}{% endblock %}
+
+
+</body>
+
+</html>

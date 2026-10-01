@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Interview Preparation | CareerAI</title>
+
+    <script>
+        /* Prevent white flash before theme loads */
+        (function () {
+            const savedTheme = localStorage.getItem("careerai-theme");
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                savedTheme === "dark" ? "dark" : "light"
+            );
+        })();
+    </script>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background 0.3s ease,
+                color 0.3s ease;
+        }
+
+
+        /* =====================================================
+           THEME
+        ===================================================== */
+
+        :root {
+            --bg: #f5f7fb;
+            --surface: #ffffff;
+            --surface-hover: #f8fafc;
+
+            --border: #e5e7eb;
+
+            --text: #111827;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+
+            --primary: #0b5cff;
+            --primary-hover: #0847c7;
+            --primary-light: #eff6ff;
+
+            --danger: #ef4444;
+
+            --sidebar-width: 255px;
+            --topbar-height: 70px;
+
+            --shadow:
+                0 10px 30px rgba(15, 23, 42, 0.07);
+        }
+
+
+        [data-theme="dark"] {
+            --bg: #070b14;
+            --surface: #0d1422;
+            --surface-hover: #151e2f;
+
+            --border: #202c3d;
+
+            --text: #f8fafc;
+            --text-secondary: #a8b3c7;
+            --text-muted: #718096;
+
+            --primary: #5b95ff;
+            --primary-hover: #78a8ff;
+            --primary-light: #172554;
+
+            --danger: #f87171;
+
+            --shadow:
+                0 15px 40px rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* =====================================================
+           TOP BAR
+        ===================================================== */
+
+        .topbar {
+            height: var(--topbar-height);
+
+            background: var(--surface);
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 28px;
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            z-index: 1000;
+
+            transition:
+                background 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+
+        .top-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+
+        /* =====================================================
+           MENU BUTTON
+        ===================================================== */
+
+        .menu-button {
+            width: 42px;
+            height: 42px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--text);
+
+            border-radius: 10px;
+
+            font-size: 23px;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .menu-button:hover {
+            background: var(--surface-hover);
+            transform: scale(1.05);
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+
+            text-decoration: none;
+
+            color: var(--primary);
+
+            letter-spacing: -0.5px;
+        }
+
+
+        .logo span {
+            color: var(--text);
+        }
+
+
+        .page-title {
+            color: var(--text-secondary);
+
+            font-size: 14px;
+
+            padding-left: 15px;
+
+            border-left:
+                1px solid var(--border);
+        }
+
+
+        /* =====================================================
+           TOP RIGHT
+        ===================================================== */
+
+        .top-right {
+            display: flex;
+            align-items: center;
+
+            gap: 16px;
+        }
+
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .theme-toggle {
+            width: 45px;
+            height: 45px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0b5cff,
+                    #7c3aed
+                );
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 19px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow:
+                0 5px 15px
+                rgba(11, 92, 255, 0.25);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+
+        .theme-toggle:hover {
+            transform:
+                rotate(15deg)
+                scale(1.08);
+
+            box-shadow:
+                0 8px 20px
+                rgba(11, 92, 255, 0.35);
+        }
+
+
+        /* =====================================================
+           TOP USER
+        ===================================================== */
+
+        .top-user {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            color: var(--text);
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
+        .top-avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 800;
+        }
+
+
+        .top-logout {
+            text-decoration: none;
+
+            color: var(--danger);
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: opacity 0.2s ease;
+        }
+
+
+        .top-logout:hover {
+            opacity: 0.75;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            position: fixed;
+
+            left: 0;
+            top: var(--topbar-height);
+            bottom: 0;
+
+            width: var(--sidebar-width);
+
+            background: var(--surface);
+
+            border-right:
+                1px solid var(--border);
+
+            padding: 25px 15px;
+
+            overflow-y: auto;
+
+            z-index: 900;
+
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+
+        /* =====================================================
+           SIDEBAR USER
+        ===================================================== */
+
+        .sidebar-user {
+            padding:
+                5px 12px
+                22px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            margin-bottom: 18px;
+        }
+
+
+        .sidebar-user-name {
+            font-size: 17px;
+
+            font-weight: 800;
+
+            color: var(--text);
+
+            margin-bottom: 5px;
+        }
+
+
+        .sidebar-user-role {
+            font-size: 12px;
+
+            color: var(--text-secondary);
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .nav-list {
+            list-style: none;
+        }
+
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding:
+                12px 13px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: var(--text-secondary);
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition:
+                color 0.2s ease,
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .nav-link:hover {
+            background: var(--surface-hover);
+
+            color: var(--primary);
+
+            transform:
+                translateX(3px);
+        }
+
+
+        .nav-link.active {
+            background:
+                var(--primary-light);
+
+            color: var(--primary);
+        }
+
+
+        .nav-icon {
+            width: 22px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+        ===================================================== */
+
+        .sidebar-bottom {
+            margin-top: 25px;
+
+            padding-top: 18px;
+
+            border-top:
+                1px solid var(--border);
+        }
+
+
+        .sidebar-logout {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            width: 100%;
+
+            padding:
+                12px 13px;
+
+            margin-top: 5px;
+
+            color: var(--danger);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            border-radius: 10px;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .sidebar-logout:hover {
+            background:
+                rgba(239, 68, 68, 0.08);
+
+            transform:
+                translateX(3px);
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            margin-left:
+                var(--sidebar-width);
+
+            padding:
+                calc(var(--topbar-height) + 35px)
+                35px
+                50px;
+
+            min-height: 100vh;
+
+            transition:
+                margin-left 0.3s ease;
+        }
+
+
+        .content {
+            max-width: 1100px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           PAGE INTRO
+        ===================================================== */
+
+        .page-intro {
+            margin-bottom: 28px;
+
+            animation:
+                fadeUp 0.45s ease;
+        }
+
+
+        .back {
+            display: inline-flex;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+
+            color: var(--primary);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease;
+        }
+
+
+        .back:hover {
+            transform:
+                translateX(-4px);
+        }
+
+
+        .page-intro h1 {
+            font-size: 32px;
+
+            margin-bottom: 8px;
+
+            color: var(--text);
+        }
+
+
+        .page-intro p {
+            color: var(--text-secondary);
+
+            font-size: 15px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0b5cff,
+                    #2563eb
+                );
+
+            color: white;
+
+            border-radius: 20px;
+
+            padding: 34px;
+
+            margin-bottom: 28px;
+
+            box-shadow:
+                0 15px 35px
+                rgba(11, 92, 255, 0.18);
+
+            animation:
+                fadeUp 0.5s ease;
+        }
+
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            right: -60px;
+            top: -80px;
+        }
+
+
+        .hero h2 {
+            position: relative;
+
+            z-index: 2;
+
+            font-size: 24px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .hero p {
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 800px;
+
+            line-height: 1.7;
+
+            color: #dbeafe;
+
+            font-size: 15px;
+        }
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .card {
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 27px;
+
+            margin-bottom: 24px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(15, 23, 42, 0.04);
+
+            transition:
+                background 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+
+            animation:
+                fadeUp 0.55s ease both;
+        }
+
+
+        .card:hover {
+            box-shadow:
+                var(--shadow);
+        }
+
+
+        .card h2 {
+            color: var(--text);
+
+            font-size: 20px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .card-description {
+            color: var(--text-secondary);
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 14px;
+        }
+
+
+        .profile-item {
+            background:
+                var(--surface-hover);
+
+            border:
+                1px solid var(--border);
+
+            padding: 17px;
+
+            border-radius: 11px;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+
+        .profile-item:hover {
+            transform:
+                translateY(-2px);
+
+            border-color:
+                rgba(11, 92, 255, 0.25);
+        }
+
+
+        .profile-label {
+            color: var(--text-secondary);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.6px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .profile-value {
+            color: var(--text);
+
+            font-size: 14px;
+
+            line-height: 1.55;
+        }
+
+
+        /* =====================================================
+           GENERATE AREA
+        ===================================================== */
+
+        .generate-area {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding-bottom: 22px;
+
+            margin-bottom: 24px;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .generate-text strong {
+            display: block;
+
+            color: var(--text);
+
+            font-size: 16px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .generate-text span {
+            color: var(--text-secondary);
+
+            font-size: 13px;
+        }
+
+
+        .generate-button {
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0b5cff,
+                    #2563eb
+                );
+
+            color: white;
+
+            padding:
+                13px 21px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+
+            box-shadow:
+                0 7px 18px
+                rgba(11, 92, 255, 0.20);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .generate-button:hover {
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 10px 24px
+                rgba(11, 92, 255, 0.30);
+        }
+
+
+        .generate-button:active {
+            transform:
+                translateY(0);
+        }
+
+
+        /* =====================================================
+           AI RESULT
+        ===================================================== */
+
+        .ai-result {
+            animation:
+                fadeUp 0.45s ease;
+        }
+
+
+        .ai-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: var(--primary);
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            margin-bottom: 17px;
+        }
+
+
+        .ai-content {
+            color: var(--text);
+
+            line-height: 1.8;
+
+            font-size: 15px;
+
+            white-space: pre-wrap;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty {
+            text-align: center;
+
+            padding:
+                35px 15px 15px;
+
+            color: var(--text-secondary);
+        }
+
+
+        .empty-icon {
+            font-size: 42px;
+
+            margin-bottom: 13px;
+
+            animation:
+                floatIcon 3s ease-in-out infinite;
+        }
+
+
+        .empty h3 {
+            color: var(--text);
+
+            font-size: 18px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .empty p {
+            max-width: 550px;
+
+            margin: 0 auto;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           MOBILE OVERLAY
+        ===================================================== */
+
+        .sidebar-overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0, 0, 0, 0.48);
+
+            z-index: 850;
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes floatIcon {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-7px);
+            }
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 950px) {
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .generate-area {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .generate-button {
+                width: 100%;
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 750px) {
+
+            .topbar {
+                padding:
+                    0 15px;
+            }
+
+
+            .page-title {
+                display: none;
+            }
+
+
+            .top-user span {
+                display: none;
+            }
+
+
+            .top-right {
+                gap: 9px;
+            }
+
+
+            .top-logout {
+                display: none;
+            }
+
+
+            .sidebar {
+                transform:
+                    translateX(-100%);
+
+                box-shadow:
+                    10px 0 30px
+                    rgba(0,0,0,0.18);
+            }
+
+
+            .sidebar.open {
+                transform:
+                    translateX(0);
+            }
+
+
+            .sidebar-overlay.show {
+                display: block;
+            }
+
+
+            .main {
+                margin-left: 0;
+
+                padding:
+                    calc(var(--topbar-height) + 25px)
+                    15px
+                    40px;
+            }
+
+
+            .page-intro h1 {
+                font-size: 27px;
+            }
+
+
+            .hero {
+                padding: 25px;
+
+                border-radius: 16px;
+            }
+
+
+            .hero h2 {
+                font-size: 21px;
+            }
+
+
+            .card {
+                padding: 21px;
+            }
+
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 450px) {
+
+            .logo {
+                font-size: 21px;
+            }
+
+
+            .theme-toggle {
+                width: 40px;
+                height: 40px;
+
+                font-size: 17px;
+            }
+
+
+            .top-avatar {
+                width: 35px;
+                height: 35px;
+            }
+
+
+            .page-intro h1 {
+                font-size: 24px;
+            }
+
+
+            .hero {
+                padding: 22px;
+            }
+
+
+            .card {
+                padding: 19px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         TOP MENU
+    ===================================================== -->
+
+    <header class="topbar">
+
+        <div class="top-left">
+
+            <button
+                type="button"
+                class="menu-button"
+                id="menuButton"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+
+            <!-- CareerAI ONLY HERE -->
+
+            <a
+                href="{{ url_for('dashboard.home') }}"
+                class="logo"
+            >
+                Career<span>AI</span>
+            </a>
+
+
+            <div class="page-title">
+                Interview Preparation
+            </div>
+
+        </div>
+
+
+        <div class="top-right">
+
+
+            <!-- THEME -->
+
+            <button
+                type="button"
+                class="theme-toggle"
+                id="themeToggle"
+                aria-label="Toggle dark and light mode"
+                title="Toggle theme"
+            >
+                🌙
+            </button>
+
+
+            <!-- USER -->
+
+            <div class="top-user">
+
+                <div class="top-avatar">
+                    {{ (user.name or "U")[0]|upper }}
+                </div>
+
+                <span>
+                    {{ user.name }}
+                </span>
+
+            </div>
+
+
+            <!-- LOGOUT -->
+
+            <a
+                href="{{ url_for('auth.logout') }}"
+                class="top-logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MOBILE OVERLAY
+    ===================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- USER FIRST -->
+
+        <div class="sidebar-user">
+
+            <div class="sidebar-user-name">
+                👤 {{ user.name }}
+            </div>
+
+            <div class="sidebar-user-role">
+                My Account
+            </div>
+
+        </div>
+
+
+        <!-- MAIN MENU -->
+
+        <ul class="nav-list">
+
+
+            <!-- DASHBOARD -->
+
+            <li class="nav-item">
+
+                <a
+                    href="{{ url_for('dashboard.home') }}"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        🏠
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- ROADMAP -->
+
+            <li class="nav-item">
+
+                <a
+                    href="{{ url_for('roadmap.home') }}"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        🧭
+                    </span>
+
+                    <span>
+                        Career Roadmap
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- RESUME ANALYZER -->
+
+            <li class="nav-item">
+
+                <a
+                    href="{{ url_for('resume.analyzer') }}"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        📄
+                    </span>
+
+                    <span>
+                        Resume Analyzer
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- RESUME BUILDER -->
+
+            <li class="nav-item">
+
+                <a
+                    href="{{ url_for('resume_builder.builder') }}"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        ✍️
+                    </span>
+
+                    <span>
+                        Resume Builder
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- PORTFOLIO -->
+
+            <li class="nav-item">
+
+                <a
+                    href="/portfolio"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        💼
+                    </span>
+
+                    <span>
+                        Portfolio Builder
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- JOB FINDER -->
+
+            <li class="nav-item">
+
+                <a
+                    href="/jobs"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        🔎
+                    </span>
+
+                    <span>
+                        Job Finder
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- CERTIFICATIONS -->
+
+            <li class="nav-item">
+
+                <a
+                    href="/certifications"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        🎓
+                    </span>
+
+                    <span>
+                        Certifications
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- INTERVIEW -->
+
+            <li class="nav-item">
+
+                <a
+                    href="/interview"
+                    class="nav-link active"
+                >
+
+                    <span class="nav-icon">
+                        🎤
+                    </span>
+
+                    <span>
+                        Interview
+                    </span>
+
+                </a>
+
+            </li>
+
+
+        </ul>
+
+
+        <!-- =================================================
+             BOTTOM MENU
+        ================================================= -->
+
+        <div class="sidebar-bottom">
+
+
+            <!-- PROFILE -->
+
+            <a
+                href="{{ url_for('profile.home') }}"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    👤
+                </span>
+
+                <span>
+                    My Profile
+                </span>
+
+            </a>
+
+
+            <!-- LOGOUT -->
+
+            <a
+                href="{{ url_for('auth.logout') }}"
+                class="sidebar-logout"
+            >
+
+                <span class="nav-icon">
+                    🚪
+                </span>
+
+                <span>
+                    Logout
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ===================================================== -->
+
+    <main class="main">
+
+        <div class="content">
+
+
+            <!-- PAGE INTRO -->
+
+            <section class="page-intro">
+
+                <a
+                    href="{{ url_for('dashboard.home') }}"
+                    class="back"
+                >
+                    ← Back to Dashboard
+                </a>
+
+                <h1>
+                    Interview Preparation
+                </h1>
+
+                <p>
+                    Practice personalized interview questions
+                    based on your career profile, skills and goals.
+                </p>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 HERO
+            ================================================= -->
+
+            <section class="hero">
+
+                <h2>
+                    🎤 Your AI Interview Coach
+                </h2>
+
+                <p>
+                    Prepare for technical and behavioral interviews
+                    with personalized questions generated from your
+                    education, skills, experience and career goals.
+                </p>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 PROFILE
+            ================================================= -->
+
+            <section class="card">
+
+                <h2>
+                    Your Interview Profile
+                </h2>
+
+                <p class="card-description">
+                    CareerAI uses this information to personalize
+                    your interview preparation.
+                </p>
+
+
+                <div class="profile-grid">
+
+
+                    <div class="profile-item">
+
+                        <div class="profile-label">
+                            Career Goal
+                        </div>
+
+                        <div class="profile-value">
+                            {{ user.career_goal or "Not provided" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-item">
+
+                        <div class="profile-label">
+                            Education
+                        </div>
+
+                        <div class="profile-value">
+                            {{ user.education or "Not provided" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-item">
+
+                        <div class="profile-label">
+                            Skills
+                        </div>
+
+                        <div class="profile-value">
+                            {{ user.skills or "Not provided" }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-item">
+
+                        <div class="profile-label">
+                            Experience
+                        </div>
+
+                        <div class="profile-value">
+                            {{ user.experience or "Not provided" }}
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 AI INTERVIEW COACH
+            ================================================= -->
+
+            <section class="card">
+
+                <h2>
+                    AI Interview Coach
+                </h2>
+
+                <p class="card-description">
+                    Generate technical and behavioral interview
+                    questions tailored to your career profile.
+                </p>
+
+
+                <div class="generate-area">
+
+                    <div class="generate-text">
+
+                        <strong>
+                            Ready to practice?
+                        </strong>
+
+                        <span>
+                            Generate a fresh set of personalized
+                            interview questions.
+                        </span>
+
+                    </div>
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('interview.home') }}"
+                    >
+
+                        <button
+                            type="submit"
+                            class="generate-button"
+                        >
+                            Generate Questions
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     QUESTIONS RESULT
+                ================================================= -->
+
+                {% if questions %}
+
+                    <div class="ai-result">
+
+                        <div class="ai-badge">
+                            🤖 AI-Powered Interview Preparation
+                        </div>
+
+
+                        <div class="ai-content">
+                            {{ questions }}
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🎤
+                        </div>
+
+                        <h3>
+                            Ready to Practice?
+                        </h3>
+
+                        <p>
+                            Click "Generate Questions" to receive
+                            personalized interview questions and
+                            preparation guidance.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        /* =================================================
+           THEME
+        ================================================= */
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+
+        function updateThemeButton() {
+
+            const currentTheme =
+                document.documentElement
+                    .getAttribute("data-theme");
+
+
+            if (currentTheme === "dark") {
+
+                themeToggle.textContent = "☀️";
+
+                themeToggle.title =
+                    "Switch to Light Mode";
+
+            } else {
+
+                themeToggle.textContent = "🌙";
+
+                themeToggle.title =
+                    "Switch to Dark Mode";
+
+            }
+
+        }
+
+
+        themeToggle.addEventListener(
+            "click",
+            function () {
+
+                const currentTheme =
+                    document.documentElement
+                        .getAttribute("data-theme");
+
+
+                const newTheme =
+                    currentTheme === "dark"
+                        ? "light"
+                        : "dark";
+
+
+                document.documentElement
+                    .setAttribute(
+                        "data-theme",
+                        newTheme
+                    );
+
+
+                localStorage.setItem(
+                    "careerai-theme",
+                    newTheme
+                );
+
+
+                updateThemeButton();
+
+            }
+        );
+
+
+        updateThemeButton();
+
+
+
+        /* =================================================
+           MOBILE SIDEBAR
+        ================================================= */
+
+        const menuButton =
+            document.getElementById("menuButton");
+
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+
+        const sidebarOverlay =
+            document.getElementById(
+                "sidebarOverlay"
+            );
+
+
+        function openSidebar() {
+
+            sidebar.classList.add("open");
+
+            sidebarOverlay.classList.add("show");
+
+            document.body.style.overflow =
+                "hidden";
+        }
+
+
+        function closeSidebar() {
+
+            sidebar.classList.remove("open");
+
+            sidebarOverlay.classList.remove("show");
+
+            document.body.style.overflow =
+                "";
+        }
+
+
+        menuButton.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    sidebar.classList.contains("open")
+                ) {
+
+                    closeSidebar();
+
+                } else {
+
+                    openSidebar();
+
+                }
+
+            }
+        );
+
+
+        sidebarOverlay.addEventListener(
+            "click",
+            closeSidebar
+        );
+
+
+        /* Close after navigation on mobile */
+
+        const sidebarLinks =
+            sidebar.querySelectorAll("a");
+
+
+        sidebarLinks.forEach(
+            function (link) {
+
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            window.innerWidth <= 750
+                        ) {
+
+                            closeSidebar();
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* Close when returning to desktop */
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                if (
+                    window.innerWidth > 750
+                ) {
+
+                    closeSidebar();
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

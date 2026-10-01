@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Panel | CareerAI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f4f7fc;
+            --surface: #ffffff;
+            --surface-2: #f8fafc;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --muted: #64748b;
+            --primary: #145df5;
+            --primary-hover: #0f4bd8;
+            --danger: #ef4444;
+            --danger-bg: #fef2f2;
+            --success: #16a34a;
+            --success-bg: #f0fdf4;
+            --sidebar: #ffffff;
+            --topbar: #ffffff;
+            --shadow: 0 5px 25px rgba(15, 23, 42, 0.06);
+        }
+
+        body.dark {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-2: #172033;
+            --border: #334155;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --primary: #4f8cff;
+            --primary-hover: #3b78ed;
+            --danger: #f87171;
+            --danger-bg: #351b20;
+            --success: #4ade80;
+            --success-bg: #142b20;
+            --sidebar: #111827;
+            --topbar: #111827;
+            --shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        /* =====================================================
+           TOP BAR
+        ===================================================== */
+
+        .topbar {
+            height: 72px;
+            width: 100%;
+            background: var(--topbar);
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+
+            box-shadow: var(--shadow);
+        }
+
+        .brand {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .admin-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            font-weight: 700;
+            color: var(--text);
+
+            padding: 9px 13px;
+
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+        }
+
+        .admin-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        /* DARK/LIGHT BUTTON */
+
+        .theme-button {
+            width: 42px;
+            height: 42px;
+
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+            color: var(--text);
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 19px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.2s;
+        }
+
+        .theme-button:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .logout-button {
+            text-decoration: none;
+
+            background: var(--danger);
+            color: white;
+
+            padding: 10px 16px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: 0.2s;
+        }
+
+        .logout-button:hover {
+            opacity: 0.9;
+        }
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            position: fixed;
+
+            top: 72px;
+            left: 0;
+            bottom: 0;
+
+            width: 245px;
+
+            background: var(--sidebar);
+
+            border-right: 1px solid var(--border);
+
+            padding: 25px 15px;
+
+            overflow-y: auto;
+
+            z-index: 900;
+        }
+
+        .sidebar-title {
+            padding: 0 12px;
+
+            margin-bottom: 12px;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            color: var(--muted);
+
+            font-weight: 800;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .menu-item {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 13px;
+
+            border-radius: 10px;
+
+            color: var(--muted);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            border: none;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            text-align: left;
+
+            transition: 0.2s;
+        }
+
+        .menu-item:hover {
+            color: var(--primary);
+            background: var(--surface-2);
+        }
+
+        .menu-item.active {
+            color: var(--primary);
+            background: rgba(20, 93, 245, 0.10);
+        }
+
+        .menu-icon {
+            width: 22px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            margin-left: 245px;
+
+            padding: 105px 35px 50px;
+
+            min-height: 100vh;
+        }
+
+        .content {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           WELCOME
+        ===================================================== */
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            margin: 0 0 8px;
+
+            font-size: 34px;
+
+            color: var(--text);
+        }
+
+        .welcome p {
+            margin: 0;
+
+            color: var(--muted);
+
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           FLASH MESSAGES
+        ===================================================== */
+
+        .flash-container {
+            margin-bottom: 25px;
+        }
+
+        .flash {
+            padding: 13px 16px;
+
+            border-radius: 10px;
+
+            margin-bottom: 10px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            border: 1px solid var(--border);
+        }
+
+        .flash.success {
+            color: var(--success);
+            background: var(--success-bg);
+        }
+
+        .flash.error {
+            color: var(--danger);
+            background: var(--danger-bg);
+        }
+
+        /* =====================================================
+           STAT CARDS
+        ===================================================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            padding: 22px;
+
+            box-shadow: var(--shadow);
+
+            transition: 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-top {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(20, 93, 245, 0.10);
+
+            font-size: 20px;
+        }
+
+        .stat-label {
+            color: var(--muted);
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .stat-number {
+            font-size: 30px;
+
+            font-weight: 800;
+
+            color: var(--text);
+        }
+
+        /* =====================================================
+           SECTION
+        ===================================================== */
+
+        .section {
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            box-shadow: var(--shadow);
+
+            margin-bottom: 25px;
+
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 22px 24px;
+
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+        .section-title {
+            margin: 0;
+
+            font-size: 20px;
+
+            color: var(--text);
+        }
+
+        .section-subtitle {
+            margin: 5px 0 0;
+
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        .search-box {
+            padding: 18px 24px;
+
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+
+            padding: 12px 14px;
+
+            background: var(--surface-2);
+
+            color: var(--text);
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px rgba(20, 93, 245, 0.10);
+        }
+
+        /* =====================================================
+           USER TABLE
+        ===================================================== */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+        }
+
+        th {
+            text-align: left;
+
+            padding: 14px 18px;
+
+            background: var(--surface-2);
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px 18px;
+
+            border-top: 1px solid var(--border);
+
+            color: var(--text);
+
+            font-size: 14px;
+
+            vertical-align: middle;
+        }
+
+        .user-name {
+            font-weight: 700;
+        }
+
+        .user-email {
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+        .role {
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        .role.admin {
+            color: var(--primary);
+
+            background: rgba(20, 93, 245, 0.10);
+        }
+
+        .role.user {
+            color: var(--muted);
+
+            background: var(--surface-2);
+        }
+
+        /* =====================================================
+           ACTION BUTTONS
+        ===================================================== */
+
+        .actions {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+        }
+
+        .action-button {
+            border: none;
+
+            padding: 8px 11px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+            transition: 0.2s;
+        }
+
+        .action-history {
+            background: rgba(20, 93, 245, 0.10);
+
+            color: var(--primary);
+        }
+
+        .action-admin {
+            background: var(--success-bg);
+
+            color: var(--success);
+        }
+
+        .action-remove {
+            background: #fff7ed;
+
+            color: #ea580c;
+        }
+
+        body.dark .action-remove {
+            background: #352317;
+        }
+
+        .action-delete {
+            background: var(--danger-bg);
+
+            color: var(--danger);
+        }
+
+        .action-button:hover {
+            transform: translateY(-1px);
+            opacity: 0.85;
+        }
+
+        /* =====================================================
+           ACTIVITY LOG
+        ===================================================== */
+
+        .activity-list {
+            padding: 0;
+        }
+
+        .activity {
+            padding: 17px 24px;
+
+            border-bottom: 1px solid var(--border);
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 14px;
+        }
+
+        .activity:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 38px;
+            height: 38px;
+
+            flex-shrink: 0;
+
+            border-radius: 10px;
+
+            background: rgba(20, 93, 245, 0.10);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 17px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-action {
+            color: var(--text);
+
+            font-weight: 700;
+
+            margin-bottom: 4px;
+        }
+
+        .activity-meta {
+            color: var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           USER HISTORY
+        ===================================================== */
+
+        .history-header {
+            padding: 20px 24px;
+
+            background: var(--surface-2);
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .history-user {
+            font-size: 18px;
+
+            font-weight: 800;
+
+            color: var(--text);
+        }
+
+        .history-email {
+            color: var(--muted);
+
+            margin-top: 4px;
+
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty {
+            padding: 45px 25px;
+
+            text-align: center;
+
+            color: var(--muted);
+        }
+
+        .empty-icon {
+            font-size: 42px;
+
+            margin-bottom: 12px;
+        }
+
+        .empty h3 {
+            margin: 0 0 8px;
+
+            color: var(--text);
+        }
+
+        .empty p {
+            margin: 0;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            padding: 15px;
+        }
+
+        /* =====================================================
+           MOBILE SIDEBAR
+        ===================================================== */
+
+        .mobile-menu {
+            display: none;
+
+            width: 42px;
+            height: 42px;
+
+            border: 1px solid var(--border);
+
+            background: var(--surface-2);
+
+            color: var(--text);
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-size: 20px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 800px) {
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .brand {
+                font-size: 22px;
+            }
+
+            .admin-label span {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+
+                transition: transform 0.25s ease;
+
+                box-shadow: var(--shadow);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+
+                padding: 95px 18px 40px;
+            }
+
+            .welcome h1 {
+                font-size: 28px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .logout-button {
+                padding: 9px 12px;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .top-right {
+                gap: 7px;
+            }
+
+            .admin-label {
+                display: none;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .section-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP NAVBAR
+========================================================= -->
+
+<header class="topbar">
+
+    <div style="display:flex;align-items:center;gap:12px;">
+
+        <button
+            class="mobile-menu"
+            id="mobileMenuButton"
+            type="button"
+            aria-label="Open menu"
+        >
+            ☰
+        </button>
+
+        <a
+            href="{{ url_for('admin.dashboard') }}"
+            class="brand"
+        >
+            CareerAI
+        </a>
+
+    </div>
+
+
+    <div class="top-right">
+
+        <div class="admin-label">
+
+            <span class="admin-dot"></span>
+
+            <span>Admin</span>
+
+        </div>
+
+
+        <!-- DARK / LIGHT MODE -->
+
+        <button
+            type="button"
+            class="theme-button"
+            id="themeButton"
+            title="Toggle dark/light mode"
+            aria-label="Toggle dark/light mode"
+        >
+            🌙
+        </button>
+
+
+        <a
+            href="{{ url_for('auth.logout') }}"
+            class="logout-button"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+    <div class="sidebar-title">
+        Admin Menu
+    </div>
+
+
+    <nav class="menu">
+
+        <a
+            href="#dashboard"
+            class="menu-item active"
+            data-section="dashboard"
+        >
+            <span class="menu-icon">📊</span>
+            Dashboard
+        </a>
+
+
+        <a
+            href="#users"
+            class="menu-item"
+            data-section="users"
+        >
+            <span class="menu-icon">👥</span>
+            Users
+        </a>
+
+
+        <a
+            href="#history"
+            class="menu-item"
+            data-section="history"
+        >
+            <span class="menu-icon">🕘</span>
+            User History
+        </a>
+
+
+        <a
+            href="#activity"
+            class="menu-item"
+            data-section="activity"
+        >
+            <span class="menu-icon">📋</span>
+            Activity Logs
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="main">
+
+    <div class="content">
+
+
+        <!-- =================================================
+             FLASH MESSAGES
+        ================================================== -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                <div class="flash-container">
+
+                    {% for category, message in messages %}
+
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =================================================
+             WELCOME
+        ================================================== -->
+
+        <section
+            class="welcome"
+            id="dashboard"
+        >
+
+            <h1>
+                Welcome, Admin 👋
+            </h1>
+
+            <p>
+                Manage CareerAI users, monitor activity,
+                control administrator access and review
+                user history from this panel.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <section class="stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-label">
+                        Total Users
+                    </div>
+
+                    <div class="stat-icon">
+                        👥
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+                    {{ total_users }}
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-label">
+                        Normal Users
+                    </div>
+
+                    <div class="stat-icon">
+                        👤
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+                    {{ normal_users }}
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-label">
+                        Administrators
+                    </div>
+
+                    <div class="stat-icon">
+                        🛡️
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+                    {{ admin_users }}
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-label">
+                        Logged Activities
+                    </div>
+
+                    <div class="stat-icon">
+                        📋
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+                    {{ recent_activities|length }}
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             USER MANAGEMENT
+        ================================================== -->
+
+        <section
+            class="section"
+            id="users"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2 class="section-title">
+                        User Management
+                    </h2>
+
+                    <p class="section-subtitle">
+                        View, manage and control CareerAI accounts.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH USERS -->
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="userSearch"
+                    class="search-input"
+                    placeholder="Search users by name or email..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- USER TABLE -->
+
+            {% if users %}
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                User
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Role
+                            </th>
+
+                            <th>
+                                Joined
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="userTable">
+
+                    {% for user in users %}
+
+                        <tr
+                            class="user-row"
+                            data-search="{{ user.name|lower }} {{ user.email|lower }}"
+                        >
+
+                            <td>
+
+                                <div class="user-name">
+                                    {{ user.name }}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="user-email">
+                                    {{ user.email }}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                {% if user.is_admin %}
+
+                                    <span class="role admin">
+                                        🛡️ Admin
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="role user">
+                                        👤 User
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {% if user.created_at %}
+
+                                    {{ user.created_at.strftime("%d %b %Y") }}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="actions">
+
+
+                                    <!-- HISTORY -->
+
+                                    <a
+                                        href="{{ url_for('admin.user_history', user_id=user.id) }}"
+                                        class="action-button action-history"
+                                    >
+                                        🕘 History
+                                    </a>
+
+
+                                    {% if user.id != current_user.id %}
+
+
+                                        <!-- MAKE ADMIN -->
+
+                                        {% if not user.is_admin %}
+
+                                            <form
+                                                method="POST"
+                                                action="{{ url_for('admin.make_admin', user_id=user.id) }}"
+                                                style="display:inline;"
+                                                onsubmit="return confirm('Make {{ user.name|e }} an administrator?');"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="action-button action-admin"
+                                                >
+                                                    🛡️ Make Admin
+                                                </button>
+
+                                            </form>
+
+                                        {% else %}
+
+
+                                            <!-- REMOVE ADMIN -->
+
+                                            <form
+                                                method="POST"
+                                                action="{{ url_for('admin.remove_admin', user_id=user.id) }}"
+                                                style="display:inline;"
+                                                onsubmit="return confirm('Remove administrator access from {{ user.name|e }}?');"
+                                            >
+
+                                                <button
+                                                    type="submit"
+                                                    class="action-button action-remove"
+                                                >
+                                                    Remove Admin
+                                                </button>
+
+                                            </form>
+
+                                        {% endif %}
+
+
+                                        <!-- DELETE -->
+
+                                        <form
+                                            method="POST"
+                                            action="{{ url_for('admin.delete_user', user_id=user.id) }}"
+                                            style="display:inline;"
+                                            onsubmit="return confirm('DELETE {{ user.name|e }} permanently? This cannot be undone.');"
+                                        >
+
+                                            <button
+                                                type="submit"
+                                                class="action-button action-delete"
+                                            >
+                                                🗑 Delete
+                                            </button>
+
+                                        </form>
+
+
+                                    {% else %}
+
+                                        <span class="role admin">
+                                            Current Account
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div
+                id="noUsersFound"
+                class="empty"
+                style="display:none;"
+            >
+
+                <div class="empty-icon">
+                    🔎
+                </div>
+
+                <h3>
+                    No users found
+                </h3>
+
+                <p>
+                    Try another name or email.
+                </p>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    👥
+                </div>
+
+                <h3>
+                    No Users Yet
+                </h3>
+
+                <p>
+                    No registered users are currently available.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- =================================================
+             USER HISTORY
+        ================================================== -->
+
+        <section
+            class="section"
+            id="history"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2 class="section-title">
+                        User History
+                    </h2>
+
+                    <p class="section-subtitle">
+                        Review activities associated with a selected user.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if history_user %}
+
+                <div class="history-header">
+
+                    <div class="history-user">
+                        {{ history_user.name }}
+                    </div>
+
+                    <div class="history-email">
+                        {{ history_user.email }}
+                    </div>
+
+                </div>
+
+
+                {% if recent_activities %}
+
+                    <div class="activity-list">
+
+                        {% for activity in recent_activities %}
+
+                            <div class="activity">
+
+                                <div class="activity-icon">
+                                    🕘
+                                </div>
+
+                                <div class="activity-content">
+
+                                    <div class="activity-action">
+                                        {{ activity.action }}
+                                    </div>
+
+                                    <div class="activity-meta">
+
+                                        {% if activity.created_at %}
+                                            {{ activity.created_at.strftime("%d %b %Y, %I:%M %p") }}
+                                        {% endif %}
+
+                                        {% if activity.endpoint %}
+                                            · {{ activity.endpoint }}
+                                        {% endif %}
+
+                                        {% if activity.ip_address %}
+                                            · IP: {{ activity.ip_address }}
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🕘
+                        </div>
+
+                        <h3>
+                            No History
+                        </h3>
+
+                        <p>
+                            No activity has been recorded for this user yet.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            {% else %}
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        🕘
+                    </div>
+
+                    <h3>
+                        Select a User
+                    </h3>
+
+                    <p>
+                        Click the History button beside a user
+                        to view their activity.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- =================================================
+             ALL ACTIVITY LOGS
+        ================================================== -->
+
+        <section
+            class="section"
+            id="activity"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2 class="section-title">
+                        Activity Logs
+                    </h2>
+
+                    <p class="section-subtitle">
+                        Recent administrative and user activity.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if recent_activities %}
+
+                <div class="activity-list">
+
+                    {% for activity in recent_activities %}
+
+                        <div class="activity">
+
+                            <div class="activity-icon">
+
+                                {% if "DELETE" in activity.action %}
+                                    🗑️
+                                {% elif "ADMIN" in activity.action %}
+                                    🛡️
+                                {% elif "LOGIN" in activity.action %}
+                                    🔐
+                                {% else %}
+                                    📋
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="activity-content">
+
+                                <div class="activity-action">
+
+                                    {{ activity.action }}
+
+                                </div>
+
+
+                                <div class="activity-meta">
+
+                                    {% if activity.user_name %}
+                                        {{ activity.user_name }}
+                                    {% endif %}
+
+                                    {% if activity.user_email %}
+                                        · {{ activity.user_email }}
+                                    {% endif %}
+
+                                    {% if activity.created_at %}
+                                        · {{ activity.created_at.strftime("%d %b %Y, %I:%M %p") }}
+                                    {% endif %}
+
+                                    {% if activity.ip_address %}
+                                        · IP: {{ activity.ip_address }}
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        📋
+                    </div>
+
+                    <h3>
+                        No Activity Yet
+                    </h3>
+
+                    <p>
+                        Administrative activity will appear here.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <div class="footer">
+
+            CareerAI Admin Panel ·
+            Secure Administrator Area
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    /* =====================================================
+       DARK / LIGHT MODE
+    ===================================================== */
+
+    const themeButton =
+        document.getElementById("themeButton");
+
+
+    function updateThemeIcon() {
+
+        if (document.body.classList.contains("dark")) {
+
+            themeButton.textContent = "☀️";
+
+            themeButton.title = "Switch to light mode";
+
+        } else {
+
+            themeButton.textContent = "🌙";
+
+            themeButton.title = "Switch to dark mode";
+
+        }
+
+    }
+
+
+    const savedTheme =
+        localStorage.getItem("careerai-admin-theme");
+
+
+    if (savedTheme === "dark") {
+
+        document.body.classList.add("dark");
+
+    }
+
+
+    updateThemeIcon();
+
+
+    themeButton.addEventListener(
+        "click",
+        function () {
+
+            document.body.classList.toggle("dark");
+
+
+            if (
+                document.body.classList.contains("dark")
+            ) {
+
+                localStorage.setItem(
+                    "careerai-admin-theme",
+                    "dark"
+                );
+
+            } else {
+
+                localStorage.setItem(
+                    "careerai-admin-theme",
+                    "light"
+                );
+
+            }
+
+
+            updateThemeIcon();
+
+        }
+    );
+
+
+    /* =====================================================
+       USER SEARCH
+    ===================================================== */
+
+    const searchInput =
+        document.getElementById("userSearch");
+
+    const noUsersFound =
+        document.getElementById("noUsersFound");
+
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "input",
+            function () {
+
+                const search =
+                    this.value.toLowerCase().trim();
+
+                const rows =
+                    document.querySelectorAll(".user-row");
+
+                let visibleCount = 0;
+
+
+                rows.forEach(function (row) {
+
+                    const text =
+                        row.getAttribute("data-search") || "";
+
+
+                    if (text.includes(search)) {
+
+                        row.style.display = "";
+
+                        visibleCount++;
+
+                    } else {
+
+                        row.style.display = "none";
+
+                    }
+
+                });
+
+
+                if (noUsersFound) {
+
+                    if (
+                        visibleCount === 0 &&
+                        search !== ""
+                    ) {
+
+                        noUsersFound.style.display =
+                            "block";
+
+                    } else {
+
+                        noUsersFound.style.display =
+                            "none";
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SIDEBAR MOBILE
+    ===================================================== */
+
+    const mobileMenuButton =
+        document.getElementById("mobileMenuButton");
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+
+    if (mobileMenuButton) {
+
+        mobileMenuButton.addEventListener(
+            "click",
+            function () {
+
+                sidebar.classList.toggle("open");
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SIDEBAR ACTIVE MENU
+    ===================================================== */
+
+    const menuItems =
+        document.querySelectorAll(".menu-item");
+
+
+    menuItems.forEach(function (item) {
+
+        item.addEventListener(
+            "click",
+            function () {
+
+                menuItems.forEach(function (menu) {
+
+                    menu.classList.remove("active");
+
+                });
+
+
+                item.classList.add("active");
+
+
+                if (window.innerWidth <= 800) {
+
+                    sidebar.classList.remove("open");
+
+                }
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       UPDATE ACTIVE MENU ON SCROLL
+    ===================================================== */
+
+    const sections = [
+        document.getElementById("dashboard"),
+        document.getElementById("users"),
+        document.getElementById("history"),
+        document.getElementById("activity")
+    ];
+
+
+    window.addEventListener(
+        "scroll",
+        function () {
+
+            let current = "dashboard";
+
+
+            sections.forEach(function (section) {
+
+                if (!section) {
+                    return;
+                }
+
+
+                const sectionTop =
+                    section.getBoundingClientRect().top;
+
+
+                if (sectionTop <= 150) {
+
+                    current =
+                        section.getAttribute("id");
+
+                }
+
+            });
+
+
+            menuItems.forEach(function (item) {
+
+                item.classList.remove("active");
+
+
+                if (
+                    item.getAttribute("data-section")
+                    === current
+                ) {
+
+                    item.classList.add("active");
+
+                }
+
+            });
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,2847 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Resume Builder | CareerAI</title>
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+
+            --primary: #0b5cff;
+            --primary-hover: #0847c7;
+            --primary-light: #eff6ff;
+
+            --bg: #f5f8ff;
+            --card: #ffffff;
+            --preview: #ffffff;
+
+            --text: #111827;
+            --text-secondary: #475569;
+            --muted: #64748b;
+            --placeholder: #94a3b8;
+
+            --border: #e5e7eb;
+            --input-border: #dbe3ef;
+
+            --soft: #f1f5f9;
+            --soft-hover: #e2e8f0;
+
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+
+            --shadow:
+                0 8px 25px rgba(15, 23, 42, 0.06);
+
+            --transition: 0.25s ease;
+        }
+
+
+        /* =====================================================
+           DARK MODE
+        ===================================================== */
+
+        body.dark {
+
+            --bg: #0b1120;
+            --card: #111827;
+            --preview: #ffffff;
+
+            --text: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --muted: #94a3b8;
+            --placeholder: #64748b;
+
+            --border: #263244;
+            --input-border: #334155;
+
+            --soft: #1e293b;
+            --soft-hover: #334155;
+
+            --primary-light: #172554;
+
+            --shadow:
+                0 8px 30px rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--bg);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background var(--transition),
+                color var(--transition);
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+
+            height: 70px;
+
+            background: var(--card);
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 35px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+            transition:
+                background var(--transition),
+                border-color var(--transition);
+        }
+
+
+        .logo {
+
+            font-size: 25px;
+
+            font-weight: 800;
+
+            color: var(--primary);
+
+            text-decoration: none;
+        }
+
+
+        .logo span {
+
+            color: var(--text);
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+        }
+
+
+        .user-name {
+
+            font-size: 14px;
+
+            color: var(--text-secondary);
+
+            font-weight: 600;
+        }
+
+
+        .profile-circle {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: 700;
+        }
+
+
+        .logout {
+
+            color: var(--danger);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: var(--transition);
+        }
+
+
+        .logout:hover {
+
+            color: var(--danger-hover);
+        }
+
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .theme-button {
+
+            width: 40px;
+
+            height: 40px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            background: var(--soft);
+
+            color: var(--text);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+
+        .theme-button:hover {
+
+            background: var(--soft-hover);
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 40px 25px;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .page-header {
+
+            margin-bottom: 25px;
+        }
+
+
+        .back {
+
+            display: inline-block;
+
+            margin-bottom: 18px;
+
+            color: var(--primary);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        .back:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .page-header h1 {
+
+            font-size: 32px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .page-header p {
+
+            color: var(--muted);
+
+            font-size: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           TOOLBAR
+        ===================================================== */
+
+        .toolbar {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .completion-box {
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 14px 18px;
+
+            min-width: 250px;
+
+            box-shadow: var(--shadow);
+        }
+
+
+        .completion-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 9px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .completion-percent {
+
+            color: var(--primary);
+        }
+
+
+        .progress {
+
+            width: 100%;
+
+            height: 7px;
+
+            background: var(--soft);
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            width: 0%;
+
+            background: var(--primary);
+
+            border-radius: 20px;
+
+            transition: width 0.35s ease;
+        }
+
+
+        .toolbar-actions {
+
+            display: flex;
+
+            gap: 9px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .tool-button {
+
+            border: 1px solid var(--border);
+
+            background: var(--card);
+
+            color: var(--text-secondary);
+
+            padding: 10px 14px;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: var(--transition);
+        }
+
+
+        .tool-button:hover {
+
+            background: var(--soft);
+
+            transform: translateY(-1px);
+        }
+
+
+        .tool-button.primary {
+
+            background: var(--primary);
+
+            color: white;
+
+            border-color: var(--primary);
+        }
+
+
+        .tool-button.primary:hover {
+
+            background: var(--primary-hover);
+        }
+
+
+        .tool-button.danger {
+
+            color: var(--danger);
+        }
+
+
+        /* =====================================================
+           BUILDER
+        ===================================================== */
+
+        .builder-layout {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                minmax(0, 1fr);
+
+            gap: 25px;
+
+            align-items: start;
+        }
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .card {
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow: var(--shadow);
+
+            transition:
+                background var(--transition),
+                border-color var(--transition);
+        }
+
+
+        .card-title {
+
+            font-size: 21px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .card-description {
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 20px;
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .full {
+
+            grid-column: 1 / -1;
+        }
+
+
+        label {
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: var(--text-secondary);
+
+            margin-bottom: 8px;
+        }
+
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            border:
+                1px solid var(--input-border);
+
+            border-radius: 10px;
+
+            padding: 13px 14px;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            color: var(--text);
+
+            background: var(--card);
+
+            outline: none;
+
+            transition: var(--transition);
+        }
+
+
+        input {
+
+            height: 48px;
+        }
+
+
+        textarea {
+
+            min-height: 110px;
+
+            resize: vertical;
+
+            line-height: 1.6;
+        }
+
+
+        input:focus,
+        textarea:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(11, 92, 255, 0.12);
+        }
+
+
+        input::placeholder,
+        textarea::placeholder {
+
+            color: var(--placeholder);
+        }
+
+
+        .hint {
+
+            margin-top: 6px;
+
+            color: var(--placeholder);
+
+            font-size: 12px;
+
+            line-height: 1.4;
+        }
+
+
+        .char-count {
+
+            text-align: right;
+
+            color: var(--placeholder);
+
+            font-size: 11px;
+
+            margin-top: 5px;
+        }
+
+
+        /* =====================================================
+           BUTTON AREA
+        ===================================================== */
+
+        .actions {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 12px;
+
+            margin-top: 25px;
+
+            padding-top: 25px;
+
+            border-top:
+                1px solid var(--border);
+        }
+
+
+        .button {
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 13px 20px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            transition: var(--transition);
+        }
+
+
+        .back-button {
+
+            background: var(--soft);
+
+            color: var(--text-secondary);
+        }
+
+
+        .back-button:hover {
+
+            background: var(--soft-hover);
+        }
+
+
+        .save-button {
+
+            background: var(--primary);
+
+            color: #ffffff;
+        }
+
+
+        .save-button:hover {
+
+            background: var(--primary-hover);
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =====================================================
+           PREVIEW
+        ===================================================== */
+
+        .preview-card {
+
+            position: sticky;
+
+            top: 95px;
+        }
+
+
+        .preview-heading-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .preview-status {
+
+            font-size: 11px;
+
+            color: #16a34a;
+
+            background: #dcfce7;
+
+            padding: 5px 9px;
+
+            border-radius: 20px;
+
+            font-weight: 700;
+        }
+
+
+        body.dark .preview-status {
+
+            background: #052e16;
+
+            color: #86efac;
+        }
+
+
+        /* =====================================================
+           RESUME PAPER
+        ===================================================== */
+
+        .resume-preview {
+
+            background: var(--preview);
+
+            color: #111827;
+
+            border:
+                1px solid #dbe3ef;
+
+            min-height: 700px;
+
+            padding: 38px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(15, 23, 42, 0.08);
+        }
+
+
+        .preview-header {
+
+            border-bottom:
+                2px solid #111827;
+
+            padding-bottom: 18px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .preview-name {
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            color: #111827;
+
+            margin-bottom: 6px;
+        }
+
+
+        .preview-career {
+
+            color: #0b5cff;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            margin-bottom: 10px;
+        }
+
+
+        .preview-contact {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        .preview-section {
+
+            margin-top: 22px;
+        }
+
+
+        .preview-section h3 {
+
+            font-size: 15px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            color: #111827;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            padding-bottom: 7px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .preview-section p {
+
+            color: #475569;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            white-space: pre-line;
+        }
+
+
+        .preview-skills {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+        }
+
+
+        .skill-badge {
+
+            background: #eff6ff;
+
+            color: #0b5cff;
+
+            border-radius: 7px;
+
+            padding: 6px 9px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .empty-preview {
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            font-style: italic;
+        }
+
+
+        /* =====================================================
+           FLASH MESSAGE
+        ===================================================== */
+
+        .alert {
+
+            padding: 13px 15px;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        .alert-success {
+
+            background: var(--success-bg);
+
+            color: var(--success-text);
+
+            border:
+                1px solid #bbf7d0;
+        }
+
+
+        .alert-error {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border:
+                1px solid #fecaca;
+        }
+
+
+        body.dark .alert-error {
+
+            background: #450a0a;
+
+            color: #fca5a5;
+
+            border-color: #7f1d1d;
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            background: #111827;
+
+            color: white;
+
+            padding: 13px 17px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            opacity: 0;
+
+            transform: translateY(15px);
+
+            pointer-events: none;
+
+            transition: 0.3s ease;
+
+            z-index: 999;
+        }
+
+
+        .toast.show {
+
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 950px) {
+
+            .builder-layout {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .preview-card {
+
+                position: static;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding: 0 18px;
+            }
+
+
+            .user-name {
+
+                display: none;
+            }
+
+
+            .main {
+
+                padding: 25px 15px;
+            }
+
+
+            .card {
+
+                padding: 22px;
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .full {
+
+                grid-column: auto;
+            }
+
+
+            .toolbar {
+
+                align-items: stretch;
+
+                flex-direction: column;
+            }
+
+
+            .completion-box {
+
+                width: 100%;
+            }
+
+
+            .toolbar-actions {
+
+                width: 100%;
+            }
+
+
+            .tool-button {
+
+                flex: 1;
+            }
+
+
+            .actions {
+
+                flex-direction: column;
+            }
+
+
+            .button {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+
+            .resume-preview {
+
+                padding: 25px;
+            }
+
+
+            .preview-name {
+
+                font-size: 23px;
+            }
+
+
+            .theme-button {
+
+                width: 38px;
+
+                height: 38px;
+            }
+
+        }
+
+
+        /* =====================================================
+           PRINT
+        ===================================================== */
+
+        @media print {
+
+            body {
+
+                background: white !important;
+            }
+
+
+            .navbar,
+            .page-header,
+            .toolbar,
+            .card-title,
+            .card-description,
+            .alert,
+            .actions,
+            .toast {
+
+                display: none !important;
+            }
+
+
+            .main {
+
+                max-width: none;
+
+                padding: 0;
+            }
+
+
+            .builder-layout {
+
+                display: block;
+            }
+
+
+            .builder-layout > .card:first-child {
+
+                display: none;
+            }
+
+
+            .preview-card {
+
+                display: block !important;
+
+                position: static;
+
+                box-shadow: none;
+
+                border: none;
+
+                padding: 0;
+            }
+
+
+            .resume-preview {
+
+                border: none;
+
+                box-shadow: none;
+
+                min-height: auto;
+
+                padding: 20px;
+
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <a
+        href="{{ url_for('dashboard.home') }}"
+        class="logo"
+    >
+        Career<span>AI</span>
+    </a>
+
+
+    <div class="nav-right">
+
+        <div class="user-name">
+            {{ user.name or 'User' }}
+        </div>
+
+
+        <div class="profile-circle">
+
+            {{ (user.name or 'U')[0]|upper }}
+
+        </div>
+
+
+        <!-- DARK MODE -->
+
+        <button
+            type="button"
+            class="theme-button"
+            id="themeButton"
+            aria-label="Toggle dark mode"
+            title="Toggle dark mode"
+        >
+            🌙
+        </button>
+
+
+        <a
+            href="{{ url_for('auth.logout') }}"
+            class="logout"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <a
+            href="{{ url_for('dashboard.home') }}"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+        <h1>
+            Resume & CV Builder
+        </h1>
+
+
+        <p>
+            Create a professional resume using
+            your career information.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         FLASH MESSAGES
+    ================================================= -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div
+                    class="alert
+                    {% if category == 'error' %}
+                        alert-error
+                    {% else %}
+                        alert-success
+                    {% endif %}"
+                >
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =================================================
+         IMPORTANT FIX
+    ================================================= -->
+
+    {% set data = resume_data or {} %}
+
+
+    <!-- =================================================
+         TOOLBAR
+    ================================================= -->
+
+    <div class="toolbar">
+
+
+        <!-- COMPLETION -->
+
+        <div class="completion-box">
+
+            <div class="completion-top">
+
+                <span>
+                    Resume Completion
+                </span>
+
+                <span
+                    class="completion-percent"
+                    id="completionPercent"
+                >
+                    0%
+                </span>
+
+            </div>
+
+
+            <div class="progress">
+
+                <div
+                    class="progress-bar"
+                    id="progressBar"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOOLS -->
+
+        <div class="toolbar-actions">
+
+            <button
+                type="button"
+                class="tool-button"
+                onclick="copyResume()"
+            >
+                📋 Copy
+            </button>
+
+
+            <button
+                type="button"
+                class="tool-button"
+                onclick="printResume()"
+            >
+                📄 PDF / Print
+            </button>
+
+
+            <button
+                type="button"
+                class="tool-button danger"
+                onclick="clearDraft()"
+            >
+                🧹 Clear
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         BUILDER LAYOUT
+    ================================================= -->
+
+    <div class="builder-layout">
+
+
+        <!-- =================================================
+             FORM CARD
+        ================================================= -->
+
+        <div class="card">
+
+            <h2 class="card-title">
+                Your Information
+            </h2>
+
+
+            <p class="card-description">
+                Enter your information below.
+                Your resume preview updates automatically.
+            </p>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('resume_builder.builder') }}"
+                id="resumeForm"
+            >
+
+
+                <div class="form-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="{{ data.get('name') or (user.name or '') }}"
+                            placeholder="Your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value="{{ data.get('email') or (user.email or '') }}"
+                            placeholder="your@email.com"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            value="{{ data.get('phone') or '' }}"
+                            placeholder="+91 98765 43210"
+                        >
+
+                    </div>
+
+
+                    <!-- CAREER -->
+
+                    <div class="form-group">
+
+                        <label for="career_goal">
+                            Target Career
+                        </label>
+
+                        <input
+                            type="text"
+                            id="career_goal"
+                            name="career_goal"
+                            value="{{ data.get('career_goal') or (user.career_goal or '') }}"
+                            placeholder="Software Engineer"
+                        >
+
+                    </div>
+
+
+                    <!-- EDUCATION -->
+
+                    <div class="form-group full">
+
+                        <label for="education">
+                            Education
+                        </label>
+
+                        <textarea
+                            id="education"
+                            name="education"
+                            placeholder="Example: B.Tech in Computer Science, ABC University, 2025"
+                        >{{ data.get('education') or (user.education or '') }}</textarea>
+
+                        <span class="hint">
+                            Include degree, college/university,
+                            graduation year and relevant coursework.
+                        </span>
+
+                        <span
+                            class="char-count"
+                            data-counter="education"
+                        >
+                            0 characters
+                        </span>
+
+                    </div>
+
+
+                    <!-- SKILLS -->
+
+                    <div class="form-group full">
+
+                        <label for="skills">
+                            Skills
+                        </label>
+
+                        <textarea
+                            id="skills"
+                            name="skills"
+                            placeholder="Python, Java, HTML, CSS, JavaScript, SQL, Git"
+                        >{{ data.get('skills') or (user.skills or '') }}</textarea>
+
+                        <span class="hint">
+                            Separate skills using commas.
+                        </span>
+
+                        <span
+                            class="char-count"
+                            data-counter="skills"
+                        >
+                            0 characters
+                        </span>
+
+                    </div>
+
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="form-group full">
+
+                        <label for="experience">
+                            Experience
+                        </label>
+
+                        <textarea
+                            id="experience"
+                            name="experience"
+                            placeholder="Company name, job title, responsibilities and achievements..."
+                        >{{ data.get('experience') or (user.experience or '') }}</textarea>
+
+                        <span class="hint">
+                            Include internships, jobs,
+                            freelance work or relevant experience.
+                        </span>
+
+                        <span
+                            class="char-count"
+                            data-counter="experience"
+                        >
+                            0 characters
+                        </span>
+
+                    </div>
+
+
+                    <!-- PROJECTS -->
+
+                    <div class="form-group full">
+
+                        <label for="projects">
+                            Projects
+                        </label>
+
+                        <textarea
+                            id="projects"
+                            name="projects"
+                            placeholder="Project name - technologies used - what you built - key result..."
+                        >{{ data.get('projects') or '' }}</textarea>
+
+                        <span class="hint">
+                            Add your strongest academic,
+                            personal or professional projects.
+                        </span>
+
+                        <span
+                            class="char-count"
+                            data-counter="projects"
+                        >
+                            0 characters
+                        </span>
+
+                    </div>
+
+
+                    <!-- CERTIFICATIONS -->
+
+                    <div class="form-group full">
+
+                        <label for="certifications">
+                            Certifications
+                        </label>
+
+                        <textarea
+                            id="certifications"
+                            name="certifications"
+                            placeholder="Example: Python Programming - Coursera - 2025"
+                        >{{ data.get('certifications') or '' }}</textarea>
+
+                        <span class="hint">
+                            Add relevant certifications,
+                            courses or professional training.
+                        </span>
+
+                        <span
+                            class="char-count"
+                            data-counter="certifications"
+                        >
+                            0 characters
+                        </span>
+
+                    </div>
+
+
+                    <!-- SUMMARY -->
+
+                    <div class="form-group full">
+
+                        <label for="bio">
+                            Professional Summary
+                        </label>
+
+                        <textarea
+                            id="bio"
+                            name="bio"
+                            placeholder="Write a short professional summary about yourself..."
+                        >{{ data.get('bio') or (user.bio or '') }}</textarea>
+
+                        <span class="hint">
+                            Keep this short, professional and focused
+                            on your career goals.
+                        </span>
+
+                        <span
+                            class="char-count"
+                            data-counter="bio"
+                        >
+                            0 characters
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="actions">
+
+                    <a
+                        href="{{ url_for('dashboard.home') }}"
+                        class="button back-button"
+                    >
+                        Cancel
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="button save-button"
+                    >
+                        💾 Save Resume
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+
+        <!-- =================================================
+             PREVIEW CARD
+        ================================================= -->
+
+        <div class="card preview-card">
+
+            <div class="preview-heading-row">
+
+                <h2 class="card-title">
+                    Resume Preview
+                </h2>
+
+                <span class="preview-status">
+                    ● Live
+                </span>
+
+            </div>
+
+
+            <p class="card-description">
+                Your resume preview updates automatically.
+            </p>
+
+
+            <div class="resume-preview">
+
+
+                <!-- HEADER -->
+
+                <div class="preview-header">
+
+                    <div
+                        class="preview-name"
+                        id="previewName"
+                    >
+                        {{ data.get('name') or (user.name or 'Your Name') }}
+                    </div>
+
+
+                    <div
+                        class="preview-career"
+                        id="previewCareer"
+                    >
+                        {{ data.get('career_goal') or (user.career_goal or 'Your Target Career') }}
+                    </div>
+
+
+                    <div
+                        class="preview-contact"
+                        id="previewContact"
+                    >
+
+                        {{ data.get('email') or (user.email or 'Email') }}
+
+                        {% if data.get('phone') %}
+
+                            · {{ data.get('phone') }}
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUMMARY -->
+
+                <div class="preview-section">
+
+                    <h3>
+                        Professional Summary
+                    </h3>
+
+
+                    <p id="previewBio">
+
+                        {% if data.get('bio') or user.bio %}
+
+                            {{ data.get('bio') or user.bio }}
+
+                        {% else %}
+
+                            <span class="empty-preview">
+                                Your professional summary will appear here.
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <!-- SKILLS -->
+
+                <div class="preview-section">
+
+                    <h3>
+                        Skills
+                    </h3>
+
+
+                    <div
+                        class="preview-skills"
+                        id="previewSkills"
+                    >
+
+                        {% set skill_text =
+                            data.get('skills') or
+                            (user.skills or '')
+                        %}
+
+
+                        {% if skill_text %}
+
+                            {% for skill in skill_text.split(',') %}
+
+                                {% if skill.strip() %}
+
+                                    <span class="skill-badge">
+                                        {{ skill.strip() }}
+                                    </span>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <span class="empty-preview">
+                                Your skills will appear here.
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- EXPERIENCE -->
+
+                <div class="preview-section">
+
+                    <h3>
+                        Experience
+                    </h3>
+
+
+                    <p id="previewExperience">
+
+                        {% if data.get('experience') or user.experience %}
+
+                            {{ data.get('experience') or user.experience }}
+
+                        {% else %}
+
+                            <span class="empty-preview">
+                                Your experience will appear here.
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <!-- EDUCATION -->
+
+                <div class="preview-section">
+
+                    <h3>
+                        Education
+                    </h3>
+
+
+                    <p id="previewEducation">
+
+                        {% if data.get('education') or user.education %}
+
+                            {{ data.get('education') or user.education }}
+
+                        {% else %}
+
+                            <span class="empty-preview">
+                                Your education will appear here.
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <!-- PROJECTS -->
+
+                <div class="preview-section">
+
+                    <h3>
+                        Projects
+                    </h3>
+
+
+                    <p id="previewProjects">
+
+                        {% if data.get('projects') %}
+
+                            {{ data.get('projects') }}
+
+                        {% else %}
+
+                            <span class="empty-preview">
+                                Your projects will appear here.
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <!-- CERTIFICATIONS -->
+
+                <div class="preview-section">
+
+                    <h3>
+                        Certifications
+                    </h3>
+
+
+                    <p id="previewCertifications">
+
+                        {% if data.get('certifications') %}
+
+                            {{ data.get('certifications') }}
+
+                        {% else %}
+
+                            <span class="empty-preview">
+                                Your certifications will appear here.
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+>
+    Saved
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const form =
+        document.getElementById("resumeForm");
+
+    const fields =
+        form.querySelectorAll(
+            "input, textarea"
+        );
+
+
+    /* =====================================================
+       DARK MODE
+    ===================================================== */
+
+    const themeButton =
+        document.getElementById("themeButton");
+
+
+    function applyTheme(theme) {
+
+        if (theme === "dark") {
+
+            document.body.classList.add("dark");
+
+            themeButton.textContent = "☀️";
+
+            themeButton.title =
+                "Switch to light mode";
+
+        } else {
+
+            document.body.classList.remove("dark");
+
+            themeButton.textContent = "🌙";
+
+            themeButton.title =
+                "Switch to dark mode";
+        }
+    }
+
+
+    const savedTheme =
+        localStorage.getItem("careerai_theme");
+
+
+    if (savedTheme) {
+
+        applyTheme(savedTheme);
+
+    } else if (
+        window.matchMedia &&
+        window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches
+    ) {
+
+        applyTheme("dark");
+
+    } else {
+
+        applyTheme("light");
+    }
+
+
+    themeButton.addEventListener(
+        "click",
+        function() {
+
+            const isDark =
+                document.body.classList.contains("dark");
+
+            const newTheme =
+                isDark ? "light" : "dark";
+
+            localStorage.setItem(
+                "careerai_theme",
+                newTheme
+            );
+
+            applyTheme(newTheme);
+        }
+    );
+
+
+    /* =====================================================
+       LIVE PREVIEW
+    ===================================================== */
+
+    function updatePreview() {
+
+
+        /* NAME */
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        document.getElementById(
+            "previewName"
+        ).textContent =
+            name || "Your Name";
+
+
+        /* CAREER */
+
+        const career =
+            document.getElementById(
+                "career_goal"
+            ).value.trim();
+
+        document.getElementById(
+            "previewCareer"
+        ).textContent =
+            career || "Your Target Career";
+
+
+        /* EMAIL + PHONE */
+
+        const email =
+            document.getElementById(
+                "email"
+            ).value.trim();
+
+        const phone =
+            document.getElementById(
+                "phone"
+            ).value.trim();
+
+
+        let contact =
+            email || "Email";
+
+
+        if (phone) {
+
+            contact +=
+                " · " + phone;
+        }
+
+
+        document.getElementById(
+            "previewContact"
+        ).textContent =
+            contact;
+
+
+        /* BIO */
+
+        updateTextPreview(
+            "bio",
+            "previewBio",
+            "Your professional summary will appear here."
+        );
+
+
+        /* EXPERIENCE */
+
+        updateTextPreview(
+            "experience",
+            "previewExperience",
+            "Your experience will appear here."
+        );
+
+
+        /* EDUCATION */
+
+        updateTextPreview(
+            "education",
+            "previewEducation",
+            "Your education will appear here."
+        );
+
+
+        /* PROJECTS */
+
+        updateTextPreview(
+            "projects",
+            "previewProjects",
+            "Your projects will appear here."
+        );
+
+
+        /* CERTIFICATIONS */
+
+        updateTextPreview(
+            "certifications",
+            "previewCertifications",
+            "Your certifications will appear here."
+        );
+
+
+        /* SKILLS */
+
+        const skills =
+            document.getElementById(
+                "skills"
+            ).value.trim();
+
+
+        const previewSkills =
+            document.getElementById(
+                "previewSkills"
+            );
+
+
+        previewSkills.innerHTML = "";
+
+
+        if (skills) {
+
+            skills
+                .split(",")
+                .forEach(function(skill) {
+
+                    skill =
+                        skill.trim();
+
+
+                    if (skill) {
+
+                        const badge =
+                            document.createElement(
+                                "span"
+                            );
+
+                        badge.className =
+                            "skill-badge";
+
+                        badge.textContent =
+                            skill;
+
+                        previewSkills.appendChild(
+                            badge
+                        );
+                    }
+
+                });
+
+        } else {
+
+            previewSkills.innerHTML =
+                '<span class="empty-preview">' +
+                'Your skills will appear here.' +
+                '</span>';
+        }
+
+
+        /* COMPLETION */
+
+        updateCompletion();
+
+
+        /* CHARACTER COUNTERS */
+
+        updateCounters();
+    }
+
+
+    /* =====================================================
+       TEXT PREVIEW HELPER
+    ===================================================== */
+
+    function updateTextPreview(
+        inputId,
+        previewId,
+        emptyText
+    ) {
+
+        const value =
+            document.getElementById(
+                inputId
+            ).value.trim();
+
+
+        const preview =
+            document.getElementById(
+                previewId
+            );
+
+
+        if (value) {
+
+            preview.textContent =
+                value;
+
+        } else {
+
+            preview.innerHTML =
+                '<span class="empty-preview">' +
+                emptyText +
+                '</span>';
+        }
+    }
+
+
+    /* =====================================================
+       COMPLETION
+    ===================================================== */
+
+    function updateCompletion() {
+
+        const importantFields = [
+
+            "name",
+
+            "email",
+
+            "career_goal",
+
+            "education",
+
+            "skills",
+
+            "experience",
+
+            "projects",
+
+            "certifications",
+
+            "bio"
+
+        ];
+
+
+        let completed = 0;
+
+
+        importantFields.forEach(
+            function(id) {
+
+                const field =
+                    document.getElementById(id);
+
+
+                if (
+                    field &&
+                    field.value.trim()
+                ) {
+
+                    completed++;
+                }
+
+            }
+        );
+
+
+        const percentage =
+            Math.round(
+                (
+                    completed /
+                    importantFields.length
+                ) * 100
+            );
+
+
+        document.getElementById(
+            "completionPercent"
+        ).textContent =
+            percentage + "%";
+
+
+        document.getElementById(
+            "progressBar"
+        ).style.width =
+            percentage + "%";
+    }
+
+
+    /* =====================================================
+       CHARACTER COUNTERS
+    ===================================================== */
+
+    function updateCounters() {
+
+        document
+            .querySelectorAll(
+                "[data-counter]"
+            )
+            .forEach(
+                function(counter) {
+
+                    const id =
+                        counter.dataset.counter;
+
+                    const field =
+                        document.getElementById(id);
+
+
+                    if (!field) return;
+
+
+                    const length =
+                        field.value.length;
+
+
+                    counter.textContent =
+                        length +
+                        (
+                            length === 1
+                                ? " character"
+                                : " characters"
+                        );
+                }
+            );
+    }
+
+
+    /* =====================================================
+       AUTO SAVE
+    ===================================================== */
+
+    const STORAGE_KEY =
+        "careerai_resume_draft";
+
+
+    function saveDraft() {
+
+        const draft = {};
+
+
+        fields.forEach(
+            function(field) {
+
+                draft[field.name] =
+                    field.value;
+            }
+        );
+
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(draft)
+        );
+    }
+
+
+    function loadDraft() {
+
+        const saved =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+
+        if (!saved) return;
+
+
+        try {
+
+            const draft =
+                JSON.parse(saved);
+
+
+            fields.forEach(
+                function(field) {
+
+                    if (
+                        Object.prototype.hasOwnProperty.call(
+                            draft,
+                            field.name
+                        )
+                    ) {
+
+                        /*
+                         Only restore if
+                         the saved value exists.
+                        */
+
+                        if (
+                            draft[field.name] !==
+                            ""
+                        ) {
+
+                            field.value =
+                                draft[field.name];
+                        }
+                    }
+
+                });
+
+        } catch (error) {
+
+            console.log(
+                "Unable to load saved draft."
+            );
+        }
+    }
+
+
+    /* =====================================================
+       AUTO SAVE ON INPUT
+    ===================================================== */
+
+    fields.forEach(
+        function(field) {
+
+            field.addEventListener(
+                "input",
+                function() {
+
+                    updatePreview();
+
+                    saveDraft();
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       COPY RESUME
+    ===================================================== */
+
+    function copyResume() {
+
+        const name =
+            document.getElementById(
+                "name"
+            ).value.trim();
+
+
+        const career =
+            document.getElementById(
+                "career_goal"
+            ).value.trim();
+
+
+        const email =
+            document.getElementById(
+                "email"
+            ).value.trim();
+
+
+        const phone =
+            document.getElementById(
+                "phone"
+            ).value.trim();
+
+
+        const education =
+            document.getElementById(
+                "education"
+            ).value.trim();
+
+
+        const skills =
+            document.getElementById(
+                "skills"
+            ).value.trim();
+
+
+        const experience =
+            document.getElementById(
+                "experience"
+            ).value.trim();
+
+
+        const projects =
+            document.getElementById(
+                "projects"
+            ).value.trim();
+
+
+        const certifications =
+            document.getElementById(
+                "certifications"
+            ).value.trim();
+
+
+        const bio =
+            document.getElementById(
+                "bio"
+            ).value.trim();
+
+
+        let text = "";
+
+
+        text +=
+            (name || "Your Name") +
+            "\n";
+
+
+        text +=
+            (career || "Your Target Career") +
+            "\n";
+
+
+        if (email) {
+
+            text +=
+                email;
+        }
+
+
+        if (phone) {
+
+            text +=
+                " · " + phone;
+        }
+
+
+        text +=
+            "\n\n";
+
+
+        if (bio) {
+
+            text +=
+                "PROFESSIONAL SUMMARY\n";
+
+            text +=
+                bio + "\n\n";
+        }
+
+
+        if (skills) {
+
+            text +=
+                "SKILLS\n";
+
+            text +=
+                skills + "\n\n";
+        }
+
+
+        if (experience) {
+
+            text +=
+                "EXPERIENCE\n";
+
+            text +=
+                experience + "\n\n";
+        }
+
+
+        if (education) {
+
+            text +=
+                "EDUCATION\n";
+
+            text +=
+                education + "\n\n";
+        }
+
+
+        if (projects) {
+
+            text +=
+                "PROJECTS\n";
+
+            text +=
+                projects + "\n\n";
+        }
+
+
+        if (certifications) {
+
+            text +=
+                "CERTIFICATIONS\n";
+
+            text +=
+                certifications + "\n\n";
+        }
+
+
+        navigator.clipboard
+            .writeText(text)
+            .then(
+                function() {
+
+                    showToast(
+                        "Resume copied!"
+                    );
+
+                }
+            )
+            .catch(
+                function() {
+
+                    showToast(
+                        "Copy failed."
+                    );
+
+                }
+            );
+    }
+
+
+    /* =====================================================
+       PRINT / PDF
+    ===================================================== */
+
+    function printResume() {
+
+        updatePreview();
+
+        window.print();
+    }
+
+
+    /* =====================================================
+       CLEAR DRAFT
+    ===================================================== */
+
+    function clearDraft() {
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to clear your saved resume draft?"
+            );
+
+
+        if (!confirmed) return;
+
+
+        localStorage.removeItem(
+            STORAGE_KEY
+        );
+
+
+        fields.forEach(
+            function(field) {
+
+                /*
+                 Keep account-based
+                 defaults for name/email.
+                */
+
+                if (field.id === "name") {
+
+                    field.value =
+                        "{{ user.name or '' }}";
+
+                } else if (
+                    field.id === "email"
+                ) {
+
+                    field.value =
+                        "{{ user.email or '' }}";
+
+                } else {
+
+                    field.value = "";
+                }
+
+            }
+        );
+
+
+        updatePreview();
+
+
+        showToast(
+            "Draft cleared."
+        );
+    }
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    let toastTimer;
+
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        toast.textContent =
+            message;
+
+
+        toast.classList.add(
+            "show"
+        );
+
+
+        clearTimeout(
+            toastTimer
+        );
+
+
+        toastTimer =
+            setTimeout(
+                function() {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                2200
+            );
+    }
+
+
+    /* =====================================================
+       FORM SUBMIT
+    ===================================================== */
+
+    form.addEventListener(
+        "submit",
+        function() {
+
+            saveDraft();
+
+        }
+    );
+
+
+    /* =====================================================
+       LOAD SAVED DRAFT
+    ===================================================== */
+
+    loadDraft();
+
+
+    /* =====================================================
+       INITIAL PREVIEW
+    ===================================================== */
+
+    updatePreview();
+
+</script>
+
+
+</body>
+
+</html>

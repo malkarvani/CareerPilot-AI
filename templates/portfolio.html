@@ -1,0 +1,3137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Build and preview your professional portfolio with CareerAI."
+    >
+
+    <title>Portfolio Builder | CareerAI</title>
+
+
+    <style>
+
+        /* =========================================================
+           ROOT / THEME
+        ========================================================= */
+
+        :root {
+
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+
+            --success: #16a34a;
+            --danger: #ef4444;
+
+            --bg: #f4f7fc;
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+
+            --border: #e2e8f0;
+            --input-border: #cbd5e1;
+
+            --shadow-sm:
+                0 4px 15px rgba(15, 23, 42, 0.05);
+
+            --shadow-md:
+                0 10px 30px rgba(15, 23, 42, 0.08);
+
+            --shadow-lg:
+                0 20px 50px rgba(15, 23, 42, 0.12);
+
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+
+            --transition:
+                0.25s ease;
+
+        }
+
+
+        /* =========================================================
+           DARK THEME
+        ========================================================= */
+
+        html[data-theme="dark"] {
+
+            --bg: #0b1120;
+            --surface: #111827;
+            --surface-soft: #1e293b;
+
+            --text: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+
+            --border: #334155;
+            --input-border: #475569;
+
+            --primary-light: #172554;
+
+            --shadow-sm:
+                0 4px 15px rgba(0, 0, 0, 0.25);
+
+            --shadow-md:
+                0 10px 30px rgba(0, 0, 0, 0.30);
+
+            --shadow-lg:
+                0 20px 50px rgba(0, 0, 0, 0.40);
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: var(--bg);
+
+            color: var(--text);
+
+            transition:
+                background var(--transition),
+                color var(--transition);
+
+        }
+
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+
+        button {
+            border: none;
+        }
+
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .navbar {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            min-height: 72px;
+
+            background:
+                color-mix(
+                    in srgb,
+                    var(--surface) 94%,
+                    transparent
+                );
+
+            border-bottom:
+                1px solid var(--border);
+
+            backdrop-filter: blur(14px);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                0 40px;
+
+            transition:
+                background var(--transition),
+                border-color var(--transition);
+
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            text-decoration: none;
+
+            font-size: 25px;
+
+            font-weight: 850;
+
+            color: var(--primary);
+
+            letter-spacing: -0.5px;
+
+        }
+
+
+        .logo-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-size: 19px;
+
+            box-shadow:
+                0 6px 15px
+                rgba(37, 99, 235, 0.25);
+
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+        .user-pill {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding:
+                7px 12px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 30px;
+
+            background: var(--surface-soft);
+
+            color: var(--text-secondary);
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+        }
+
+
+        .user-avatar {
+
+            width: 30px;
+
+            height: 30px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+        }
+
+
+        .theme-button {
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 11px;
+
+            background: var(--surface-soft);
+
+            border:
+                1px solid var(--border);
+
+            color: var(--text);
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            transition:
+                transform var(--transition),
+                background var(--transition);
+
+        }
+
+
+        .theme-button:hover {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .logout {
+
+            color: var(--danger);
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            padding:
+                10px 12px;
+
+            border-radius: 9px;
+
+            transition:
+                background var(--transition);
+
+        }
+
+
+        .logout:hover {
+
+            background:
+                rgba(239, 68, 68, 0.08);
+
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 1250px;
+
+            margin: 0 auto;
+
+            padding:
+                35px 25px 70px;
+
+        }
+
+
+        .back {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 20px;
+
+            color: var(--primary);
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            transition:
+                transform var(--transition);
+
+        }
+
+
+        .back:hover {
+
+            transform:
+                translateX(-3px);
+
+        }
+
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
+
+        .page-header {
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .page-header h1 {
+
+            margin:
+                0 0 8px;
+
+            font-size:
+                clamp(30px, 5vw, 42px);
+
+            line-height: 1.1;
+
+            letter-spacing:
+                -1.2px;
+
+        }
+
+
+        .page-header h1 span {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+
+        }
+
+
+        .subtitle {
+
+            margin: 0;
+
+            color: var(--text-muted);
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+        }
+
+
+        .status-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            padding:
+                9px 14px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+        }
+
+
+        .status-dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--success);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(22, 163, 74, 0.12);
+
+        }
+
+
+        /* =========================================================
+           BUILDER LAYOUT
+        ========================================================= */
+
+        .builder {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 0.9fr)
+                minmax(0, 1.1fr);
+
+            gap: 25px;
+
+            align-items: start;
+
+        }
+
+
+        .card {
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius-lg);
+
+            padding: 28px;
+
+            box-shadow: var(--shadow-sm);
+
+            transition:
+                background var(--transition),
+                border-color var(--transition),
+                box-shadow var(--transition);
+
+        }
+
+
+        .card:hover {
+
+            box-shadow: var(--shadow-md);
+
+        }
+
+
+        .card-header {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 24px;
+
+        }
+
+
+        .card-title {
+
+            margin: 0 0 5px;
+
+            font-size: 21px;
+
+        }
+
+
+        .card-description {
+
+            margin: 0;
+
+            color: var(--text-muted);
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .section-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+
+        }
+
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        .form-group {
+
+            margin-bottom: 19px;
+
+        }
+
+
+        label {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 7px;
+
+            font-size: 13px;
+
+            font-weight: 750;
+
+            color: var(--text);
+
+        }
+
+
+        .counter {
+
+            font-size: 11px;
+
+            color: var(--text-muted);
+
+            font-weight: 500;
+
+        }
+
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            padding:
+                13px 14px;
+
+            border:
+                1px solid var(--input-border);
+
+            border-radius: 11px;
+
+            background: var(--surface);
+
+            color: var(--text);
+
+            outline: none;
+
+            transition:
+                border var(--transition),
+                box-shadow var(--transition),
+                background var(--transition);
+
+        }
+
+
+        input::placeholder,
+        textarea::placeholder {
+
+            color: var(--text-muted);
+
+            opacity: 0.8;
+
+        }
+
+
+        textarea {
+
+            min-height: 105px;
+
+            resize: vertical;
+
+            line-height: 1.6;
+
+        }
+
+
+        input:focus,
+        textarea:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(37, 99, 235, 0.10);
+
+        }
+
+
+        .form-hint {
+
+            margin-top: 6px;
+
+            color: var(--text-muted);
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =========================================================
+           FORM BUTTONS
+        ========================================================= */
+
+        .form-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+        }
+
+
+        .button {
+
+            flex: 1;
+
+            min-height: 48px;
+
+            padding:
+                13px 18px;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #1d4ed8
+                );
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 750;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 7px 18px
+                rgba(37, 99, 235, 0.20);
+
+            transition:
+                transform var(--transition),
+                box-shadow var(--transition);
+
+        }
+
+
+        .button:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 10px 23px
+                rgba(37, 99, 235, 0.28);
+
+        }
+
+
+        .secondary-button {
+
+            min-height: 48px;
+
+            padding:
+                13px 18px;
+
+            border-radius: 11px;
+
+            background: var(--surface-soft);
+
+            color: var(--text);
+
+            border:
+                1px solid var(--border);
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background var(--transition),
+                transform var(--transition);
+
+        }
+
+
+        .secondary-button:hover {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        /* =========================================================
+           PREVIEW TOOLBAR
+        ========================================================= */
+
+        .preview-card {
+
+            position: sticky;
+
+            top: 95px;
+
+        }
+
+
+        .preview-toolbar {
+
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+            justify-content: flex-end;
+
+        }
+
+
+        .tool-button {
+
+            padding:
+                8px 11px;
+
+            border-radius: 9px;
+
+            border:
+                1px solid var(--border);
+
+            background: var(--surface-soft);
+
+            color: var(--text-secondary);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background var(--transition),
+                transform var(--transition);
+
+        }
+
+
+        .tool-button:hover {
+
+            transform:
+                translateY(-1px);
+
+            background:
+                var(--primary-light);
+
+            color: var(--primary);
+
+        }
+
+
+        /* =========================================================
+           PORTFOLIO PREVIEW
+        ========================================================= */
+
+        .portfolio-preview {
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            box-shadow: var(--shadow-md);
+
+        }
+
+
+        .preview-header {
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1d4ed8,
+                    #2563eb 50%,
+                    #7c3aed
+                );
+
+            color: white;
+
+            padding:
+                38px 30px;
+
+        }
+
+
+        .preview-header::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 170px;
+
+            height: 170px;
+
+            border-radius: 50%;
+
+            right: -60px;
+
+            top: -80px;
+
+            background:
+                rgba(255,255,255,0.10);
+
+        }
+
+
+        .preview-header-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        .preview-header h2 {
+
+            margin:
+                0 0 7px;
+
+            font-size: 30px;
+
+            line-height: 1.15;
+
+            letter-spacing:
+                -0.5px;
+
+        }
+
+
+        .preview-header p {
+
+            margin: 0;
+
+            color:
+                rgba(255,255,255,0.86);
+
+            font-size: 14px;
+
+        }
+
+
+        .preview-contact {
+
+            margin-top: 18px;
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+        }
+
+
+        .contact-pill {
+
+            background:
+                rgba(255,255,255,0.13);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.16);
+
+            padding:
+                6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+        }
+
+
+        .preview-body {
+
+            padding:
+                28px;
+
+        }
+
+
+        .preview-section {
+
+            margin-bottom:
+                27px;
+
+        }
+
+
+        .preview-section:last-child {
+
+            margin-bottom: 0;
+
+        }
+
+
+        .preview-section h3 {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            margin:
+                0 0 9px;
+
+            color: var(--text);
+
+            font-size: 16px;
+
+        }
+
+
+        .preview-section h3::before {
+
+            content: "";
+
+            width: 4px;
+
+            height: 18px;
+
+            border-radius: 4px;
+
+            background: var(--primary);
+
+        }
+
+
+        .preview-section p {
+
+            margin: 0;
+
+            color: var(--text-secondary);
+
+            line-height: 1.75;
+
+            font-size: 13px;
+
+            white-space: pre-wrap;
+
+        }
+
+
+        .skills {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+        }
+
+
+        .skill {
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            padding:
+                7px 11px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            border:
+                1px solid
+                rgba(37, 99, 235, 0.10);
+
+        }
+
+
+        .empty-preview {
+
+            color: var(--text-muted);
+
+            font-style: italic;
+
+        }
+
+
+        /* =========================================================
+           PROGRESS
+        ========================================================= */
+
+        .progress-box {
+
+            background: var(--surface-soft);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            padding: 14px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .progress-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .progress-title {
+
+            font-size: 12px;
+
+            font-weight: 750;
+
+        }
+
+
+        .progress-percent {
+
+            color: var(--primary);
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+        }
+
+
+        .progress-bar {
+
+            height: 7px;
+
+            border-radius: 10px;
+
+            background:
+                var(--border);
+
+            overflow: hidden;
+
+        }
+
+
+        .progress-fill {
+
+            width: 0%;
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            transition:
+                width 0.4s ease;
+
+        }
+
+
+        /* =========================================================
+           TIPS
+        ========================================================= */
+
+        .tips {
+
+            margin-top: 20px;
+
+            padding:
+                16px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary-light),
+                    var(--surface-soft)
+                );
+
+            border:
+                1px solid var(--border);
+
+        }
+
+
+        .tips-title {
+
+            margin:
+                0 0 7px;
+
+            color: var(--primary);
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+        }
+
+
+        .tips p {
+
+            margin: 0;
+
+            color: var(--text-secondary);
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        .toast {
+
+            position: fixed;
+
+            right: 22px;
+
+            bottom: 22px;
+
+            z-index: 2000;
+
+            max-width: 340px;
+
+            padding:
+                13px 17px;
+
+            border-radius: 11px;
+
+            background:
+                #0f172a;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            box-shadow: var(--shadow-lg);
+
+            transform:
+                translateY(120px);
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition:
+                all 0.3s ease;
+
+        }
+
+
+        .toast.show {
+
+            transform:
+                translateY(0);
+
+            opacity: 1;
+
+        }
+
+
+        /* =========================================================
+           SCROLL TOP
+        ========================================================= */
+
+        .scroll-top {
+
+            position: fixed;
+
+            right: 22px;
+
+            bottom: 80px;
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+
+            color: white;
+
+            cursor: pointer;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            box-shadow:
+                0 8px 20px
+                rgba(37, 99, 235, 0.25);
+
+            font-size: 18px;
+
+            z-index: 900;
+
+        }
+
+
+        .scroll-top.visible {
+
+            display: flex;
+
+        }
+
+
+        /* =========================================================
+           ANIMATION
+        ========================================================= */
+
+        .fade-in {
+
+            animation:
+                fadeInUp
+                0.55s ease
+                both;
+
+        }
+
+
+        @keyframes fadeInUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(12px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =========================================================
+           PRINT
+        ========================================================= */
+
+        @media print {
+
+            body {
+
+                background: white;
+
+            }
+
+
+            .navbar,
+            .back,
+            .page-header,
+            .builder > .card:first-child,
+            .preview-toolbar,
+            .tips,
+            .progress-box,
+            .scroll-top,
+            .toast {
+
+                display: none !important;
+
+            }
+
+
+            .container {
+
+                max-width: none;
+
+                padding: 0;
+
+            }
+
+
+            .builder {
+
+                display: block;
+
+            }
+
+
+            .preview-card {
+
+                position: static;
+
+                box-shadow: none;
+
+                border: none;
+
+                padding: 0;
+
+            }
+
+
+            .portfolio-preview {
+
+                box-shadow: none;
+
+                border: none;
+
+            }
+
+
+            .preview-header {
+
+                print-color-adjust: exact;
+
+                -webkit-print-color-adjust: exact;
+
+            }
+
+
+            .preview-body {
+
+                padding: 30px;
+
+            }
+
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 950px) {
+
+            .builder {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .preview-card {
+
+                position: static;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .navbar {
+
+                padding:
+                    0 18px;
+
+            }
+
+
+            .logo {
+
+                font-size: 21px;
+
+            }
+
+
+            .logo-icon {
+
+                width: 34px;
+
+                height: 34px;
+
+                font-size: 16px;
+
+            }
+
+
+            .user-pill {
+
+                display: none;
+
+            }
+
+
+            .logout {
+
+                font-size: 13px;
+
+            }
+
+
+            .container {
+
+                padding:
+                    25px 16px 55px;
+
+            }
+
+
+            .page-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+            }
+
+
+            .status-badge {
+
+                align-self: flex-start;
+
+            }
+
+
+            .card {
+
+                padding:
+                    21px;
+
+                border-radius: 16px;
+
+            }
+
+
+            .card-header {
+
+                flex-direction: column;
+
+            }
+
+
+            .preview-toolbar {
+
+                justify-content: flex-start;
+
+            }
+
+
+            .form-actions {
+
+                flex-direction: column;
+
+            }
+
+
+            .secondary-button {
+
+                width: 100%;
+
+            }
+
+
+            .preview-header {
+
+                padding:
+                    30px 22px;
+
+            }
+
+
+            .preview-header h2 {
+
+                font-size: 25px;
+
+            }
+
+
+            .preview-body {
+
+                padding:
+                    22px;
+
+            }
+
+        }
+
+
+        @media (max-width: 420px) {
+
+            .navbar {
+
+                min-height: 64px;
+
+            }
+
+
+            .theme-button {
+
+                width: 38px;
+
+                height: 38px;
+
+            }
+
+
+            .logout {
+
+                padding:
+                    8px 5px;
+
+            }
+
+
+            .container {
+
+                padding-left: 12px;
+
+                padding-right: 12px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         NAVBAR
+    ========================================================= -->
+
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('dashboard.home') }}"
+            class="logo"
+        >
+
+            <span class="logo-icon">
+                ✦
+            </span>
+
+            CareerAI
+
+        </a>
+
+
+        <div class="nav-right">
+
+
+            <div class="user-pill">
+
+                <span class="user-avatar">
+                    {{ (user.name or "U")[0]|upper }}
+                </span>
+
+                <span>
+                    {{ user.name or "User" }}
+                </span>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="theme-button"
+                id="themeToggle"
+                aria-label="Toggle dark mode"
+                title="Toggle dark mode"
+            >
+                🌙
+            </button>
+
+
+            <a
+                href="{{ url_for('auth.logout') }}"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================= -->
+
+    <main class="container">
+
+
+        <a
+            href="{{ url_for('dashboard.home') }}"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+        <!-- =====================================================
+             PAGE HEADER
+        ===================================================== -->
+
+        <header class="page-header fade-in">
+
+            <div>
+
+                <h1>
+                    Build your
+                    <span>portfolio.</span>
+                </h1>
+
+                <p class="subtitle">
+                    Create a professional portfolio from your
+                    CareerAI profile and preview it instantly.
+                </p>
+
+            </div>
+
+
+            <div class="status-badge">
+
+                <span class="status-dot"></span>
+
+                Live Preview
+
+            </div>
+
+        </header>
+
+
+        <!-- =====================================================
+             BUILDER
+        ===================================================== -->
+
+        <div class="builder">
+
+
+            <!-- =================================================
+                 EDITOR
+            ================================================= -->
+
+            <section class="card fade-in">
+
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2 class="card-title">
+                            Portfolio Details
+                        </h2>
+
+                        <p class="card-description">
+                            Add your professional information below.
+                        </p>
+
+                    </div>
+
+
+                    <div class="section-icon">
+                        ✏️
+                    </div>
+
+                </div>
+
+
+                <!-- PROFILE COMPLETION -->
+
+                <div class="progress-box">
+
+                    <div class="progress-top">
+
+                        <span class="progress-title">
+                            Portfolio completion
+                        </span>
+
+                        <span
+                            class="progress-percent"
+                            id="progressPercent"
+                        >
+                            0%
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            id="progressFill"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FORM -->
+
+                <form
+                    method="POST"
+                    action="{{ url_for('portfolio.home') }}"
+                    id="portfolioForm"
+                >
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+
+                            <span>
+                                Full Name
+                            </span>
+
+                            <span
+                                class="counter"
+                                id="nameCounter"
+                            >
+                                0/80
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="{{ portfolio.name or '' }}"
+                            placeholder="e.g. John Smith"
+                            maxlength="80"
+                            autocomplete="name"
+                        >
+
+                    </div>
+
+
+                    <!-- CAREER GOAL -->
+
+                    <div class="form-group">
+
+                        <label for="career_goal">
+
+                            <span>
+                                Career Goal
+                            </span>
+
+                            <span
+                                class="counter"
+                                id="careerCounter"
+                            >
+                                0/120
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="career_goal"
+                            name="career_goal"
+                            value="{{ portfolio.career_goal or '' }}"
+                            placeholder="e.g. Full-Stack Python Developer"
+                            maxlength="120"
+                        >
+
+                    </div>
+
+
+                    <!-- EDUCATION -->
+
+                    <div class="form-group">
+
+                        <label for="education">
+
+                            <span>
+                                Education
+                            </span>
+
+                            <span
+                                class="counter"
+                                id="educationCounter"
+                            >
+                                0
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            id="education"
+                            name="education"
+                            placeholder="Example: B.Tech in Computer Science, XYZ University, 2026"
+                        >{{ portfolio.education or '' }}</textarea>
+
+                    </div>
+
+
+                    <!-- SKILLS -->
+
+                    <div class="form-group">
+
+                        <label for="skills">
+
+                            <span>
+                                Skills
+                            </span>
+
+                            <span
+                                class="counter"
+                                id="skillsCounter"
+                            >
+                                0
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            id="skills"
+                            name="skills"
+                            placeholder="Python, Flask, SQL, HTML, CSS, JavaScript"
+                        >{{ portfolio.skills or '' }}</textarea>
+
+
+                        <div class="form-hint">
+                            Separate skills with commas for the best preview.
+                        </div>
+
+                    </div>
+
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="form-group">
+
+                        <label for="experience">
+
+                            <span>
+                                Experience
+                            </span>
+
+                            <span
+                                class="counter"
+                                id="experienceCounter"
+                            >
+                                0
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            id="experience"
+                            name="experience"
+                            placeholder="Describe your work experience, internships, responsibilities and achievements."
+                        >{{ portfolio.experience or '' }}</textarea>
+
+                    </div>
+
+
+                    <!-- INTERESTS -->
+
+                    <div class="form-group">
+
+                        <label for="interests">
+
+                            <span>
+                                Professional Summary
+                            </span>
+
+                            <span
+                                class="counter"
+                                id="interestsCounter"
+                            >
+                                0
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            id="interests"
+                            name="interests"
+                            placeholder="Tell employers about your professional interests, strengths and career goals."
+                        >{{ portfolio.interests or '' }}</textarea>
+
+                    </div>
+
+
+                    <!-- PROJECTS -->
+
+                    <div class="form-group">
+
+                        <label for="projects">
+
+                            <span>
+                                Projects
+                            </span>
+
+                            <span
+                                class="counter"
+                                id="projectsCounter"
+                            >
+                                0
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            id="projects"
+                            name="projects"
+                            placeholder="Describe your important projects, technologies used and what you achieved."
+                        >{{ portfolio.projects or '' }}</textarea>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="form-actions">
+
+                        <button
+                            type="button"
+                            class="secondary-button"
+                            id="clearButton"
+                        >
+                            ↺ Reset Preview
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="button"
+                        >
+                            ✨ Generate Portfolio
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+
+                <!-- TIPS -->
+
+                <div class="tips">
+
+                    <div class="tips-title">
+                        💡 Portfolio Tip
+                    </div>
+
+                    <p>
+                        Keep your portfolio focused on measurable
+                        achievements, relevant skills and projects
+                        that match your target career.
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 PREVIEW
+            ================================================= -->
+
+            <section class="card preview-card fade-in">
+
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2 class="card-title">
+                            Portfolio Preview
+                        </h2>
+
+                        <p class="card-description">
+                            Your portfolio updates as you type.
+                        </p>
+
+                    </div>
+
+
+                    <div class="preview-toolbar">
+
+                        <button
+                            type="button"
+                            class="tool-button"
+                            id="copyButton"
+                            title="Copy portfolio text"
+                        >
+                            📋 Copy
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="tool-button"
+                            id="printButton"
+                            title="Print or save as PDF"
+                        >
+                            🖨️ Print
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PORTFOLIO -->
+
+                <div
+                    class="portfolio-preview"
+                    id="portfolioPreview"
+                >
+
+
+                    <!-- HEADER -->
+
+                    <div class="preview-header">
+
+                        <div class="preview-header-content">
+
+                            <h2 id="previewName">
+                                {{ portfolio.name or "Your Name" }}
+                            </h2>
+
+
+                            <p id="previewCareer">
+                                {{ portfolio.career_goal or "Your Career Goal" }}
+                            </p>
+
+
+                            <div class="preview-contact">
+
+                                <span class="contact-pill">
+                                    ✦ CareerAI Portfolio
+                                </span>
+
+                                <span class="contact-pill">
+                                    🚀 Career Ready
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BODY -->
+
+                    <div class="preview-body">
+
+
+                        <!-- ABOUT -->
+
+                        <div class="preview-section">
+
+                            <h3>
+                                About Me
+                            </h3>
+
+                            <p
+                                id="previewInterests"
+                                class="{% if not portfolio.interests %}empty-preview{% endif %}"
+                            >
+                                {{ portfolio.interests or
+                                "Your professional summary will appear here." }}
+                            </p>
+
+                        </div>
+
+
+                        <!-- EDUCATION -->
+
+                        <div class="preview-section">
+
+                            <h3>
+                                Education
+                            </h3>
+
+                            <p
+                                id="previewEducation"
+                                class="{% if not portfolio.education %}empty-preview{% endif %}"
+                            >
+                                {{ portfolio.education or
+                                "Your education information will appear here." }}
+                            </p>
+
+                        </div>
+
+
+                        <!-- SKILLS -->
+
+                        <div class="preview-section">
+
+                            <h3>
+                                Skills
+                            </h3>
+
+
+                            <div
+                                class="skills"
+                                id="previewSkills"
+                            >
+
+                                {% if portfolio.skills %}
+
+                                    {% for skill in portfolio.skills.split(',') %}
+
+                                        {% if skill.strip() %}
+
+                                            <span class="skill">
+                                                {{ skill.strip() }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                {% else %}
+
+                                    <span class="empty-preview">
+                                        Your skills will appear here.
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- EXPERIENCE -->
+
+                        <div class="preview-section">
+
+                            <h3>
+                                Experience
+                            </h3>
+
+                            <p
+                                id="previewExperience"
+                                class="{% if not portfolio.experience %}empty-preview{% endif %}"
+                            >
+                                {{ portfolio.experience or
+                                "Your professional experience will appear here." }}
+                            </p>
+
+                        </div>
+
+
+                        <!-- PROJECTS -->
+
+                        <div class="preview-section">
+
+                            <h3>
+                                Projects
+                            </h3>
+
+                            <p
+                                id="previewProjects"
+                                class="{% if not portfolio.projects %}empty-preview{% endif %}"
+                            >
+                                {{ portfolio.projects or
+                                "Your projects will appear here." }}
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =========================================================
+         TOAST
+    ========================================================= -->
+
+    <div
+        class="toast"
+        id="toast"
+        role="status"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- =========================================================
+         SCROLL TOP
+    ========================================================= -->
+
+    <button
+        type="button"
+        class="scroll-top"
+        id="scrollTop"
+        aria-label="Scroll to top"
+    >
+        ↑
+    </button>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================= -->
+
+    <script>
+
+        /* =========================================================
+           DARK MODE
+        ========================================================= */
+
+        const html = document.documentElement;
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+
+        function applyTheme(theme) {
+
+            html.setAttribute(
+                "data-theme",
+                theme
+            );
+
+
+            if (theme === "dark") {
+
+                themeToggle.textContent = "☀️";
+
+                themeToggle.setAttribute(
+                    "title",
+                    "Switch to light mode"
+                );
+
+            } else {
+
+                themeToggle.textContent = "🌙";
+
+                themeToggle.setAttribute(
+                    "title",
+                    "Switch to dark mode"
+                );
+
+            }
+
+        }
+
+
+        const savedTheme =
+            localStorage.getItem("careerai-theme");
+
+
+        if (savedTheme) {
+
+            applyTheme(savedTheme);
+
+        } else {
+
+            const prefersDark =
+                window.matchMedia &&
+                window.matchMedia(
+                    "(prefers-color-scheme: dark)"
+                ).matches;
+
+
+            applyTheme(
+                prefersDark
+                    ? "dark"
+                    : "light"
+            );
+
+        }
+
+
+        themeToggle.addEventListener(
+            "click",
+            function () {
+
+                const current =
+                    html.getAttribute("data-theme");
+
+
+                const next =
+                    current === "dark"
+                        ? "light"
+                        : "dark";
+
+
+                applyTheme(next);
+
+
+                localStorage.setItem(
+                    "careerai-theme",
+                    next
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           ELEMENTS
+        ========================================================= */
+
+        const fields = {
+
+            name:
+                document.getElementById("name"),
+
+            career:
+                document.getElementById("career_goal"),
+
+            education:
+                document.getElementById("education"),
+
+            skills:
+                document.getElementById("skills"),
+
+            experience:
+                document.getElementById("experience"),
+
+            interests:
+                document.getElementById("interests"),
+
+            projects:
+                document.getElementById("projects")
+
+        };
+
+
+        const preview = {
+
+            name:
+                document.getElementById("previewName"),
+
+            career:
+                document.getElementById("previewCareer"),
+
+            education:
+                document.getElementById("previewEducation"),
+
+            skills:
+                document.getElementById("previewSkills"),
+
+            experience:
+                document.getElementById("previewExperience"),
+
+            interests:
+                document.getElementById("previewInterests"),
+
+            projects:
+                document.getElementById("previewProjects")
+
+        };
+
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        const toast =
+            document.getElementById("toast");
+
+
+        let toastTimer;
+
+
+        function showToast(message) {
+
+            toast.textContent = message;
+
+            toast.classList.add("show");
+
+
+            clearTimeout(toastTimer);
+
+
+            toastTimer =
+                setTimeout(
+                    function () {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    2500
+                );
+
+        }
+
+
+        /* =========================================================
+           LIVE PREVIEW
+        ========================================================= */
+
+        function updateTextPreview(
+            input,
+            output,
+            fallback
+        ) {
+
+            const value =
+                input.value.trim();
+
+
+            output.textContent =
+                value || fallback;
+
+
+            if (value) {
+
+                output.classList.remove(
+                    "empty-preview"
+                );
+
+            } else {
+
+                output.classList.add(
+                    "empty-preview"
+                );
+
+            }
+
+        }
+
+
+        function updateSkills() {
+
+            const value =
+                fields.skills.value.trim();
+
+
+            preview.skills.innerHTML = "";
+
+
+            if (!value) {
+
+                const empty =
+                    document.createElement("span");
+
+
+                empty.className =
+                    "empty-preview";
+
+
+                empty.textContent =
+                    "Your skills will appear here.";
+
+
+                preview.skills.appendChild(
+                    empty
+                );
+
+
+                return;
+
+            }
+
+
+            const skills =
+                value
+                    .split(",")
+                    .map(
+                        skill =>
+                            skill.trim()
+                    )
+                    .filter(
+                        skill =>
+                            skill.length > 0
+                    );
+
+
+            skills.forEach(
+                function (skillText) {
+
+                    const skill =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    skill.className =
+                        "skill";
+
+
+                    skill.textContent =
+                        skillText;
+
+
+                    preview.skills.appendChild(
+                        skill
+                    );
+
+                }
+            );
+
+        }
+
+
+        function updatePreview() {
+
+            updateTextPreview(
+                fields.name,
+                preview.name,
+                "Your Name"
+            );
+
+
+            updateTextPreview(
+                fields.career,
+                preview.career,
+                "Your Career Goal"
+            );
+
+
+            updateTextPreview(
+                fields.education,
+                preview.education,
+                "Your education information will appear here."
+            );
+
+
+            updateTextPreview(
+                fields.experience,
+                preview.experience,
+                "Your professional experience will appear here."
+            );
+
+
+            updateTextPreview(
+                fields.interests,
+                preview.interests,
+                "Your professional summary will appear here."
+            );
+
+
+            updateTextPreview(
+                fields.projects,
+                preview.projects,
+                "Your projects will appear here."
+            );
+
+
+            updateSkills();
+
+
+            updateCounters();
+
+            updateProgress();
+
+        }
+
+
+        Object.values(fields).forEach(
+            function (field) {
+
+                field.addEventListener(
+                    "input",
+                    updatePreview
+                );
+
+            }
+        );
+
+
+        /* =========================================================
+           CHARACTER COUNTERS
+        ========================================================= */
+
+        function updateCounters() {
+
+            const counters = {
+
+                name:
+                    document.getElementById(
+                        "nameCounter"
+                    ),
+
+                career:
+                    document.getElementById(
+                        "careerCounter"
+                    ),
+
+                education:
+                    document.getElementById(
+                        "educationCounter"
+                    ),
+
+                skills:
+                    document.getElementById(
+                        "skillsCounter"
+                    ),
+
+                experience:
+                    document.getElementById(
+                        "experienceCounter"
+                    ),
+
+                interests:
+                    document.getElementById(
+                        "interestsCounter"
+                    ),
+
+                projects:
+                    document.getElementById(
+                        "projectsCounter"
+                    )
+
+            };
+
+
+            counters.name.textContent =
+                fields.name.value.length +
+                "/80";
+
+
+            counters.career.textContent =
+                fields.career.value.length +
+                "/120";
+
+
+            counters.education.textContent =
+                fields.education.value.length +
+                " chars";
+
+
+            counters.skills.textContent =
+                fields.skills.value.length +
+                " chars";
+
+
+            counters.experience.textContent =
+                fields.experience.value.length +
+                " chars";
+
+
+            counters.interests.textContent =
+                fields.interests.value.length +
+                " chars";
+
+
+            counters.projects.textContent =
+                fields.projects.value.length +
+                " chars";
+
+        }
+
+
+        /* =========================================================
+           PROGRESS
+        ========================================================= */
+
+        function updateProgress() {
+
+            const requiredFields = [
+
+                fields.name,
+
+                fields.career,
+
+                fields.education,
+
+                fields.skills,
+
+                fields.experience,
+
+                fields.interests,
+
+                fields.projects
+
+            ];
+
+
+            let completed = 0;
+
+
+            requiredFields.forEach(
+                function (field) {
+
+                    if (
+                        field.value.trim().length > 0
+                    ) {
+
+                        completed++;
+
+                    }
+
+                }
+            );
+
+
+            const percentage =
+                Math.round(
+                    (
+                        completed /
+                        requiredFields.length
+                    ) * 100
+                );
+
+
+            document.getElementById(
+                "progressFill"
+            ).style.width =
+                percentage + "%";
+
+
+            document.getElementById(
+                "progressPercent"
+            ).textContent =
+                percentage + "%";
+
+        }
+
+
+        /* =========================================================
+           RESET PREVIEW
+        ========================================================= */
+
+        document
+            .getElementById("clearButton")
+            .addEventListener(
+                "click",
+                function () {
+
+                    Object.values(fields).forEach(
+                        function (field) {
+
+                            field.value = "";
+
+                        }
+                    );
+
+
+                    updatePreview();
+
+
+                    showToast(
+                        "Preview has been reset."
+                    );
+
+                }
+            );
+
+
+        /* =========================================================
+           COPY PORTFOLIO
+        ========================================================= */
+
+        document
+            .getElementById("copyButton")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    const name =
+                        fields.name.value.trim()
+                        || "Your Name";
+
+
+                    const career =
+                        fields.career.value.trim()
+                        || "Your Career Goal";
+
+
+                    const education =
+                        fields.education.value.trim()
+                        || "Not provided";
+
+
+                    const skills =
+                        fields.skills.value.trim()
+                        || "Not provided";
+
+
+                    const experience =
+                        fields.experience.value.trim()
+                        || "Not provided";
+
+
+                    const interests =
+                        fields.interests.value.trim()
+                        || "Not provided";
+
+
+                    const projects =
+                        fields.projects.value.trim()
+                        || "Not provided";
+
+
+                    const portfolioText =
+
+                        name +
+                        "\n" +
+                        career +
+                        "\n\n" +
+
+                        "ABOUT ME\n" +
+                        interests +
+                        "\n\n" +
+
+                        "EDUCATION\n" +
+                        education +
+                        "\n\n" +
+
+                        "SKILLS\n" +
+                        skills +
+                        "\n\n" +
+
+                        "EXPERIENCE\n" +
+                        experience +
+                        "\n\n" +
+
+                        "PROJECTS\n" +
+                        projects;
+
+
+                    try {
+
+                        await navigator.clipboard.writeText(
+                            portfolioText
+                        );
+
+
+                        showToast(
+                            "Portfolio copied to clipboard!"
+                        );
+
+                    } catch (error) {
+
+                        showToast(
+                            "Unable to copy. Please try again."
+                        );
+
+                    }
+
+                }
+            );
+
+
+        /* =========================================================
+           PRINT / PDF
+        ========================================================= */
+
+        document
+            .getElementById("printButton")
+            .addEventListener(
+                "click",
+                function () {
+
+                    window.print();
+
+                }
+            );
+
+
+        /* =========================================================
+           SCROLL TO TOP
+        ========================================================= */
+
+        const scrollTop =
+            document.getElementById(
+                "scrollTop"
+            );
+
+
+        window.addEventListener(
+            "scroll",
+            function () {
+
+                if (
+                    window.scrollY > 400
+                ) {
+
+                    scrollTop.classList.add(
+                        "visible"
+                    );
+
+                } else {
+
+                    scrollTop.classList.remove(
+                        "visible"
+                    );
+
+                }
+
+            }
+        );
+
+
+        scrollTop.addEventListener(
+            "click",
+            function () {
+
+                window.scrollTo({
+
+                    top: 0,
+
+                    behavior: "smooth"
+
+                });
+
+            }
+        );
+
+
+        /* =========================================================
+           INITIALIZE
+        ========================================================= */
+
+        updatePreview();
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,2799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Roadmap | CareerAI</title>
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+
+            --bg: #f4f7fb;
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+
+            --text: #172033;
+            --muted: #64748b;
+            --border: #dbe4f0;
+
+            --shadow:
+                0 12px 35px rgba(15, 23, 42, 0.08);
+
+            --shadow-small:
+                0 6px 20px rgba(15, 23, 42, 0.07);
+        }
+
+        body.dark {
+            --bg: #0b1220;
+            --surface: #111827;
+            --surface-soft: #172033;
+
+            --text: #f8fafc;
+            --muted: #a8b3c7;
+            --border: #273449;
+
+            --primary-light: #172554;
+
+            --shadow:
+                0 12px 35px rgba(0, 0, 0, 0.30);
+
+            --shadow-small:
+                0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            line-height: 1.6;
+
+            transition:
+                background 0.3s ease,
+                color 0.3s ease;
+        }
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            height: 70px;
+
+            background: var(--surface);
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 1000;
+
+            box-shadow:
+                0 2px 12px rgba(15, 23, 42, 0.05);
+        }
+
+        .brand {
+            color: var(--primary);
+
+            text-decoration: none;
+
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .username {
+            color: var(--text);
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            background: var(--surface);
+
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.2s;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .logout-btn {
+            text-decoration: none;
+
+            background: #ef4444;
+            color: #ffffff;
+
+            padding: 10px 18px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+            font-weight: 800;
+
+            transition: 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .page {
+            width: min(1250px, 94%);
+
+            margin: 0 auto;
+
+            padding:
+                48px 0 80px;
+        }
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            text-align: center;
+
+            margin-bottom: 40px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            border:
+                1px solid rgba(37, 99, 235, 0.18);
+
+            padding: 8px 16px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+            font-weight: 900;
+
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size:
+                clamp(32px, 5vw, 48px);
+
+            line-height: 1.15;
+
+            margin-bottom: 15px;
+
+            font-weight: 900;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            max-width: 760px;
+
+            margin: 0 auto;
+
+            color: var(--muted);
+
+            font-size: 16px;
+        }
+
+        /* =====================================================
+           INPUT CARD
+        ===================================================== */
+
+        .input-card {
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 22px;
+
+            padding: 30px;
+
+            margin-bottom: 40px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .input-title {
+            font-size: 22px;
+            font-weight: 900;
+
+            margin-bottom: 8px;
+        }
+
+        .input-description {
+            color: var(--muted);
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 11px;
+
+            background: var(--surface-soft);
+
+            color: var(--text);
+
+            outline: none;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+        .generate-area {
+            display: flex;
+
+            justify-content: flex-end;
+
+            margin-top: 25px;
+        }
+
+        .generate-button {
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #1d4ed8
+                );
+
+            color: white;
+
+            padding: 13px 25px;
+
+            border-radius: 11px;
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 22px
+                rgba(37, 99, 235, 0.25);
+
+            transition: 0.2s;
+        }
+
+        .generate-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 28px
+                rgba(37, 99, 235, 0.32);
+        }
+
+        /* =====================================================
+           GOAL CARD
+        ===================================================== */
+
+        .goal-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #1e40af
+                );
+
+            color: white;
+
+            border-radius: 22px;
+
+            padding: 35px;
+
+            margin-bottom: 45px;
+
+            box-shadow:
+                0 18px 45px
+                rgba(37, 99, 235, 0.20);
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .goal-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            border-radius: 50%;
+
+            border:
+                35px solid
+                rgba(255, 255, 255, 0.08);
+
+            right: -80px;
+            top: -90px;
+        }
+
+        .goal-label {
+            font-size: 13px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+            opacity: 0.85;
+
+            margin-bottom: 8px;
+        }
+
+        .goal-card h2 {
+            font-size:
+                clamp(25px, 4vw, 36px);
+
+            line-height: 1.2;
+
+            margin-bottom: 10px;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .goal-card p {
+            max-width: 800px;
+
+            opacity: 0.92;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        /* =====================================================
+           ROADMAP
+        ===================================================== */
+
+        .timeline-wrapper {
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 25px;
+
+            padding:
+                50px 35px 60px;
+
+            box-shadow: var(--shadow);
+
+            overflow: hidden;
+        }
+
+        .timeline-title {
+            text-align: center;
+
+            margin-bottom: 50px;
+        }
+
+        .timeline-title h2 {
+            font-size: 29px;
+
+            margin-bottom: 8px;
+        }
+
+        .timeline-title p {
+            color: var(--muted);
+        }
+
+        .timeline {
+            position: relative;
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding:
+                20px 0 30px;
+        }
+
+        .timeline::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+
+            left: 50%;
+
+            width: 5px;
+
+            transform:
+                translateX(-50%);
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    #2563eb,
+                    #60a5fa,
+                    #2563eb
+                );
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 0 0 7px
+                rgba(37, 99, 235, 0.05);
+        }
+
+        /* =====================================================
+           TIMELINE ITEM
+        ===================================================== */
+
+        .timeline-item {
+            position: relative;
+
+            width: 50%;
+
+            padding:
+                20px 55px;
+
+            margin-bottom: 30px;
+
+            opacity: 0;
+
+            transform:
+                translateY(30px);
+
+            animation:
+                roadmapAppear
+                0.65s ease forwards;
+        }
+
+        .timeline-item:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .timeline-item:nth-child(2) {
+            animation-delay: 0.12s;
+        }
+
+        .timeline-item:nth-child(3) {
+            animation-delay: 0.19s;
+        }
+
+        .timeline-item:nth-child(4) {
+            animation-delay: 0.26s;
+        }
+
+        .timeline-item:nth-child(5) {
+            animation-delay: 0.33s;
+        }
+
+        .timeline-item:nth-child(6) {
+            animation-delay: 0.40s;
+        }
+
+        .timeline-item:nth-child(7) {
+            animation-delay: 0.47s;
+        }
+
+        .timeline-item:nth-child(8) {
+            animation-delay: 0.54s;
+        }
+
+        .timeline-item:nth-child(9) {
+            animation-delay: 0.61s;
+        }
+
+        .timeline-item:nth-child(10) {
+            animation-delay: 0.68s;
+        }
+
+        .timeline-item:nth-child(11) {
+            animation-delay: 0.75s;
+        }
+
+        .timeline-item:nth-child(12) {
+            animation-delay: 0.82s;
+        }
+
+        .timeline-item.left {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item.right {
+            left: 50%;
+            text-align: left;
+        }
+
+        /* =====================================================
+           DOT
+        ===================================================== */
+
+        .timeline-dot {
+            position: absolute;
+
+            top: 38px;
+
+            width: 58px;
+            height: 58px;
+
+            border-radius: 50%;
+
+            background: var(--surface);
+
+            border:
+                5px solid var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+
+            box-shadow:
+                0 0 0 8px
+                rgba(37, 99, 235, 0.08);
+
+            z-index: 5;
+        }
+
+        .timeline-item.left .timeline-dot {
+            right: -29px;
+        }
+
+        .timeline-item.right .timeline-dot {
+            left: -29px;
+        }
+
+        /* =====================================================
+           STEP CARD
+        ===================================================== */
+
+        .step-card {
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow: var(--shadow-small);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(37, 99, 235, 0.45);
+
+            box-shadow:
+                0 15px 35px
+                rgba(37, 99, 235, 0.12);
+        }
+
+        .step-number {
+            color: var(--primary);
+
+            font-size: 12px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 8px;
+        }
+
+        .step-card h3 {
+            font-size: 21px;
+
+            line-height: 1.3;
+
+            margin-bottom: 10px;
+        }
+
+        .step-summary {
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.65;
+        }
+
+        .open-details {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-top: 17px;
+
+            color: var(--primary);
+
+            font-size: 13px;
+
+            font-weight: 900;
+        }
+
+        /* =====================================================
+           DETAILS
+        ===================================================== */
+
+        .details {
+            display: none;
+
+            margin-top: 20px;
+
+            border-top:
+                1px solid var(--border);
+
+            padding-top: 20px;
+
+            text-align: left;
+        }
+
+        .timeline-item.active .details {
+            display: block;
+
+            animation:
+                detailOpen
+                0.3s ease;
+        }
+
+        .detail-section {
+            margin-bottom: 22px;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-section h4 {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: var(--text);
+
+            font-size: 15px;
+
+            margin-bottom: 8px;
+        }
+
+        .detail-section p {
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+        .detail-section ul {
+            padding-left: 21px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+        .detail-section li {
+            margin-bottom: 7px;
+        }
+
+        .detail-section strong {
+            color: var(--text);
+        }
+
+        /* =====================================================
+           PROJECT / LEARNING BOX
+        ===================================================== */
+
+        .learning-box {
+            background: var(--surface-soft);
+
+            border:
+                1px solid var(--border);
+
+            border-left:
+                4px solid var(--primary);
+
+            border-radius: 10px;
+
+            padding: 14px 16px;
+        }
+
+        .project-box {
+            background:
+                rgba(37, 99, 235, 0.06);
+
+            border:
+                1px solid
+                rgba(37, 99, 235, 0.20);
+
+            border-radius: 13px;
+
+            padding: 17px;
+        }
+
+        .time-box {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            border-radius: 30px;
+
+            padding: 7px 13px;
+
+            font-size: 12px;
+
+            font-weight: 900;
+        }
+
+        /* =====================================================
+           CHECKLIST
+        ===================================================== */
+
+        .check-list {
+            list-style: none;
+
+            padding: 0 !important;
+
+            margin-top: 10px;
+        }
+
+        .check-list li {
+            background: var(--surface-soft);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            padding: 9px 11px;
+
+            margin-bottom: 7px;
+        }
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-state {
+            padding: 60px 20px;
+
+            text-align: center;
+
+            color: var(--muted);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            color: var(--text);
+
+            margin-bottom: 8px;
+        }
+
+        /* =====================================================
+           FINAL MESSAGE
+        ===================================================== */
+
+        .final-goal {
+            margin-top: 60px;
+
+            padding: 35px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554,
+                    #1e3a8a
+                );
+
+            color: white;
+
+            text-align: center;
+        }
+
+        .final-goal .arrow {
+            font-size: 36px;
+
+            margin-bottom: 8px;
+
+            animation:
+                bounceArrow
+                1.8s infinite;
+        }
+
+        .final-goal h2 {
+            font-size: 29px;
+
+            margin-bottom: 10px;
+        }
+
+        .final-goal p {
+            max-width: 720px;
+
+            margin: 0 auto;
+
+            opacity: 0.9;
+        }
+
+        /* =====================================================
+           BOTTOM
+        ===================================================== */
+
+        .bottom-actions {
+            text-align: center;
+
+            margin-top: 35px;
+        }
+
+        .dashboard-link {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 11px 20px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            color: var(--text);
+
+            background: var(--surface);
+
+            text-decoration: none;
+
+            font-weight: 800;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+        .dashboard-link:hover {
+            border-color: var(--primary);
+
+            color: var(--primary);
+
+            transform: translateY(-2px);
+        }
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes roadmapAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes detailOpen {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceArrow {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(7px);
+            }
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            .navbar {
+                padding: 0 16px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .username {
+                display: none;
+            }
+
+            .page {
+                width: 94%;
+
+                padding-top: 30px;
+            }
+
+            .input-card {
+                padding: 22px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .generate-area {
+                justify-content: stretch;
+            }
+
+            .generate-button {
+                width: 100%;
+            }
+
+            .timeline-wrapper {
+                padding:
+                    35px 16px 45px;
+            }
+
+            .timeline::before {
+                left: 28px;
+
+                transform: none;
+            }
+
+            .timeline-item,
+            .timeline-item.left,
+            .timeline-item.right {
+                width: 100%;
+
+                left: 0;
+
+                padding:
+                    15px 10px 15px 75px;
+
+                text-align: left;
+            }
+
+            .timeline-item.left .timeline-dot,
+            .timeline-item.right .timeline-dot {
+                left: 0;
+                right: auto;
+
+                width: 56px;
+                height: 56px;
+            }
+
+            .timeline-item.left .details,
+            .timeline-item.right .details {
+                text-align: left;
+            }
+
+            .goal-card {
+                padding: 27px;
+            }
+
+            .hero {
+                margin-bottom: 30px;
+            }
+
+            .step-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .navbar {
+                height: 65px;
+            }
+
+            .nav-right {
+                gap: 7px;
+            }
+
+            .theme-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .logout-btn {
+                padding:
+                    9px 12px;
+
+                font-size: 12px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .goal-card {
+                border-radius: 17px;
+            }
+
+            .timeline-wrapper {
+                border-radius: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('dashboard.home') }}"
+            class="brand"
+        >
+            CareerAI
+        </a>
+
+        <div class="nav-right">
+
+            {% if current_user.is_authenticated %}
+                <span class="username">
+                    {{ current_user.name }}
+                </span>
+            {% endif %}
+
+            <button
+                type="button"
+                class="theme-btn"
+                id="themeToggle"
+                title="Toggle dark/light mode"
+            >
+                🌙
+            </button>
+
+            {% if current_user.is_authenticated %}
+                <a
+                    href="{{ url_for('auth.logout') }}"
+                    class="logout-btn"
+                >
+                    Logout
+                </a>
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         PAGE
+    ===================================================== -->
+
+    <main class="page">
+
+        <!-- =================================================
+             HERO
+        ================================================= -->
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                🧭 PERSONALIZED CAREER PLAN
+            </div>
+
+            <h1>
+                Your Career Journey,
+                <span>Step by Step</span>
+            </h1>
+
+            <p>
+                CareerAI creates a personalized learning path
+                based on your current level, skills and target
+                career. Follow every stage and build your career
+                step by step.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             INPUT
+        ================================================= -->
+
+        <section class="input-card">
+
+            <div class="input-title">
+                🎯 Start Your Career Journey
+            </div>
+
+            <p class="input-description">
+                Enter your target career and current level.
+                CareerAI will generate a personalized roadmap
+                for you.
+            </p>
+
+            <form
+                method="POST"
+                action="{{ url_for('roadmap.home') }}"
+                id="roadmapForm"
+            >
+
+                <div class="form-grid">
+
+                    <!-- TARGET CAREER -->
+
+                    <div class="form-group full">
+
+                        <label class="form-label">
+                            Target Career
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="career_goal"
+                            class="form-input"
+                            placeholder="Example: Cyber Security Engineer"
+                            value="{{ request.form.get('career_goal', '') }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CURRENT LEVEL -->
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Current Level
+                        </label>
+
+                        <select
+                            name="current_level"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Select your level
+                            </option>
+
+                            <option value="Beginner"
+                                {% if request.form.get('current_level') == 'Beginner' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Beginner
+                            </option>
+
+                            <option value="Intermediate"
+                                {% if request.form.get('current_level') == 'Intermediate' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Intermediate
+                            </option>
+
+                            <option value="Advanced"
+                                {% if request.form.get('current_level') == 'Advanced' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Advanced
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- EDUCATION -->
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Education
+                        </label>
+
+                        <input
+                            type="text"
+                            name="education"
+                            class="form-input"
+                            placeholder="Example: B.Tech Computer Science"
+                            value="{{ request.form.get('education', '') }}"
+                        >
+
+                    </div>
+
+
+                    <!-- SKILLS -->
+
+                    <div class="form-group full">
+
+                        <label class="form-label">
+                            Current Skills
+                        </label>
+
+                        <input
+                            type="text"
+                            name="skills"
+                            class="form-input"
+                            placeholder="Example: Python, Linux, Networking"
+                            value="{{ request.form.get('skills', '') }}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="generate-area">
+
+                    <button
+                        type="submit"
+                        class="generate-button"
+                    >
+                        🚀 Generate My Roadmap
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- =================================================
+             GOAL
+        ================================================= -->
+
+        <section class="goal-card">
+
+            <div class="goal-label">
+                🎯 YOUR DESTINATION
+            </div>
+
+            <h2 id="careerGoal">
+                Your Target Career
+            </h2>
+
+            <p>
+                Complete each step in order. Every stage builds
+                the knowledge and practical experience required
+                for the next stage of your career.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             ROADMAP
+        ================================================= -->
+
+        <section class="timeline-wrapper">
+
+            <div class="timeline-title">
+
+                <h2>
+                    🛤️ Your Career Roadmap
+                </h2>
+
+                <p>
+                    Click any step to view detailed guidance.
+                </p>
+
+            </div>
+
+
+            <div
+                id="timeline"
+                class="timeline"
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        🧭
+                    </div>
+
+                    <h3>
+                        Your roadmap is ready to begin
+                    </h3>
+
+                    <p>
+                        Enter your career goal above and
+                        generate your personalized roadmap.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 FINAL CAREER MESSAGE
+            ================================================= -->
+
+            <div class="final-goal">
+
+                <div class="arrow">
+                    🚀
+                </div>
+
+                <h2 id="finalCareerGoal">
+                    🎯 Your Career Goal
+                </h2>
+
+                <p>
+                    Stay consistent, build real projects,
+                    practice your skills and keep improving.
+                    Your career journey starts with the first step.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             BACK TO DASHBOARD
+        ================================================= -->
+
+        <div class="bottom-actions">
+
+            <a
+                href="{{ url_for('dashboard.home') }}"
+                class="dashboard-link"
+            >
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         ROADMAP DATA
+         SAFE JINJA → JAVASCRIPT METHOD
+    ===================================================== -->
+
+    <script id="roadmap-data" type="application/json">
+        {{ roadmap_result|default('', true)|tojson }}
+    </script>
+
+
+    <script>
+
+        /* =====================================================
+           GET ROADMAP DATA
+        ===================================================== */
+
+        let roadmapText = "";
+
+        try {
+
+            const roadmapElement =
+                document.getElementById("roadmap-data");
+
+            if (roadmapElement) {
+
+                const rawData =
+                    roadmapElement.textContent.trim();
+
+                if (rawData) {
+
+                    roadmapText =
+                        JSON.parse(rawData) || "";
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Could not read roadmap data:",
+                error
+            );
+
+            roadmapText = "";
+
+        }
+
+
+        /*
+         * If backend accidentally sends an object,
+         * convert it safely to text.
+         */
+
+        if (
+            roadmapText &&
+            typeof roadmapText !== "string"
+        ) {
+
+            try {
+
+                roadmapText =
+                    JSON.stringify(
+                        roadmapText,
+                        null,
+                        2
+                    );
+
+            } catch (error) {
+
+                roadmapText = "";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           THEME
+        ===================================================== */
+
+        const themeToggle =
+            document.getElementById(
+                "themeToggle"
+            );
+
+
+        function setTheme(theme) {
+
+            if (!themeToggle) {
+                return;
+            }
+
+            if (theme === "dark") {
+
+                document.body.classList.add("dark");
+
+                themeToggle.textContent = "☀️";
+
+            } else {
+
+                document.body.classList.remove("dark");
+
+                themeToggle.textContent = "🌙";
+
+            }
+
+            try {
+
+                localStorage.setItem(
+                    "careerai-theme",
+                    theme
+                );
+
+            } catch (error) {
+
+                console.warn(
+                    "Theme storage unavailable."
+                );
+
+            }
+
+        }
+
+
+        let savedTheme = null;
+
+        try {
+
+            savedTheme =
+                localStorage.getItem(
+                    "careerai-theme"
+                );
+
+        } catch (error) {
+
+            savedTheme = null;
+
+        }
+
+
+        setTheme(
+            savedTheme === "dark"
+                ? "dark"
+                : "light"
+        );
+
+
+        if (themeToggle) {
+
+            themeToggle.addEventListener(
+                "click",
+                function () {
+
+                    const dark =
+                        document.body.classList.contains(
+                            "dark"
+                        );
+
+                    setTheme(
+                        dark
+                            ? "light"
+                            : "dark"
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
+
+        function escapeHtml(value) {
+
+            const text =
+                String(
+                    value === null ||
+                    value === undefined
+                        ? ""
+                        : value
+                );
+
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        /* =====================================================
+           INLINE MARKDOWN
+        ===================================================== */
+
+        function formatInline(value) {
+
+            let text =
+                escapeHtml(value);
+
+            text =
+                text.replace(
+                    /\*\*(.*?)\*\*/g,
+                    "<strong>$1</strong>"
+                );
+
+            text =
+                text.replace(
+                    /`([^`]+)`/g,
+                    "<code>$1</code>"
+                );
+
+            return text;
+
+        }
+
+
+        /* =====================================================
+           MARKDOWN TO SAFE HTML
+        ===================================================== */
+
+        function cleanMarkdown(value) {
+
+            if (!value) {
+                return "";
+            }
+
+            let text =
+                escapeHtml(value);
+
+
+            /*
+             * Bold
+             */
+
+            text =
+                text.replace(
+                    /\*\*(.*?)\*\*/g,
+                    "<strong>$1</strong>"
+                );
+
+
+            /*
+             * Inline code
+             */
+
+            text =
+                text.replace(
+                    /`([^`]+)`/g,
+                    "<code>$1</code>"
+                );
+
+
+            /*
+             * Checkboxes
+             */
+
+            text =
+                text.replace(
+                    /^-\s*\[\s*\]\s*(.+)$/gm,
+                    '<li class="check-item">☐ $1</li>'
+                );
+
+
+            /*
+             * Bullet list
+             */
+
+            text =
+                text.replace(
+                    /^[-*]\s+(.+)$/gm,
+                    "<li>$1</li>"
+                );
+
+
+            /*
+             * Numbered list
+             */
+
+            text =
+                text.replace(
+                    /^\d+\.\s+(.+)$/gm,
+                    "<li>$1</li>"
+                );
+
+
+            /*
+             * Wrap consecutive list items.
+             */
+
+            text =
+                text.replace(
+                    /((?:<li[^>]*>.*?<\/li>\s*)+)/gs,
+                    "<ul>$1</ul>"
+                );
+
+
+            /*
+             * Paragraphs
+             */
+
+            const parts =
+                text
+                    .split(/\n\s*\n/)
+                    .map(
+                        part => part.trim()
+                    )
+                    .filter(Boolean);
+
+
+            return parts
+                .map(
+                    part => {
+
+                        if (
+                            part.startsWith("<ul>")
+                        ) {
+                            return part;
+                        }
+
+                        return `
+                            <p>
+                                ${part.replace(
+                                    /\n/g,
+                                    "<br>"
+                                )}
+                            </p>
+                        `;
+
+                    }
+                )
+                .join("");
+
+        }
+
+
+        /* =====================================================
+           STEP ICON
+        ===================================================== */
+
+        function getStepIcon(number) {
+
+            const icons = [
+                "🎯",
+                "📚",
+                "💻",
+                "🧠",
+                "🛠️",
+                "🚀",
+                "🏆",
+                "💼",
+                "🎤",
+                "🌟",
+                "🔥",
+                "👑"
+            ];
+
+            const index =
+                Math.max(
+                    0,
+                    Number(number) - 1
+                ) % icons.length;
+
+            return icons[index];
+
+        }
+
+
+        /* =====================================================
+           PARSE STEP HEADINGS
+        ===================================================== */
+
+        function parseRoadmap(text) {
+
+            if (!text || !text.trim()) {
+                return [];
+            }
+
+            /*
+             * CareerAI roadmap step parser.
+             *
+             * Supported formats:
+             * STEP 1 — Foundation
+             * STEP 1 – Foundation
+             * STEP 1 - Foundation
+             * STEP 1: Foundation
+             * STEP 1 Foundation
+             *
+             * Markdown headings are also supported:
+             * # STEP 1 — Foundation
+             * ## STEP 1 — Foundation
+             * ### STEP 1 — Foundation
+             */
+
+            const normalizedText = text
+                .replace(/\r\n/g, "\n")
+                .replace(/\r/g, "\n");
+
+            const regex =
+                /^\s*(?:#{1,6}\s*)?STEP\s+(\d+)(?:\s*(?:—|–|-|:)\s*|\s+)(.+?)\s*$/gim;
+
+            const matches = [
+                ...normalizedText.matchAll(regex)
+            ];
+
+            /*
+             * Do not create a fake STEP 1 when the AI response
+             * does not contain valid STEP headings.
+             * The old fallback placed the complete AI response
+             * inside one card titled "Your Career Roadmap".
+             */
+            if (!matches.length) {
+                return [];
+            }
+
+            const steps = [];
+
+            for (let i = 0; i < matches.length; i++) {
+
+                const match = matches[i];
+
+                const number = parseInt(match[1], 10);
+
+                const title = match[2]
+                    .trim()
+                    .replace(/^[-:—–]+/, "")
+                    .trim();
+
+                const start =
+                    match.index + match[0].length;
+
+                const end =
+                    i + 1 < matches.length
+                        ? matches[i + 1].index
+                        : normalizedText.length;
+
+                let content =
+                    normalizedText.substring(start, end);
+
+                content = content
+                    .replace(/^\s+/, "")
+                    .replace(/\s+$/, "");
+
+                if (!title && !content) {
+                    continue;
+                }
+
+                steps.push({
+                    number: number,
+                    title: title || `Step ${number}`,
+                    content: content
+                });
+            }
+
+            /* Always display the roadmap in numerical order. */
+            steps.sort((a, b) => a.number - b.number);
+
+            return steps;
+        }
+
+        /* =====================================================
+           SECTION PARSER
+        ===================================================== */
+
+        function parseSections(content) {
+
+            if (!content) {
+                return [];
+            }
+
+
+            const lines =
+                content.split("\n");
+
+
+            const sections = [];
+
+
+            let currentTitle = "";
+
+            let currentContent = [];
+
+
+            function saveSection() {
+
+                const cleaned =
+                    currentContent
+                        .join("\n")
+                        .trim();
+
+
+                if (
+                    currentTitle &&
+                    cleaned
+                ) {
+
+                    sections.push({
+
+                        title:
+                            currentTitle,
+
+                        content:
+                            cleaned
+
+                    });
+
+                }
+
+            }
+
+
+            lines.forEach(
+                line => {
+
+                    const heading =
+                        line.match(
+                            /^###\s+(.+)$/
+                        );
+
+
+                    if (heading) {
+
+                        saveSection();
+
+
+                        currentTitle =
+                            heading[1]
+                                .trim();
+
+
+                        currentContent = [];
+
+                    } else {
+
+                        currentContent.push(
+                            line
+                        );
+
+                    }
+
+                }
+            );
+
+
+            saveSection();
+
+
+            return sections;
+
+        }
+
+
+        /* =====================================================
+           SECTION ICON
+        ===================================================== */
+
+        function getSectionIcon(title) {
+
+            const text =
+                String(title)
+                    .toLowerCase();
+
+
+            if (
+                text.includes("goal") ||
+                text.includes("objective")
+            ) {
+                return "🎯";
+            }
+
+
+            if (
+                text.includes("learn") ||
+                text.includes("skill")
+            ) {
+                return "📚";
+            }
+
+
+            if (
+                text.includes("practice")
+            ) {
+                return "🧪";
+            }
+
+
+            if (
+                text.includes("project") ||
+                text.includes("build")
+            ) {
+                return "💻";
+            }
+
+
+            if (
+                text.includes("time") ||
+                text.includes("duration")
+            ) {
+                return "⏱️";
+            }
+
+
+            if (
+                text.includes("check") ||
+                text.includes("ready")
+            ) {
+                return "✅";
+            }
+
+
+            if (
+                text.includes("interview")
+            ) {
+                return "🎤";
+            }
+
+
+            if (
+                text.includes("portfolio") ||
+                text.includes("github")
+            ) {
+                return "💼";
+            }
+
+
+            if (
+                text.includes("certificate")
+            ) {
+                return "🏆";
+            }
+
+
+            return "📌";
+
+        }
+
+
+        /* =====================================================
+           CREATE DETAILS
+        ===================================================== */
+
+        function createDetails(content) {
+
+            const sections =
+                parseSections(content);
+
+
+            if (!sections.length) {
+
+                return `
+                    <div class="detail-section">
+                        ${cleanMarkdown(content)}
+                    </div>
+                `;
+
+            }
+
+
+            let html = "";
+
+
+            sections.forEach(
+                section => {
+
+                    const lower =
+                        section.title
+                            .toLowerCase();
+
+
+                    let className =
+                        "detail-section";
+
+
+                    if (
+                        lower.includes("project") ||
+                        lower.includes("build")
+                    ) {
+
+                        className +=
+                            " project-box";
+
+                    }
+
+
+                    let contentHtml =
+                        cleanMarkdown(
+                            section.content
+                        );
+
+
+                    if (
+                        lower.includes("time") ||
+                        lower.includes("duration")
+                    ) {
+
+                        contentHtml = `
+                            <div class="time-box">
+                                ⏱️
+                                ${contentHtml}
+                            </div>
+                        `;
+
+                    }
+
+
+                    if (
+                        lower.includes("check") ||
+                        lower.includes("ready")
+                    ) {
+
+                        contentHtml = `
+                            <div class="learning-box">
+                                ${contentHtml}
+                            </div>
+                        `;
+
+                    }
+
+
+                    html += `
+
+                        <div class="${className}">
+
+                            <h4>
+                                ${getSectionIcon(
+                                    section.title
+                                )}
+
+                                ${formatInline(
+                                    section.title
+                                )}
+                            </h4>
+
+                            ${contentHtml}
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+
+            return html;
+
+        }
+
+
+        /* =====================================================
+           GET SUMMARY
+        ===================================================== */
+
+        function getStepSummary(content) {
+
+            if (!content) {
+                return "";
+            }
+
+
+            /*
+             * First try Goal section.
+             */
+
+            const sections =
+                parseSections(content);
+
+
+            const goalSection =
+                sections.find(
+                    section => {
+
+                        const title =
+                            section.title
+                                .toLowerCase();
+
+                        return (
+                            title === "goal" ||
+                            title.includes("objective")
+                        );
+
+                    }
+                );
+
+
+            let summary =
+                goalSection
+                    ? goalSection.content
+                    : "";
+
+
+            /*
+             * Fallback to first useful text.
+             */
+
+            if (!summary) {
+
+                summary =
+                    content
+                        .replace(
+                            /^###.*$/gm,
+                            ""
+                        )
+                        .replace(
+                            /^[-*]\s*/gm,
+                            ""
+                        )
+                        .replace(
+                            /^\d+\.\s*/gm,
+                            ""
+                        )
+                        .replace(
+                            /[#*]/g,
+                            ""
+                        )
+                        .replace(
+                            /\s+/g,
+                            " "
+                        )
+                        .trim();
+
+            }
+
+
+            summary =
+                summary
+                    .replace(
+                        /\s+/g,
+                        " "
+                    )
+                    .trim();
+
+
+            if (
+                summary.length > 190
+            ) {
+
+                summary =
+                    summary.substring(
+                        0,
+                        190
+                    ) + "...";
+
+            }
+
+
+            return summary;
+
+        }
+
+
+        /* =====================================================
+           CREATE TIMELINE ITEM
+        ===================================================== */
+
+        function createTimelineItem(
+            step,
+            index
+        ) {
+
+            const side =
+                index % 2 === 0
+                    ? "left"
+                    : "right";
+
+
+            const summary =
+                getStepSummary(
+                    step.content
+                );
+
+
+            return `
+
+                <div
+                    class="timeline-item ${side}"
+                >
+
+                    <div class="timeline-dot">
+                        ${getStepIcon(
+                            step.number
+                        )}
+                    </div>
+
+
+                    <div
+                        class="step-card"
+                        onclick="toggleStep(this)"
+                    >
+
+                        <div class="step-number">
+                            STEP ${escapeHtml(
+                                step.number
+                            )}
+                        </div>
+
+
+                        <h3>
+                            ${formatInline(
+                                step.title
+                            )}
+                        </h3>
+
+
+                        <div class="step-summary">
+
+                            ${formatInline(
+                                summary ||
+                                "Follow this stage to continue building the skills required for your target career."
+                            )}
+
+                        </div>
+
+
+                        <div class="open-details">
+
+                            <span class="details-text">
+                                View detailed guidance
+                            </span>
+
+                            <span class="details-arrow">
+                                ↓
+                            </span>
+
+                        </div>
+
+
+                        <div class="details">
+
+                            ${createDetails(
+                                step.content
+                            )}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* =====================================================
+           TOGGLE STEP
+        ===================================================== */
+
+        function toggleStep(card) {
+
+            if (!card) {
+                return;
+            }
+
+
+            const item =
+                card.closest(
+                    ".timeline-item"
+                );
+
+
+            if (!item) {
+                return;
+            }
+
+
+            const wasActive =
+                item.classList.contains(
+                    "active"
+                );
+
+
+            /*
+             * Close all other steps.
+             */
+
+            document
+                .querySelectorAll(
+                    ".timeline-item.active"
+                )
+                .forEach(
+                    element => {
+
+                        element.classList.remove(
+                            "active"
+                        );
+
+
+                        const text =
+                            element.querySelector(
+                                ".details-text"
+                            );
+
+
+                        const arrow =
+                            element.querySelector(
+                                ".details-arrow"
+                            );
+
+
+                        if (text) {
+
+                            text.textContent =
+                                "View detailed guidance";
+
+                        }
+
+
+                        if (arrow) {
+
+                            arrow.textContent =
+                                "↓";
+
+                        }
+
+                    }
+                );
+
+
+            /*
+             * Open selected step.
+             */
+
+            if (!wasActive) {
+
+                item.classList.add(
+                    "active"
+                );
+
+
+                const text =
+                    item.querySelector(
+                        ".details-text"
+                    );
+
+
+                const arrow =
+                    item.querySelector(
+                        ".details-arrow"
+                    );
+
+
+                if (text) {
+
+                    text.textContent =
+                        "Hide detailed guidance";
+
+                }
+
+
+                if (arrow) {
+
+                    arrow.textContent =
+                        "↑";
+
+                }
+
+            }
+
+        }
+
+
+        /* =====================================================
+           DETECT CAREER GOAL
+        ===================================================== */
+
+        function detectCareerGoal(text) {
+
+            if (!text) {
+                return "";
+            }
+
+
+            /*
+             * Try:
+             *
+             * ### Your Career Goal
+             */
+
+            const goalMatch =
+                text.match(
+                    /###\s*(?:🌟\s*)?Your Career Goal\s*\n+([\s\S]*?)(?=\n###|\n##|$)/i
+                );
+
+
+            if (goalMatch) {
+
+                const value =
+                    goalMatch[1]
+                        .replace(
+                            /[*#]/g,
+                            ""
+                        )
+                        .trim()
+                        .split("\n")
+                        .map(
+                            line => line.trim()
+                        )
+                        .filter(Boolean)[0];
+
+
+                if (value) {
+                    return value;
+                }
+
+            }
+
+
+            /*
+             * Try target career.
+             */
+
+            const targetMatch =
+                text.match(
+                    /(?:target career|career goal)\s*[:\-]\s*(.+)/i
+                );
+
+
+            if (targetMatch) {
+
+                return targetMatch[1]
+                    .trim()
+                    .replace(
+                        /[*#]/g,
+                        ""
+                    );
+
+            }
+
+
+            return "";
+
+        }
+
+
+        /* =====================================================
+           DISPLAY ROADMAP
+        ===================================================== */
+
+        function displayRoadmap() {
+
+            const timeline =
+                document.getElementById(
+                    "timeline"
+                );
+
+
+            if (!timeline) {
+                return;
+            }
+
+
+            if (
+                !roadmapText ||
+                !roadmapText.trim()
+            ) {
+
+                return;
+
+            }
+
+
+            const steps =
+                parseRoadmap(
+                    roadmapText
+                );
+
+
+            if (!steps.length) {
+
+                timeline.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🧭
+                        </div>
+
+                        <h3>
+                            Roadmap could not be displayed
+                        </h3>
+
+                        <p>
+                            Please generate the roadmap again.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            /*
+             * Career goal.
+             */
+
+            const detectedGoal =
+                detectCareerGoal(
+                    roadmapText
+                );
+
+
+            if (detectedGoal) {
+
+                const careerGoal =
+                    document.getElementById(
+                        "careerGoal"
+                    );
+
+
+                const finalGoal =
+                    document.getElementById(
+                        "finalCareerGoal"
+                    );
+
+
+                if (careerGoal) {
+
+                    careerGoal.textContent =
+                        detectedGoal;
+
+                }
+
+
+                if (finalGoal) {
+
+                    finalGoal.textContent =
+                        "🎯 " + detectedGoal;
+
+                }
+
+            }
+
+
+            /*
+             * Build timeline.
+             */
+
+            timeline.innerHTML =
+                steps
+                    .map(
+                        (
+                            step,
+                            index
+                        ) =>
+                            createTimelineItem(
+                                step,
+                                index
+                            )
+                    )
+                    .join("");
+
+
+            /*
+             * Open first step.
+             */
+
+            const firstCard =
+                timeline.querySelector(
+                    ".step-card"
+                );
+
+
+            if (firstCard) {
+
+                toggleStep(
+                    firstCard
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            displayRoadmap
+        );
+
+    </script>
+
+</body>
+</html>

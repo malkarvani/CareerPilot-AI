@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Career Chat | CareerAI</title>
+
+    <script>
+        (function () {
+            const theme = localStorage.getItem("careerai-theme") || "light";
+            document.documentElement.setAttribute("data-theme", theme);
+        })();
+    </script>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            overflow: hidden;
+
+            transition:
+                background 0.3s ease,
+                color 0.3s ease;
+        }
+
+
+        /* =====================================================
+           THEME
+        ===================================================== */
+
+        :root {
+            --bg: #f6f8fc;
+            --surface: #ffffff;
+            --surface-2: #f8fafc;
+            --surface-hover: #f1f5f9;
+
+            --border: #e2e8f0;
+
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+
+            --user-message: #2563eb;
+            --user-message-text: #ffffff;
+
+            --ai-message: #ffffff;
+            --ai-message-text: #1e293b;
+
+            --danger: #ef4444;
+
+            --sidebar-width: 260px;
+            --topbar-height: 68px;
+
+            --shadow:
+                0 8px 30px rgba(15, 23, 42, 0.07);
+        }
+
+
+        [data-theme="dark"] {
+            --bg: #0b1120;
+            --surface: #111827;
+            --surface-2: #172033;
+            --surface-hover: #1d293d;
+
+            --border: #263244;
+
+            --text: #f8fafc;
+            --text-secondary: #a8b3c7;
+            --text-muted: #718096;
+
+            --primary: #4d8dff;
+            --primary-hover: #6ba0ff;
+            --primary-light: #172554;
+
+            --user-message: #2563eb;
+            --user-message-text: #ffffff;
+
+            --ai-message: #172033;
+            --ai-message-text: #e5e7eb;
+
+            --danger: #f87171;
+
+            --shadow:
+                0 15px 40px rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* =====================================================
+           TOP BAR
+        ===================================================== */
+
+        .topbar {
+            height: var(--topbar-height);
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 24px;
+
+            background: var(--surface);
+
+            border-bottom:
+                1px solid var(--border);
+
+            transition:
+                background 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+
+        .top-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+
+        .menu-button {
+            width: 42px;
+            height: 42px;
+
+            border: none;
+            background: transparent;
+
+            color: var(--text);
+
+            border-radius: 10px;
+
+            font-size: 22px;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.2s ease;
+        }
+
+
+        .menu-button:hover {
+            background: var(--surface-hover);
+            transform: scale(1.05);
+        }
+
+
+        .logo {
+            color: var(--primary);
+
+            text-decoration: none;
+
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+
+        .logo span {
+            color: var(--text);
+        }
+
+
+        .chat-title {
+            padding-left: 15px;
+
+            border-left:
+                1px solid var(--border);
+
+            color: var(--text-secondary);
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
+        .top-right {
+            display: flex;
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .theme-toggle {
+            width: 43px;
+            height: 43px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+
+            box-shadow:
+                0 5px 18px rgba(37, 99, 235, 0.28);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .theme-toggle:hover {
+            transform:
+                rotate(15deg)
+                scale(1.08);
+
+            box-shadow:
+                0 8px 25px rgba(37, 99, 235, 0.38);
+        }
+
+
+        /* =====================================================
+           TOP USER
+        ===================================================== */
+
+        .top-user {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            color: var(--text);
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+
+        .top-avatar {
+            width: 36px;
+            height: 36px;
+
+            border-radius: 50%;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 800;
+        }
+
+
+        .top-logout {
+            text-decoration: none;
+
+            color: var(--danger);
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+
+        .top-logout:hover {
+            opacity: 0.7;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            position: fixed;
+
+            top: var(--topbar-height);
+            left: 0;
+            bottom: 0;
+
+            width: var(--sidebar-width);
+
+            background: var(--surface);
+
+            border-right:
+                1px solid var(--border);
+
+            padding: 22px 14px;
+
+            overflow-y: auto;
+
+            z-index: 900;
+
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease;
+        }
+
+
+        /* =====================================================
+           SIDEBAR USER
+        ===================================================== */
+
+        .sidebar-user {
+            padding:
+                4px 12px 20px;
+
+            margin-bottom: 17px;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .sidebar-user-name {
+            color: var(--text);
+
+            font-size: 16px;
+            font-weight: 800;
+
+            margin-bottom: 5px;
+        }
+
+
+        .sidebar-user-role {
+            color: var(--text-secondary);
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .nav-list {
+            list-style: none;
+        }
+
+
+        .nav-item {
+            margin-bottom: 4px;
+        }
+
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding:
+                11px 12px;
+
+            color: var(--text-secondary);
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .nav-link:hover {
+            background: var(--surface-hover);
+
+            color: var(--primary);
+
+            transform:
+                translateX(3px);
+        }
+
+
+        .nav-link.active {
+            background: var(--primary-light);
+
+            color: var(--primary);
+        }
+
+
+        .nav-icon {
+            width: 22px;
+
+            text-align: center;
+
+            font-size: 17px;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+        ===================================================== */
+
+        .sidebar-bottom {
+            margin-top: 22px;
+
+            padding-top: 17px;
+
+            border-top:
+                1px solid var(--border);
+        }
+
+
+        .sidebar-logout {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding:
+                11px 12px;
+
+            margin-top: 4px;
+
+            color: var(--danger);
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s ease;
+        }
+
+
+        .sidebar-logout:hover {
+            background:
+                rgba(239, 68, 68, 0.08);
+
+            transform:
+                translateX(3px);
+        }
+
+
+        /* =====================================================
+           MAIN CHAT
+        ===================================================== */
+
+        .main {
+            position: fixed;
+
+            top: var(--topbar-height);
+            right: 0;
+            bottom: 0;
+            left: var(--sidebar-width);
+
+            display: flex;
+            flex-direction: column;
+
+            background: var(--bg);
+
+            transition:
+                left 0.3s ease,
+                background 0.3s ease;
+        }
+
+
+        /* =====================================================
+           CHAT HEADER
+        ===================================================== */
+
+        .chat-header {
+            height: 72px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+
+            padding:
+                0 30px;
+
+            background: var(--surface);
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .chat-header-content {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .ai-avatar {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+
+            box-shadow:
+                0 5px 15px rgba(37, 99, 235, 0.22);
+        }
+
+
+        .chat-header-text h1 {
+            color: var(--text);
+
+            font-size: 16px;
+
+            margin-bottom: 3px;
+        }
+
+
+        .chat-status {
+            display: flex;
+            align-items: center;
+
+            gap: 6px;
+
+            color: var(--text-secondary);
+
+            font-size: 12px;
+        }
+
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+        }
+
+
+        /* =====================================================
+           MESSAGE AREA
+        ===================================================== */
+
+        .messages {
+            flex: 1;
+
+            overflow-y: auto;
+
+            padding:
+                30px 20px 145px;
+        }
+
+
+        .messages-inner {
+            max-width: 850px;
+
+            margin:
+                0 auto;
+        }
+
+
+        /* =====================================================
+           WELCOME MESSAGE
+        ===================================================== */
+
+        .welcome-message {
+            text-align: center;
+
+            max-width: 600px;
+
+            margin:
+                40px auto 35px;
+
+            animation:
+                fadeUp 0.45s ease;
+        }
+
+
+        .welcome-ai-icon {
+            width: 58px;
+            height: 58px;
+
+            margin:
+                0 auto 18px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 27px;
+
+            box-shadow:
+                0 10px 30px rgba(37, 99, 235, 0.20);
+        }
+
+
+        .welcome-message h2 {
+            color: var(--text);
+
+            font-size: 25px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .welcome-message p {
+            color: var(--text-secondary);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           MESSAGES
+        ===================================================== */
+
+        .message {
+            display: flex;
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+
+            animation:
+                fadeUp 0.3s ease;
+        }
+
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+
+        .message-avatar {
+            width: 34px;
+            height: 34px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+
+        .ai-message-avatar {
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+        }
+
+
+        .user-message-avatar {
+            background: var(--primary-light);
+
+            color: var(--primary);
+        }
+
+
+        .message-content {
+            max-width: 75%;
+        }
+
+
+        .message-name {
+            color: var(--text-secondary);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            margin-bottom: 6px;
+        }
+
+
+        .message.user .message-name {
+            text-align: right;
+        }
+
+
+        .message-bubble {
+            padding:
+                13px 16px;
+
+            border-radius: 15px;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            white-space: pre-wrap;
+
+            word-wrap: break-word;
+        }
+
+
+        .ai-bubble {
+            background: var(--ai-message);
+
+            color: var(--ai-message-text);
+
+            border:
+                1px solid var(--border);
+
+            border-top-left-radius: 5px;
+
+            box-shadow:
+                0 4px 15px rgba(15, 23, 42, 0.035);
+        }
+
+
+        .user-bubble {
+            background: var(--user-message);
+
+            color: var(--user-message-text);
+
+            border-top-right-radius: 5px;
+
+            box-shadow:
+                0 5px 15px rgba(37, 99, 235, 0.18);
+        }
+
+
+        /* =====================================================
+           ANSWER FORMATTING
+        ===================================================== */
+
+        .ai-bubble strong {
+            color: var(--text);
+        }
+
+
+        .ai-bubble ul,
+        .ai-bubble ol {
+            margin:
+                10px 0 10px 20px;
+        }
+
+
+        .ai-bubble li {
+            margin-bottom: 6px;
+        }
+
+
+        .ai-bubble h3 {
+            font-size: 16px;
+
+            margin:
+                12px 0 7px;
+
+            color: var(--text);
+        }
+
+
+        /* =====================================================
+           TYPING INDICATOR
+        ===================================================== */
+
+        .typing {
+            display: none;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .typing.show {
+            display: flex;
+        }
+
+
+        .typing-bubble {
+            background: var(--ai-message);
+
+            border:
+                1px solid var(--border);
+
+            padding:
+                12px 16px;
+
+            border-radius: 15px;
+
+            border-top-left-radius: 5px;
+        }
+
+
+        .typing-dots {
+            display: flex;
+
+            gap: 4px;
+        }
+
+
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--text-secondary);
+
+            animation:
+                typingDot 1.2s infinite;
+        }
+
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+
+        /* =====================================================
+           INPUT AREA
+        ===================================================== */
+
+        .composer-area {
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            padding:
+                15px 20px 20px;
+
+            background:
+                linear-gradient(
+                    to top,
+                    var(--bg) 75%,
+                    transparent
+                );
+        }
+
+
+        .composer {
+            max-width: 850px;
+
+            margin:
+                0 auto;
+
+            display: flex;
+            align-items: flex-end;
+
+            gap: 10px;
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding:
+                9px 9px 9px 17px;
+
+            box-shadow:
+                0 8px 30px
+                rgba(15, 23, 42, 0.09);
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .composer:focus-within {
+            border-color:
+                var(--primary);
+
+            box-shadow:
+                0 8px 30px
+                rgba(37, 99, 235, 0.12);
+        }
+
+
+        .composer textarea {
+            flex: 1;
+
+            min-height: 42px;
+            max-height: 140px;
+
+            resize: none;
+
+            border: none;
+            outline: none;
+
+            background: transparent;
+
+            color: var(--text);
+
+            font-family: Arial, sans-serif;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            padding:
+                10px 0;
+        }
+
+
+        .composer textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+
+        .send-button {
+            width: 44px;
+            height: 44px;
+
+            flex-shrink: 0;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background: var(--primary);
+
+            color: white;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+
+        .send-button:hover {
+            background:
+                var(--primary-hover);
+
+            transform:
+                scale(1.05);
+        }
+
+
+        .send-button:active {
+            transform:
+                scale(0.95);
+        }
+
+
+        .composer-hint {
+            max-width: 850px;
+
+            margin:
+                7px auto 0;
+
+            text-align: center;
+
+            color: var(--text-muted);
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           MOBILE OVERLAY
+        ===================================================== */
+
+        .sidebar-overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0, 0, 0, 0.45);
+
+            z-index: 850;
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform:
+                    translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes typingDot {
+            0%,
+            60%,
+            100% {
+                opacity: 0.3;
+                transform:
+                    translateY(0);
+            }
+
+            30% {
+                opacity: 1;
+                transform:
+                    translateY(-3px);
+            }
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+                transform:
+                    translateX(-100%);
+            }
+
+
+            .sidebar.open {
+                transform:
+                    translateX(0);
+            }
+
+
+            .sidebar-overlay.show {
+                display: block;
+            }
+
+
+            .main {
+                left: 0;
+            }
+
+
+            .topbar {
+                padding:
+                    0 16px;
+            }
+
+
+            .chat-title {
+                display: none;
+            }
+
+
+            .top-logout {
+                display: none;
+            }
+
+
+            .message-content {
+                max-width: 82%;
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .logo {
+                font-size: 21px;
+            }
+
+
+            .top-user span {
+                display: none;
+            }
+
+
+            .top-right {
+                gap: 8px;
+            }
+
+
+            .theme-toggle {
+                width: 40px;
+                height: 40px;
+            }
+
+
+            .chat-header {
+                padding:
+                    0 17px;
+
+                height: 65px;
+            }
+
+
+            .ai-avatar {
+                width: 38px;
+                height: 38px;
+
+                font-size: 18px;
+            }
+
+
+            .messages {
+                padding:
+                    22px 13px 140px;
+            }
+
+
+            .welcome-message {
+                margin:
+                    25px auto 30px;
+            }
+
+
+            .welcome-message h2 {
+                font-size: 22px;
+            }
+
+
+            .welcome-message p {
+                font-size: 13px;
+            }
+
+
+            .message {
+                gap: 8px;
+
+                margin-bottom: 20px;
+            }
+
+
+            .message-avatar {
+                width: 30px;
+                height: 30px;
+
+                font-size: 13px;
+            }
+
+
+            .message-content {
+                max-width: 86%;
+            }
+
+
+            .message-bubble {
+                font-size: 13px;
+
+                padding:
+                    11px 13px;
+            }
+
+
+            .composer-area {
+                padding:
+                    10px 10px 14px;
+            }
+
+
+            .composer {
+                border-radius: 15px;
+
+                padding:
+                    7px 7px 7px 13px;
+            }
+
+
+            .composer textarea {
+                font-size: 13px;
+            }
+
+
+            .send-button {
+                width: 40px;
+                height: 40px;
+
+                border-radius: 11px;
+            }
+
+
+            .composer-hint {
+                font-size: 10px;
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 400px) {
+
+            .top-avatar {
+                width: 33px;
+                height: 33px;
+            }
+
+
+            .welcome-message h2 {
+                font-size: 20px;
+            }
+
+
+            .message-content {
+                max-width: 88%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         TOP BAR
+    ===================================================== -->
+
+    <header class="topbar">
+
+        <div class="top-left">
+
+            <button
+                type="button"
+                class="menu-button"
+                id="menuButton"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+
+            <a
+                href="{{ url_for('dashboard.home') }}"
+                class="logo"
+            >
+                Career<span>AI</span>
+            </a>
+
+
+            <div class="chat-title">
+                AI Career Chat
+            </div>
+
+        </div>
+
+
+        <div class="top-right">
+
+            <!-- THEME -->
+
+            <button
+                type="button"
+                class="theme-toggle"
+                id="themeToggle"
+                title="Toggle theme"
+                aria-label="Toggle dark and light mode"
+            >
+                🌙
+            </button>
+
+
+            <!-- USER -->
+
+            <div class="top-user">
+
+                <div class="top-avatar">
+                    {{ (user.name or "U")[0]|upper }}
+                </div>
+
+                <span>
+                    {{ user.name }}
+                </span>
+
+            </div>
+
+
+            <!-- LOGOUT -->
+
+            <a
+                href="{{ url_for('auth.logout') }}"
+                class="top-logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         SIDEBAR OVERLAY
+    ===================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <!-- USERNAME -->
+
+        <div class="sidebar-user">
+
+            <div class="sidebar-user-name">
+                👤 {{ user.name }}
+            </div>
+
+            <div class="sidebar-user-role">
+                My Account
+            </div>
+
+        </div>
+
+
+
+        <!-- NAVIGATION -->
+
+        <ul class="nav-list">
+
+
+            <!-- DASHBOARD -->
+
+            <li class="nav-item">
+
+                <a
+                    href="{{ url_for('dashboard.home') }}"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        🏠
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- ROADMAP -->
+
+            <li class="nav-item">
+
+                <a
+                    href="{{ url_for('roadmap.home') }}"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        🧭
+                    </span>
+
+                    <span>
+                        Career Roadmap
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- RESUME ANALYZER -->
+
+            <li class="nav-item">
+
+                <a
+                    href="{{ url_for('resume.analyzer') }}"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        📄
+                    </span>
+
+                    <span>
+                        Resume Analyzer
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- RESUME BUILDER -->
+
+            <li class="nav-item">
+
+                <a
+                    href="{{ url_for('resume_builder.builder') }}"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        ✍️
+                    </span>
+
+                    <span>
+                        Resume Builder
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- PORTFOLIO -->
+
+            <li class="nav-item">
+
+                <a
+                    href="/portfolio"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        💼
+                    </span>
+
+                    <span>
+                        Portfolio Builder
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- JOBS -->
+
+            <li class="nav-item">
+
+                <a
+                    href="/jobs"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        🔎
+                    </span>
+
+                    <span>
+                        Job Finder
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- CERTIFICATIONS -->
+
+            <li class="nav-item">
+
+                <a
+                    href="/certifications"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        🎓
+                    </span>
+
+                    <span>
+                        Certifications
+                    </span>
+
+                </a>
+
+            </li>
+
+
+            <!-- INTERVIEW -->
+
+            <li class="nav-item">
+
+                <a
+                    href="/interview"
+                    class="nav-link"
+                >
+
+                    <span class="nav-icon">
+                        🎤
+                    </span>
+
+                    <span>
+                        Interview
+                    </span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <!-- PROFILE -->
+
+            <a
+                href="{{ url_for('profile.home') }}"
+                class="nav-link"
+            >
+
+                <span class="nav-icon">
+                    👤
+                </span>
+
+                <span>
+                    My Profile
+                </span>
+
+            </a>
+
+
+            <!-- LOGOUT -->
+
+            <a
+                href="{{ url_for('auth.logout') }}"
+                class="sidebar-logout"
+            >
+
+                <span class="nav-icon">
+                    🚪
+                </span>
+
+                <span>
+                    Logout
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CHAT
+    ===================================================== -->
+
+    <main class="main">
+
+
+        <!-- CHAT HEADER -->
+
+        <div class="chat-header">
+
+            <div class="chat-header-content">
+
+                <div class="ai-avatar">
+                    🤖
+                </div>
+
+                <div class="chat-header-text">
+
+                    <h1>
+                        CareerAI
+                    </h1>
+
+                    <div class="chat-status">
+
+                        <span class="status-dot"></span>
+
+                        AI Career Advisor
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             MESSAGES
+        ================================================= -->
+
+        <div
+            class="messages"
+            id="messages"
+        >
+
+            <div class="messages-inner">
+
+
+                <!-- WELCOME -->
+
+                {% if not question and not answer %}
+
+                <div class="welcome-message">
+
+                    <div class="welcome-ai-icon">
+                        🤖
+                    </div>
+
+                    <h2>
+                        How can I help with your career?
+                    </h2>
+
+                    <p>
+                        Ask me about careers, skills,
+                        resumes, jobs, interviews,
+                        certifications or learning paths.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+
+
+                <!-- USER QUESTION -->
+
+                {% if question %}
+
+                <div class="message user">
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            You
+                        </div>
+
+                        <div class="message-bubble user-bubble">
+                            {{ question }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="message-avatar user-message-avatar">
+
+                        {{ (user.name or "U")[0]|upper }}
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+
+                <!-- AI ANSWER -->
+
+                {% if answer %}
+
+                <div class="message ai">
+
+                    <div class="message-avatar ai-message-avatar">
+                        🤖
+                    </div>
+
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            CareerAI
+                        </div>
+
+
+                        <div class="message-bubble ai-bubble">
+                            {{ answer }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+
+
+                <!-- TYPING -->
+
+                <div
+                    class="typing"
+                    id="typing"
+                >
+
+                    <div class="message-avatar ai-message-avatar">
+                        🤖
+                    </div>
+
+                    <div class="typing-bubble">
+
+                        <div class="typing-dots">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             MESSAGE COMPOSER
+        ================================================= -->
+
+        <div class="composer-area">
+
+            <form
+                method="POST"
+                action="{{ url_for('chat.home') }}"
+                class="composer"
+                id="chatForm"
+            >
+
+
+                <textarea
+                    name="question"
+                    id="questionInput"
+                    placeholder="Message CareerAI..."
+                    autocomplete="off"
+                    required
+                    rows="1"
+                ></textarea>
+
+
+                <button
+                    type="submit"
+                    class="send-button"
+                    id="sendButton"
+                    aria-label="Send message"
+                    title="Send message"
+                >
+                    ➤
+                </button>
+
+            </form>
+
+
+            <div class="composer-hint">
+                CareerAI can make mistakes. Check important information.
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        /* =================================================
+           THEME
+        ================================================= */
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+
+        function updateThemeButton() {
+
+            const theme =
+                document.documentElement
+                    .getAttribute("data-theme");
+
+
+            if (theme === "dark") {
+
+                themeToggle.textContent = "☀️";
+
+                themeToggle.title =
+                    "Switch to Light Mode";
+
+            } else {
+
+                themeToggle.textContent = "🌙";
+
+                themeToggle.title =
+                    "Switch to Dark Mode";
+
+            }
+
+        }
+
+
+        themeToggle.addEventListener(
+            "click",
+            function () {
+
+                const currentTheme =
+                    document.documentElement
+                        .getAttribute("data-theme");
+
+
+                const newTheme =
+                    currentTheme === "dark"
+                        ? "light"
+                        : "dark";
+
+
+                document.documentElement
+                    .setAttribute(
+                        "data-theme",
+                        newTheme
+                    );
+
+
+                localStorage.setItem(
+                    "careerai-theme",
+                    newTheme
+                );
+
+
+                updateThemeButton();
+
+            }
+        );
+
+
+        updateThemeButton();
+
+
+
+        /* =================================================
+           MOBILE SIDEBAR
+        ================================================= */
+
+        const menuButton =
+            document.getElementById("menuButton");
+
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+
+        const sidebarOverlay =
+            document.getElementById(
+                "sidebarOverlay"
+            );
+
+
+        function openSidebar() {
+
+            sidebar.classList.add("open");
+
+            sidebarOverlay.classList.add("show");
+
+        }
+
+
+        function closeSidebar() {
+
+            sidebar.classList.remove("open");
+
+            sidebarOverlay.classList.remove("show");
+
+        }
+
+
+        menuButton.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    sidebar.classList.contains("open")
+                ) {
+
+                    closeSidebar();
+
+                } else {
+
+                    openSidebar();
+
+                }
+
+            }
+        );
+
+
+        sidebarOverlay.addEventListener(
+            "click",
+            closeSidebar
+        );
+
+
+        sidebar
+            .querySelectorAll("a")
+            .forEach(function (link) {
+
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            window.innerWidth <= 850
+                        ) {
+
+                            closeSidebar();
+
+                        }
+
+                    }
+                );
+
+            });
+
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                if (
+                    window.innerWidth > 850
+                ) {
+
+                    closeSidebar();
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================================
+           TEXTAREA AUTO RESIZE
+        ================================================= */
+
+        const textarea =
+            document.getElementById(
+                "questionInput"
+            );
+
+
+        textarea.addEventListener(
+            "input",
+            function () {
+
+                this.style.height = "auto";
+
+                this.style.height =
+                    Math.min(
+                        this.scrollHeight,
+                        140
+                    ) + "px";
+
+            }
+        );
+
+
+
+        /* =================================================
+           ENTER TO SEND
+        ================================================= */
+
+        textarea.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Enter" &&
+                    !event.shiftKey
+                ) {
+
+                    event.preventDefault();
+
+                    document
+                        .getElementById("chatForm")
+                        .requestSubmit();
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================================
+           SHOW TYPING WHEN FORM SUBMITS
+        ================================================= */
+
+        const chatForm =
+            document.getElementById("chatForm");
+
+
+        chatForm.addEventListener(
+            "submit",
+            function () {
+
+                const typing =
+                    document.getElementById(
+                        "typing"
+                    );
+
+
+                typing.classList.add("show");
+
+
+                const messages =
+                    document.getElementById(
+                        "messages"
+                    );
+
+
+                setTimeout(
+                    function () {
+
+                        messages.scrollTop =
+                            messages.scrollHeight;
+
+                    },
+                    50
+                );
+
+            }
+        );
+
+
+
+        /* =================================================
+           AUTO SCROLL TO LAST MESSAGE
+        ================================================= */
+
+        window.addEventListener(
+            "load",
+            function () {
+
+                const messages =
+                    document.getElementById(
+                        "messages"
+                    );
+
+
+                messages.scrollTop =
+                    messages.scrollHeight;
+
+            }
+        );
+
+
+
+        /* =================================================
+           ESCAPE CLOSE SIDEBAR
+        ================================================= */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeSidebar();
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

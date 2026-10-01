@@ -1,0 +1,2149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="CareerAI Job Finder - Find jobs matching your career, skills and interests."
+    >
+
+    <title>Job Finder | CareerAI</title>
+
+
+    <style>
+
+        /* =====================================================
+           THEME VARIABLES
+        ===================================================== */
+
+        :root {
+
+            --primary: #145df5;
+            --primary-dark: #0f4bd8;
+            --primary-light: #eff6ff;
+
+            --bg: #f4f7fc;
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+
+            --text: #0f172a;
+            --text-secondary: #334155;
+            --muted: #64748b;
+            --muted-light: #94a3b8;
+
+            --border: #e2e8f0;
+            --border-input: #cbd5e1;
+
+            --danger: #ef4444;
+            --danger-dark: #dc2626;
+
+            --shadow:
+                0 5px 20px rgba(15, 23, 42, 0.05);
+
+            --shadow-hover:
+                0 12px 30px rgba(15, 23, 42, 0.10);
+
+            --radius: 18px;
+
+            --transition: 0.25s ease;
+        }
+
+
+        /* =====================================================
+           DARK THEME
+        ===================================================== */
+
+        html[data-theme="dark"] {
+
+            --bg: #0b1120;
+            --surface: #111827;
+            --surface-soft: #172033;
+
+            --text: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --muted: #94a3b8;
+            --muted-light: #64748b;
+
+            --border: #263449;
+            --border-input: #334155;
+
+            --primary-light: #172554;
+
+            --shadow:
+                0 5px 25px rgba(0, 0, 0, 0.25);
+
+            --shadow-hover:
+                0 15px 35px rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--bg);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background var(--transition),
+                color var(--transition);
+        }
+
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+
+            height: 72px;
+
+            background: var(--surface);
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 40px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            transition:
+                background var(--transition),
+                border-color var(--transition);
+        }
+
+
+        .logo {
+
+            color: var(--primary);
+
+            text-decoration: none;
+
+            font-size: 26px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+        }
+
+
+        .logo span {
+
+            color: var(--text);
+
+            transition:
+                color var(--transition);
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+        }
+
+
+        .username {
+
+            color: var(--text-secondary);
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           PROFILE AVATAR
+        ===================================================== */
+
+        .profile-circle {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            border:
+                1px solid rgba(20, 93, 245, 0.15);
+        }
+
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .theme-button {
+
+            width: 40px;
+
+            height: 40px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            background: var(--surface-soft);
+
+            color: var(--text);
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            transition:
+                transform var(--transition),
+                background var(--transition),
+                border-color var(--transition);
+        }
+
+
+        .theme-button:hover {
+
+            transform: translateY(-2px);
+
+            border-color: var(--primary);
+
+            color: var(--primary);
+        }
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        .logout {
+
+            color: var(--danger);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: color var(--transition);
+        }
+
+
+        .logout:hover {
+
+            color: var(--danger-dark);
+
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .container {
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 40px 25px 60px;
+        }
+
+
+        /* =====================================================
+           BACK
+        ===================================================== */
+
+        .back {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin-bottom: 20px;
+
+            color: var(--primary);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition: transform var(--transition);
+        }
+
+
+        .back:hover {
+
+            transform: translateX(-3px);
+        }
+
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .page-header {
+
+            margin-bottom: 30px;
+        }
+
+
+        h1 {
+
+            font-size: 36px;
+
+            margin: 0 0 10px;
+
+            letter-spacing: -0.7px;
+        }
+
+
+        .subtitle {
+
+            color: var(--muted);
+
+            margin: 0;
+
+            line-height: 1.7;
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           SEARCH CARD
+        ===================================================== */
+
+        .search-card {
+
+            background: var(--surface);
+
+            padding: 30px;
+
+            border-radius: var(--radius);
+
+            border:
+                1px solid var(--border);
+
+            box-shadow: var(--shadow);
+
+            margin-bottom: 32px;
+
+            transition:
+                background var(--transition),
+                border-color var(--transition),
+                box-shadow var(--transition);
+        }
+
+
+        .search-card h2 {
+
+            color: var(--text);
+
+            margin-top: 0;
+
+            margin-bottom: 8px;
+
+            font-size: 21px;
+        }
+
+
+        .search-card p {
+
+            color: var(--muted);
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+        }
+
+
+        .search-form {
+
+            display: flex;
+
+            gap: 12px;
+
+            position: relative;
+        }
+
+
+        /* =====================================================
+           SEARCH INPUT
+        ===================================================== */
+
+        .search-input {
+
+            flex: 1;
+
+            width: 100%;
+
+            padding: 15px 45px 15px 18px;
+
+            border:
+                1px solid var(--border-input);
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            outline: none;
+
+            background: var(--surface);
+
+            color: var(--text);
+
+            transition:
+                border var(--transition),
+                box-shadow var(--transition),
+                background var(--transition),
+                color var(--transition);
+        }
+
+
+        .search-input::placeholder {
+
+            color: var(--muted-light);
+        }
+
+
+        .search-input:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(20, 93, 245, 0.12);
+        }
+
+
+        /* =====================================================
+           CLEAR SEARCH
+        ===================================================== */
+
+        .clear-search {
+
+            position: absolute;
+
+            right: 155px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 30px;
+
+            height: 30px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--muted);
+
+            cursor: pointer;
+
+            border-radius: 50%;
+
+            font-size: 18px;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .clear-search:hover {
+
+            background: var(--surface-soft);
+
+            color: var(--text);
+        }
+
+
+        /* =====================================================
+           SEARCH BUTTON
+        ===================================================== */
+
+        .search-button {
+
+            padding: 15px 25px;
+
+            background: var(--primary);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            min-width: 135px;
+
+            transition:
+                background var(--transition),
+                transform var(--transition);
+        }
+
+
+        .search-button:hover {
+
+            background: var(--primary-dark);
+
+            transform: translateY(-1px);
+        }
+
+
+        .search-button:active {
+
+            transform: translateY(0);
+        }
+
+
+        .search-button.loading {
+
+            opacity: 0.75;
+
+            cursor: wait;
+        }
+
+
+        /* =====================================================
+           RESULTS HEADER
+        ===================================================== */
+
+        .results-title {
+
+            margin: 0 0 20px;
+
+            font-size: 24px;
+
+            color: var(--text);
+        }
+
+
+        .results-title strong {
+
+            color: var(--primary);
+
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           JOB GRID
+        ===================================================== */
+
+        .jobs-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+
+        /* =====================================================
+           JOB CARD
+        ===================================================== */
+
+        .job-card {
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            padding: 25px;
+
+            box-shadow: var(--shadow);
+
+            transition:
+                transform var(--transition),
+                box-shadow var(--transition),
+                border-color var(--transition),
+                background var(--transition);
+
+            animation:
+                cardAppear 0.45s ease both;
+        }
+
+
+        .job-card:hover {
+
+            transform: translateY(-4px);
+
+            box-shadow: var(--shadow-hover);
+
+            border-color:
+                rgba(20, 93, 245, 0.35);
+        }
+
+
+        @keyframes cardAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(10px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        /* =====================================================
+           JOB CARD HEADER
+        ===================================================== */
+
+        .job-title {
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            color: var(--text);
+
+            margin-bottom: 10px;
+
+            line-height: 1.35;
+        }
+
+
+        .company {
+
+            color: var(--primary);
+
+            font-weight: 700;
+
+            margin-bottom: 15px;
+
+            font-size: 15px;
+        }
+
+
+        /* =====================================================
+           JOB INFO
+        ===================================================== */
+
+        .job-info {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 4px;
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            border:
+                1px solid
+                rgba(20, 93, 245, 0.08);
+        }
+
+
+        /* =====================================================
+           DESCRIPTION
+        ===================================================== */
+
+        .description {
+
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           VIEW JOB BUTTON
+        ===================================================== */
+
+        .apply-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            background: var(--text);
+
+            color: var(--surface);
+
+            text-decoration: none;
+
+            padding: 11px 20px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition:
+                background var(--transition),
+                transform var(--transition);
+        }
+
+
+        .apply-button:hover {
+
+            background: var(--primary);
+
+            color: white;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty {
+
+            text-align: center;
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            padding: 60px 25px;
+
+            color: var(--muted);
+
+            box-shadow: var(--shadow);
+
+            transition:
+                background var(--transition),
+                border-color var(--transition);
+        }
+
+
+        .empty-icon {
+
+            width: 75px;
+
+            height: 75px;
+
+            margin:
+                0 auto 20px;
+
+            border-radius: 20px;
+
+            background: var(--primary-light);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 35px;
+        }
+
+
+        .empty h2 {
+
+            color: var(--text);
+
+            margin-bottom: 10px;
+
+            font-size: 22px;
+        }
+
+
+        .empty p {
+
+            margin: 0 auto;
+
+            max-width: 500px;
+
+            line-height: 1.7;
+
+            color: var(--muted);
+        }
+
+
+        /* =====================================================
+           QUICK SEARCHES
+        ===================================================== */
+
+        .quick-searches {
+
+            margin-top: 20px;
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+        }
+
+
+        .quick-label {
+
+            font-size: 13px;
+
+            color: var(--muted);
+
+            font-weight: 600;
+        }
+
+
+        .quick-button {
+
+            border:
+                1px solid var(--border);
+
+            background: var(--surface-soft);
+
+            color: var(--text-secondary);
+
+            border-radius: 20px;
+
+            padding: 8px 13px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background var(--transition),
+                border-color var(--transition),
+                color var(--transition);
+        }
+
+
+        .quick-button:hover {
+
+            background: var(--primary-light);
+
+            border-color: var(--primary);
+
+            color: var(--primary);
+        }
+
+
+        /* =====================================================
+           NO RESULTS MESSAGE
+        ===================================================== */
+
+        .no-results {
+
+            display: none;
+
+            text-align: center;
+
+            padding: 25px;
+
+            color: var(--muted);
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+        }
+
+
+        /* =====================================================
+           SCROLL TOP
+        ===================================================== */
+
+        .scroll-top {
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            width: 45px;
+
+            height: 45px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 20px
+                rgba(20, 93, 245, 0.25);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform: translateY(10px);
+
+            transition:
+                opacity var(--transition),
+                visibility var(--transition),
+                transform var(--transition);
+        }
+
+
+        .scroll-top.show {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform: translateY(0);
+        }
+
+
+        .scroll-top:hover {
+
+            background: var(--primary-dark);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            padding:
+                20px 0 0;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 750px) {
+
+            .navbar {
+
+                height: 65px;
+
+                padding: 0 18px;
+            }
+
+
+            .logo {
+
+                font-size: 23px;
+            }
+
+
+            .nav-right {
+
+                gap: 9px;
+            }
+
+
+            .username {
+
+                display: none;
+            }
+
+
+            .logout {
+
+                font-size: 13px;
+            }
+
+
+            .profile-circle,
+            .theme-button {
+
+                width: 36px;
+
+                height: 36px;
+            }
+
+
+            .container {
+
+                padding:
+                    30px 18px 50px;
+            }
+
+
+            h1 {
+
+                font-size: 30px;
+            }
+
+
+            .subtitle {
+
+                font-size: 14px;
+            }
+
+
+            .search-card {
+
+                padding: 22px;
+            }
+
+
+            .search-form {
+
+                flex-direction: column;
+            }
+
+
+            .search-input {
+
+                min-height: 50px;
+            }
+
+
+            .search-button {
+
+                width: 100%;
+            }
+
+
+            .clear-search {
+
+                right: 15px;
+
+                top: 25px;
+            }
+
+
+            .jobs-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .job-card {
+
+                padding: 22px;
+            }
+
+
+            .results-title {
+
+                font-size: 21px;
+            }
+
+
+            .empty {
+
+                padding:
+                    45px 20px;
+            }
+
+        }
+
+
+        /* =====================================================
+           VERY SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 430px) {
+
+            .navbar {
+
+                padding: 0 13px;
+            }
+
+
+            .nav-right {
+
+                gap: 6px;
+            }
+
+
+            .logout {
+
+                display: none;
+            }
+
+
+            .container {
+
+                padding-left: 13px;
+
+                padding-right: 13px;
+            }
+
+
+            .job-info {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .badge {
+
+                max-width: 100%;
+
+                word-break: break-word;
+            }
+
+
+            .apply-button {
+
+                width: 100%;
+            }
+
+        }
+
+
+        /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                scroll-behavior: auto !important;
+
+                animation-duration: 0.01ms !important;
+
+                transition-duration: 0.01ms !important;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('dashboard.home') }}"
+            class="logo"
+        >
+            Career<span>AI</span>
+        </a>
+
+
+        <div class="nav-right">
+
+
+            <span class="username">
+                {{ user.name or 'User' }}
+            </span>
+
+
+            <div class="profile-circle">
+
+                {{ (user.name or 'U')[0]|upper }}
+
+            </div>
+
+
+            <!-- DARK MODE -->
+
+            <button
+                type="button"
+                class="theme-button"
+                id="themeButton"
+                aria-label="Toggle dark mode"
+                title="Toggle dark mode"
+            >
+                🌙
+            </button>
+
+
+            <a
+                href="{{ url_for('auth.logout') }}"
+                class="logout"
+            >
+                Logout
+            </a>
+
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="container">
+
+
+        <!-- BACK -->
+
+        <a
+            href="{{ url_for('dashboard.home') }}"
+            class="back"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+        <!-- HEADER -->
+
+        <div class="page-header">
+
+            <h1>
+                🔎 Job Finder
+            </h1>
+
+
+            <p class="subtitle">
+                Find job opportunities related to your
+                career, skills and interests.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             SEARCH CARD
+        ================================================= -->
+
+        <section class="search-card">
+
+
+            <h2>
+                Search for Jobs
+            </h2>
+
+
+            <p>
+                Enter a job title, career or skill.
+            </p>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('job.finder') }}"
+                class="search-form"
+                id="searchForm"
+            >
+
+
+                <input
+                    type="text"
+                    name="keyword"
+                    id="searchInput"
+                    class="search-input"
+                    placeholder="Example: Python Developer"
+                    value="{{ keyword or '' }}"
+                    autocomplete="off"
+                    required
+                >
+
+
+                <button
+                    type="button"
+                    class="clear-search"
+                    id="clearSearch"
+                    aria-label="Clear search"
+                    title="Clear search"
+                >
+                    ×
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="search-button"
+                    id="searchButton"
+                >
+                    🔎 Find Jobs
+                </button>
+
+
+            </form>
+
+
+            <!-- QUICK SEARCH -->
+
+            <div class="quick-searches">
+
+                <span class="quick-label">
+                    Popular:
+                </span>
+
+
+                <button
+                    type="button"
+                    class="quick-button"
+                    data-search="Python Developer"
+                >
+                    Python Developer
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-button"
+                    data-search="Web Developer"
+                >
+                    Web Developer
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-button"
+                    data-search="Data Analyst"
+                >
+                    Data Analyst
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-button"
+                    data-search="Software Engineer"
+                >
+                    Software Engineer
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             RESULTS
+        ================================================= -->
+
+        {% if jobs %}
+
+
+            <h2 class="results-title">
+
+                Jobs related to:
+
+                <strong>
+                    {{ keyword }}
+                </strong>
+
+            </h2>
+
+
+            <div class="jobs-grid" id="jobsGrid">
+
+
+                {% for job in jobs %}
+
+
+                    <article class="job-card">
+
+
+                        <!-- JOB TITLE -->
+
+                        <div class="job-title">
+
+                            {{ job.title }}
+
+                        </div>
+
+
+                        <!-- COMPANY -->
+
+                        <div class="company">
+
+                            {{ job.company }}
+
+                        </div>
+
+
+                        <!-- INFO -->
+
+                        <div class="job-info">
+
+
+                            {% if job.location %}
+
+                                <span class="badge">
+
+                                    📍 {{ job.location }}
+
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if job.type %}
+
+                                <span class="badge">
+
+                                    💼 {{ job.type }}
+
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <div class="description">
+
+                            {{ job.description }}
+
+                        </div>
+
+
+                        <!-- VIEW JOB -->
+
+                        {% if job.url %}
+
+                            <a
+                                href="{{ job.url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="apply-button"
+                            >
+                                View Job ↗
+                            </a>
+
+                        {% endif %}
+
+
+                    </article>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+            <div
+                class="no-results"
+                id="noResults"
+            >
+                No jobs found in the current results.
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================= -->
+
+            <div class="empty">
+
+
+                <div class="empty-icon">
+
+                    🔎
+
+                </div>
+
+
+                <h2>
+
+                    Find Your Next Opportunity
+
+                </h2>
+
+
+                <p>
+
+                    Search for a career or job title above
+                    to see matching opportunities.
+
+                </p>
+
+
+                <div class="quick-searches">
+
+
+                    <span class="quick-label">
+                        Try:
+                    </span>
+
+
+                    <button
+                        type="button"
+                        class="quick-button"
+                        data-search="Python Developer"
+                    >
+                        Python Developer
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quick-button"
+                        data-search="Frontend Developer"
+                    >
+                        Frontend Developer
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quick-button"
+                        data-search="Data Scientist"
+                    >
+                        Data Scientist
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+            CareerAI · Smart Career Discovery
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         SCROLL TO TOP
+    ===================================================== -->
+
+    <button
+        type="button"
+        class="scroll-top"
+        id="scrollTop"
+        aria-label="Scroll to top"
+        title="Back to top"
+    >
+        ↑
+    </button>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        /* =================================================
+           DARK MODE
+        ================================================= */
+
+        const html =
+            document.documentElement;
+
+        const themeButton =
+            document.getElementById("themeButton");
+
+
+        function applyTheme(theme) {
+
+            html.setAttribute(
+                "data-theme",
+                theme
+            );
+
+
+            if (theme === "dark") {
+
+                themeButton.textContent = "☀️";
+
+                themeButton.setAttribute(
+                    "aria-label",
+                    "Switch to light mode"
+                );
+
+                themeButton.setAttribute(
+                    "title",
+                    "Switch to light mode"
+                );
+
+            } else {
+
+                themeButton.textContent = "🌙";
+
+                themeButton.setAttribute(
+                    "aria-label",
+                    "Switch to dark mode"
+                );
+
+                themeButton.setAttribute(
+                    "title",
+                    "Switch to dark mode"
+                );
+
+            }
+
+
+            localStorage.setItem(
+                "careerAITheme",
+                theme
+            );
+
+        }
+
+
+        function loadTheme() {
+
+            const savedTheme =
+                localStorage.getItem(
+                    "careerAITheme"
+                );
+
+
+            if (savedTheme) {
+
+                applyTheme(savedTheme);
+
+                return;
+
+            }
+
+
+            const systemDark =
+                window.matchMedia &&
+                window.matchMedia(
+                    "(prefers-color-scheme: dark)"
+                ).matches;
+
+
+            applyTheme(
+                systemDark
+                    ? "dark"
+                    : "light"
+            );
+
+        }
+
+
+        themeButton.addEventListener(
+            "click",
+            function() {
+
+                const currentTheme =
+                    html.getAttribute(
+                        "data-theme"
+                    );
+
+
+                const newTheme =
+                    currentTheme === "dark"
+                        ? "light"
+                        : "dark";
+
+
+                applyTheme(newTheme);
+
+            }
+        );
+
+
+        loadTheme();
+
+
+        /* =================================================
+           SEARCH ELEMENTS
+        ================================================= */
+
+        const searchInput =
+            document.getElementById(
+                "searchInput"
+            );
+
+        const clearSearch =
+            document.getElementById(
+                "clearSearch"
+            );
+
+        const searchForm =
+            document.getElementById(
+                "searchForm"
+            );
+
+        const searchButton =
+            document.getElementById(
+                "searchButton"
+            );
+
+
+        /* =================================================
+           SHOW / HIDE CLEAR BUTTON
+        ================================================= */
+
+        function updateClearButton() {
+
+            if (!clearSearch || !searchInput) {
+                return;
+            }
+
+
+            if (
+                searchInput.value.trim()
+                    .length > 0
+            ) {
+
+                clearSearch.style.display =
+                    "flex";
+
+            } else {
+
+                clearSearch.style.display =
+                    "none";
+
+            }
+
+        }
+
+
+        if (searchInput) {
+
+            searchInput.addEventListener(
+                "input",
+                updateClearButton
+            );
+
+        }
+
+
+        /* =================================================
+           CLEAR SEARCH
+        ================================================= */
+
+        if (clearSearch) {
+
+            clearSearch.addEventListener(
+                "click",
+                function() {
+
+                    searchInput.value = "";
+
+                    searchInput.focus();
+
+                    updateClearButton();
+
+                }
+            );
+
+        }
+
+
+        updateClearButton();
+
+
+        /* =================================================
+           QUICK SEARCH BUTTONS
+        ================================================= */
+
+        const quickButtons =
+            document.querySelectorAll(
+                ".quick-button"
+            );
+
+
+        quickButtons.forEach(
+            function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        const search =
+                            this.getAttribute(
+                                "data-search"
+                            );
+
+
+                        if (!searchInput) {
+                            return;
+                        }
+
+
+                        searchInput.value =
+                            search;
+
+
+                        updateClearButton();
+
+
+                        searchInput.focus();
+
+
+                        /* Submit automatically */
+
+                        if (searchForm) {
+
+                            searchForm.submit();
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =================================================
+           SEARCH LOADING STATE
+        ================================================= */
+
+        if (searchForm) {
+
+            searchForm.addEventListener(
+                "submit",
+                function() {
+
+                    if (
+                        !searchInput.value.trim()
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    searchButton.classList.add(
+                        "loading"
+                    );
+
+
+                    searchButton.textContent =
+                        "⏳ Searching...";
+
+
+                    searchButton.disabled =
+                        true;
+
+                }
+            );
+
+        }
+
+
+        /* =================================================
+           KEYBOARD SHORTCUT
+           
+           Ctrl + K / Cmd + K
+           focuses search.
+        ================================================= */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    (event.ctrlKey ||
+                     event.metaKey) &&
+                    event.key.toLowerCase() === "k"
+                ) {
+
+                    event.preventDefault();
+
+
+                    if (searchInput) {
+
+                        searchInput.focus();
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           ESCAPE TO CLEAR
+        ================================================= */
+
+        if (searchInput) {
+
+            searchInput.addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (
+                        event.key === "Escape"
+                    ) {
+
+                        searchInput.value = "";
+
+                        updateClearButton();
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =================================================
+           SCROLL TO TOP
+        ================================================= */
+
+        const scrollTop =
+            document.getElementById(
+                "scrollTop"
+            );
+
+
+        window.addEventListener(
+            "scroll",
+            function() {
+
+                if (
+                    window.scrollY > 350
+                ) {
+
+                    scrollTop.classList.add(
+                        "show"
+                    );
+
+                } else {
+
+                    scrollTop.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+        );
+
+
+        scrollTop.addEventListener(
+            "click",
+            function() {
+
+                window.scrollTo({
+
+                    top: 0,
+
+                    behavior: "smooth"
+
+                });
+
+            }
+        );
+
+
+        /* =================================================
+           JOB CARD STAGGER ANIMATION
+        ================================================= */
+
+        const jobCards =
+            document.querySelectorAll(
+                ".job-card"
+            );
+
+
+        jobCards.forEach(
+            function(card, index) {
+
+                card.style.animationDelay =
+                    (index * 0.06) + "s";
+
+            }
+        );
+
+
+        /* =================================================
+           EXTERNAL LINK SAFETY
+        ================================================= */
+
+        const jobLinks =
+            document.querySelectorAll(
+                ".apply-button"
+            );
+
+
+        jobLinks.forEach(
+            function(link) {
+
+                link.addEventListener(
+                    "click",
+                    function() {
+
+                        this.style.opacity =
+                            "0.75";
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

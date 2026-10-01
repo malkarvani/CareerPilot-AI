@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login | CareerAI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f7fc;
+
+            color: #0f172a;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .login-card {
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 20px;
+
+            padding: 38px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.08
+                );
+        }
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .logo {
+            text-align: center;
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            color: #145df5;
+
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           HEADING
+        ========================= */
+
+        h1 {
+            margin: 0;
+
+            text-align: center;
+
+            font-size: 28px;
+
+            color: #0f172a;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            margin:
+                10px
+                0
+                28px;
+        }
+
+        /* =========================
+           FLASH MESSAGES
+        ========================= */
+
+        .message {
+            padding: 13px 15px;
+
+            border-radius: 10px;
+
+            margin-bottom: 18px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+        .message.error {
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border: 1px solid #fecaca;
+        }
+
+        .message.success {
+            background: #dcfce7;
+
+            color: #166534;
+
+            border: 1px solid #bbf7d0;
+        }
+
+        .message.info {
+            background: #dbeafe;
+
+            color: #1e40af;
+
+            border: 1px solid #bfdbfe;
+        }
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #334155;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border:
+                1px solid
+                #cbd5e1;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            font-size: 15px;
+
+            color: #0f172a;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
+        }
+
+        input:focus {
+            border-color: #145df5;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(
+                    20,
+                    93,
+                    245,
+                    0.12
+                );
+        }
+
+        /* =========================
+           LOGIN BUTTON
+        ========================= */
+
+        .login-button {
+            width: 100%;
+
+            border: none;
+
+            border-radius: 10px;
+
+            padding: 14px;
+
+            background: #145df5;
+
+            color: #ffffff;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s,
+                transform 0.2s;
+        }
+
+        .login-button:hover {
+            background: #0f4bd8;
+
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           REGISTER LINK
+        ========================= */
+
+        .register-section {
+            text-align: center;
+
+            margin-top: 25px;
+
+            padding-top: 22px;
+
+            border-top:
+                1px solid
+                #e2e8f0;
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+        .register-section a {
+            color: #145df5;
+
+            text-decoration: none;
+
+            font-weight: 700;
+        }
+
+        .register-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            margin-top: 20px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .login-card {
+                padding: 28px 22px;
+            }
+
+            .logo {
+                font-size: 27px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-container">
+
+
+    <div class="login-card">
+
+
+        <!-- =========================
+             LOGO
+        ========================= -->
+
+        <div class="logo">
+            CareerAI
+        </div>
+
+
+        <!-- =========================
+             TITLE
+        ========================= -->
+
+        <h1>
+            Welcome Back
+        </h1>
+
+
+        <p class="subtitle">
+            Login to continue to your CareerAI account.
+        </p>
+
+
+        <!-- =========================
+             FLASH MESSAGES
+        ========================= -->
+
+        {% with messages = get_flashed_messages(
+            with_categories=true
+        ) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="message
+                        {% if category == 'error' %}
+                            error
+                        {% elif category == 'success' %}
+                            success
+                        {% else %}
+                            info
+                        {% endif %}"
+                    >
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- =========================
+             LOGIN FORM
+        ========================= -->
+
+        <form
+            method="POST"
+            action="{{ url_for('auth.login') }}"
+        >
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-button"
+            >
+                Login
+            </button>
+
+
+        </form>
+
+
+        <!-- =========================
+             REGISTER
+        ========================= -->
+
+        <div class="register-section">
+
+            Don't have an account?
+
+            <a
+                href="{{ url_for('auth.register') }}"
+            >
+                Create Account
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer">
+        © 2026 CareerAI
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

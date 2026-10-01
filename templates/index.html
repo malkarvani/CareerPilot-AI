@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CareerAI | AI-Powered Career Guidance</title>
+
+    <!-- Prevent theme flash -->
+    <script>
+        (function () {
+            const savedTheme =
+                localStorage.getItem("careerai-theme");
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                savedTheme === "dark" ? "dark" : "light"
+            );
+        })();
+    </script>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+
+            transition:
+                background 0.3s ease,
+                color 0.3s ease;
+        }
+
+
+        /* =====================================================
+           LIGHT THEME
+        ===================================================== */
+
+        :root {
+            --bg: #f7f9fc;
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+
+            --border: #e5e7eb;
+
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+
+            --primary: #145df5;
+            --primary-hover: #0f4bd8;
+
+            --primary-light: #eff6ff;
+
+            --danger: #ef4444;
+
+            --shadow:
+                0 15px 40px rgba(15, 23, 42, 0.07);
+        }
+
+
+        /* =====================================================
+           DARK THEME
+        ===================================================== */
+
+        [data-theme="dark"] {
+            --bg: #080d18;
+            --surface: #101827;
+            --surface-soft: #151f30;
+
+            --border: #263246;
+
+            --text: #f8fafc;
+            --text-secondary: #a5b1c4;
+            --text-muted: #718096;
+
+            --primary: #5b91ff;
+            --primary-hover: #78a5ff;
+
+            --primary-light: #17284d;
+
+            --danger: #f87171;
+
+            --shadow:
+                0 20px 50px rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: rgba(255, 255, 255, 0.88);
+
+            border-bottom:
+                1px solid var(--border);
+
+            backdrop-filter: blur(14px);
+
+            z-index: 1000;
+
+            transition:
+                background 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(8, 13, 24, 0.88);
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo {
+            text-decoration: none;
+
+            font-size: 25px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.6px;
+
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--text);
+        }
+
+
+        /* =====================================================
+           NAV RIGHT
+        ===================================================== */
+
+        .nav-right {
+            display: flex;
+
+            align-items: center;
+
+            gap: 22px;
+        }
+
+
+        .nav-link {
+            text-decoration: none;
+
+            color: var(--text-secondary);
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition:
+                color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .theme-toggle {
+            width: 43px;
+            height: 43px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            color: white;
+
+            font-size: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #145df5,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 6px 18px
+                rgba(20, 93, 245, 0.25);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .theme-toggle:hover {
+            transform:
+                rotate(12deg)
+                scale(1.08);
+
+            box-shadow:
+                0 10px 25px
+                rgba(20, 93, 245, 0.35);
+        }
+
+
+        /* =====================================================
+           NAV BUTTON
+        ===================================================== */
+
+        .nav-button {
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 9px;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--primary-hover);
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(20, 93, 245, 0.22);
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            position: relative;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding:
+                120px 25px
+                80px;
+
+            overflow: hidden;
+        }
+
+
+        /* Decorative circles */
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(20, 93, 245, 0.08);
+
+            top: -180px;
+            right: -120px;
+
+            animation:
+                floatShape 7s ease-in-out infinite;
+        }
+
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(124, 58, 237, 0.06);
+
+            bottom: -130px;
+            left: -100px;
+
+            animation:
+                floatShape 8s ease-in-out infinite reverse;
+        }
+
+
+        .hero-content {
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 900px;
+
+            animation:
+                fadeUp 0.8s ease;
+        }
+
+
+        /* =====================================================
+           BADGE
+        ===================================================== */
+
+        .hero-badge {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                8px 14px;
+
+            margin-bottom: 22px;
+
+            border-radius: 30px;
+
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            border:
+                1px solid
+                rgba(20, 93, 245, 0.12);
+
+            animation:
+                fadeUp 0.7s ease;
+        }
+
+
+        /* =====================================================
+           HERO TITLE
+        ===================================================== */
+
+        .hero h1 {
+            font-size:
+                clamp(42px, 7vw, 72px);
+
+            line-height: 1.05;
+
+            letter-spacing: -2.5px;
+
+            font-weight: 850;
+
+            color: var(--text);
+
+            margin-bottom: 24px;
+        }
+
+
+        .hero h1 .highlight {
+            color: var(--primary);
+        }
+
+
+        /* =====================================================
+           HERO DESCRIPTION
+        ===================================================== */
+
+        .hero-description {
+            max-width: 700px;
+
+            margin:
+                0 auto
+                30px;
+
+            color:
+                var(--text-secondary);
+
+            font-size: 17px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           HERO ACTIONS
+        ===================================================== */
+
+        .hero-actions {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 13px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .primary-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            background:
+                var(--primary);
+
+            color: white;
+
+            padding:
+                14px 25px;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .primary-button:hover {
+            background:
+                var(--primary-hover);
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(20, 93, 245, 0.22);
+        }
+
+
+        .secondary-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            background:
+                var(--surface);
+
+            color:
+                var(--text);
+
+            border:
+                1px solid
+                var(--border);
+
+            padding:
+                14px 25px;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .secondary-button:hover {
+            transform:
+                translateY(-3px);
+
+            border-color:
+                var(--primary);
+
+            color:
+                var(--primary);
+
+            background:
+                var(--surface-soft);
+        }
+
+
+        /* =====================================================
+           FEATURES
+        ===================================================== */
+
+        .features-section {
+            padding:
+                80px 6%;
+
+            background:
+                var(--surface);
+
+            border-top:
+                1px solid
+                var(--border);
+
+            border-bottom:
+                1px solid
+                var(--border);
+        }
+
+
+        .section-heading {
+            text-align: center;
+
+            max-width: 700px;
+
+            margin:
+                0 auto
+                45px;
+        }
+
+
+        .section-heading h2 {
+            font-size:
+                clamp(28px, 4vw, 40px);
+
+            color:
+                var(--text);
+
+            margin-bottom: 12px;
+
+            letter-spacing:
+                -1px;
+        }
+
+
+        .section-heading p {
+            color:
+                var(--text-secondary);
+
+            line-height: 1.7;
+
+            font-size: 15px;
+        }
+
+
+        .feature-grid {
+            max-width: 1150px;
+
+            margin: 0 auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .feature-card {
+            padding:
+                25px;
+
+            background:
+                var(--surface-soft);
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 16px;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+
+            animation:
+                fadeUp 0.6s ease both;
+        }
+
+
+        .feature-card:hover {
+            transform:
+                translateY(-6px);
+
+            border-color:
+                rgba(20, 93, 245, 0.3);
+
+            box-shadow:
+                var(--shadow);
+        }
+
+
+        .feature-icon {
+            font-size: 27px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .feature-card h3 {
+            font-size: 17px;
+
+            color:
+                var(--text);
+
+            margin-bottom: 9px;
+        }
+
+
+        .feature-card p {
+            color:
+                var(--text-secondary);
+
+            font-size: 13px;
+
+            line-height: 1.65;
+        }
+
+
+        /* =====================================================
+           CTA
+        ===================================================== */
+
+        .cta-section {
+            padding:
+                90px 25px;
+
+            text-align: center;
+        }
+
+
+        .cta-box {
+            max-width: 950px;
+
+            margin: 0 auto;
+
+            padding:
+                55px 35px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #145df5,
+                    #2563eb
+                );
+
+            color: white;
+
+            position: relative;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 45px
+                rgba(20, 93, 245, 0.18);
+
+            animation:
+                fadeUp 0.7s ease;
+        }
+
+
+        .cta-box::after {
+            content: "";
+
+            position: absolute;
+
+            width: 280px;
+            height: 280px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            right: -90px;
+            top: -110px;
+        }
+
+
+        .cta-box h2 {
+            position: relative;
+
+            z-index: 2;
+
+            font-size:
+                clamp(28px, 4vw, 40px);
+
+            margin-bottom: 14px;
+        }
+
+
+        .cta-box p {
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 650px;
+
+            margin:
+                0 auto
+                25px;
+
+            line-height: 1.7;
+
+            color:
+                #dbeafe;
+        }
+
+
+        .cta-button {
+            position: relative;
+
+            z-index: 2;
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            padding:
+                13px 23px;
+
+            border-radius: 9px;
+
+            background: white;
+
+            color: #145df5;
+
+            font-weight: 800;
+
+            font-size: 14px;
+
+            transition:
+                transform 0.2s ease;
+        }
+
+
+        .cta-button:hover {
+            transform:
+                translateY(-3px);
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+            border-top:
+                1px solid
+                var(--border);
+
+            background:
+                var(--surface);
+
+            padding:
+                25px 6%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            color:
+                var(--text-secondary);
+
+            font-size: 13px;
+        }
+
+
+        .footer-logo {
+            font-weight: 800;
+
+            color:
+                var(--primary);
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+
+        }
+
+
+        @keyframes floatShape {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+            }
+
+            50% {
+                transform:
+                    translateY(-20px)
+                    rotate(8deg);
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .navbar {
+                padding:
+                    0 20px;
+            }
+
+
+            .nav-link {
+                display: none;
+            }
+
+
+            .feature-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .features-section {
+                padding:
+                    65px 20px;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .navbar {
+                height: 65px;
+            }
+
+
+            .logo {
+                font-size: 22px;
+            }
+
+
+            .nav-right {
+                gap: 9px;
+            }
+
+
+            .nav-button {
+                padding:
+                    9px 13px;
+
+                font-size:
+                    13px;
+            }
+
+
+            .theme-toggle {
+                width: 40px;
+                height: 40px;
+            }
+
+
+            .hero {
+                min-height:
+                    90vh;
+
+                padding:
+                    110px 18px
+                    60px;
+            }
+
+
+            .hero h1 {
+                letter-spacing:
+                    -1.5px;
+            }
+
+
+            .hero-description {
+                font-size:
+                    15px;
+            }
+
+
+            .hero-actions {
+                flex-direction:
+                    column;
+
+                width: 100%;
+            }
+
+
+            .primary-button,
+            .secondary-button {
+                width:
+                    100%;
+
+                max-width:
+                    300px;
+            }
+
+
+            .feature-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .cta-section {
+                padding:
+                    65px 18px;
+            }
+
+
+            .cta-box {
+                padding:
+                    40px 22px;
+            }
+
+
+            .footer {
+                flex-direction:
+                    column;
+
+                text-align:
+                    center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('dashboard.home') }}"
+            class="logo"
+        >
+            Career<span>AI</span>
+        </a>
+
+
+        <div class="nav-right">
+
+            <a
+                href="#features"
+                class="nav-link"
+            >
+                Features
+            </a>
+
+
+            <a
+                href="#about"
+                class="nav-link"
+            >
+                About
+            </a>
+
+
+            <button
+                type="button"
+                class="theme-toggle"
+                id="themeToggle"
+                aria-label="Toggle dark and light mode"
+                title="Toggle theme"
+            >
+                🌙
+            </button>
+
+
+            <a
+                href="{{ url_for('auth.login') }}"
+                class="nav-button"
+            >
+                Get Started
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         HERO
+    ===================================================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+
+                <div class="hero-badge">
+
+                    ✨
+                    AI-Powered Career Guidance
+
+                </div>
+
+
+                <h1>
+
+                    Build Your
+                    <span class="highlight">
+                        Future Career
+                    </span>
+                    With AI
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    CareerAI helps you discover the right
+                    career path, improve your resume,
+                    build professional skills, find
+                    opportunities and prepare for interviews
+                    — all in one place.
+
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <a
+                        href="{{ url_for('auth.login') }}"
+                        class="primary-button"
+                    >
+                        Get Started →
+                    </a>
+
+
+                    <a
+                        href="#features"
+                        class="secondary-button"
+                    >
+                        Explore Career Tools
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             FEATURES
+        ================================================= -->
+
+        <section
+            class="features-section"
+            id="features"
+        >
+
+            <div class="section-heading">
+
+                <h2>
+                    Everything You Need to Grow
+                </h2>
+
+                <p>
+                    Powerful career tools designed to help
+                    you make better career decisions and
+                    become professionally ready.
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🧭
+                    </div>
+
+                    <h3>
+                        Career Roadmap
+                    </h3>
+
+                    <p>
+                        Discover a personalized path based
+                        on your skills, interests and career
+                        goals.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        📄
+                    </div>
+
+                    <h3>
+                        Resume Analyzer
+                    </h3>
+
+                    <p>
+                        Improve your resume with AI-powered
+                        feedback, scoring and suggestions.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        💼
+                    </div>
+
+                    <h3>
+                        Job Finder
+                    </h3>
+
+                    <p>
+                        Discover career opportunities that
+                        match your skills and interests.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🎤
+                    </div>
+
+                    <h3>
+                        Interview Preparation
+                    </h3>
+
+                    <p>
+                        Practice interview questions and
+                        prepare with AI-powered guidance.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ABOUT / CTA
+        ================================================= -->
+
+        <section
+            class="cta-section"
+            id="about"
+        >
+
+            <div class="cta-box">
+
+                <h2>
+                    Ready to Build Your Career?
+                </h2>
+
+                <p>
+                    Create your profile and let CareerAI
+                    help you plan, prepare and move toward
+                    your professional goals.
+                </p>
+
+
+                <a
+                    href="{{ url_for('auth.login') }}"
+                    class="cta-button"
+                >
+                    Start Your Career Journey →
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-logo">
+            CareerAI
+        </div>
+
+        <div>
+            AI-powered career guidance platform
+        </div>
+
+        <div>
+            © 2026 CareerAI
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         THEME JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+
+        function updateThemeButton() {
+
+            const currentTheme =
+                document.documentElement
+                    .getAttribute("data-theme");
+
+
+            if (currentTheme === "dark") {
+
+                themeToggle.textContent = "☀️";
+
+                themeToggle.title =
+                    "Switch to Light Mode";
+
+            } else {
+
+                themeToggle.textContent = "🌙";
+
+                themeToggle.title =
+                    "Switch to Dark Mode";
+
+            }
+
+        }
+
+
+        themeToggle.addEventListener(
+            "click",
+            function () {
+
+                const currentTheme =
+                    document.documentElement
+                        .getAttribute("data-theme");
+
+
+                const newTheme =
+                    currentTheme === "dark"
+                        ? "light"
+                        : "dark";
+
+
+                document.documentElement
+                    .setAttribute(
+                        "data-theme",
+                        newTheme
+                    );
+
+
+                localStorage.setItem(
+                    "careerai-theme",
+                    newTheme
+                );
+
+
+                updateThemeButton();
+
+            }
+        );
+
+
+        updateThemeButton();
+
+    </script>
+
+
+</body>
+
+</html>
